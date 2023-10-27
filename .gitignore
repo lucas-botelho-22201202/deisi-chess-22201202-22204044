@@ -1,0 +1,21 @@
+# Ignore compiled bytecode and build output
+/target/
+out/
+bin/
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore IntelliJ IDEA files
+.idea/
+
+# Ignore Eclipse files
+.settings/
+.classpath
+.project
+
+# Ignore Maven project files
+*.iml
+*.iws
+*.ipr
