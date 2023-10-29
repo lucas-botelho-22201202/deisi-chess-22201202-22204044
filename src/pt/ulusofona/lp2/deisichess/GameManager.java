@@ -1,24 +1,50 @@
 package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 
 public class GameManager {
+
+    static final int numOfPieceParametersFromFile = 4;
+    Board board;
+
     public GameManager() {
+        this.board = new Board();
     }
 
     public boolean loadGame(File file) {
-        // Implemente o código para carregar o jogo a partir do arquivo 'file'.
-        // Se o carregamento for bem-sucedido, retorne true, caso contrário, retorne false.
-        // Exemplo:
-        return false; // Substitua false pelo resultado apropriado.
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            int countLine = 0;
+
+
+            while ((line = reader.readLine()) != null) {
+                countLine++;
+                if (countLine == 1 && line.length() == 1 && Character.isDigit(line.charAt(0))) {
+                    board.setBoardSize(Integer.parseInt(line));
+                }
+
+                if (countLine == 2 && line.length() == 1 && Character.isDigit(line.charAt(0))) {
+                    board.setAmountOfPieces(Integer.parseInt(line));
+                }
+
+                if (countLine > 2){
+                    reader = board.buildPiecesFromFile(reader);
+                    reader = board.buildBoardFromFile(reader);
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        return false;
     }
 
     public int getBoardSize() {
-        // Implemente o código para obter o tamanho do tabuleiro e retorne-o como um número inteiro.
-        // Exemplo:
-        return 0; // Substitua 0 pelo tamanho real do tabuleiro.
+        return board.getBoardSize();
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
@@ -35,20 +61,16 @@ public class GameManager {
     }
 
     public String[] getPieceInfo(int ID) {
-        // Implemente o código para obter informações sobre a peça com o ID especificado e retorne-as como uma String[].
-        // Exemplo:
-        return new String[0]; // Substitua new String[0] pelas informações reais.
+        var piece = board.getPiecesById(ID);
+        return piece == null ? new String[0] : piece.infoToArray();
     }
 
     public String getPieceInfoAsString(int ID) {
-        // Implemente o código para obter informações sobre a peça com o ID especificado e retorne-as como uma única String.
-        // Exemplo:
-        return ""; // Substitua a string vazia pelo valor real.
+        var piece = board.getPiecesById(ID);
+        return piece == null ? "" : piece.toString();
     }
 
     public int getCurrentTeamID() {
-        // Implemente o código para obter o ID da equipe atual e retorne-o como um número inteiro.
-        // Exemplo:
         return 0; // Substitua 0 pelo ID da equipe atual.
     }
 
@@ -69,6 +91,8 @@ public class GameManager {
         // Exemplo:
         return null; // Substitua null pelo painel real dos autores.
     }
+
+
 
 
 }
