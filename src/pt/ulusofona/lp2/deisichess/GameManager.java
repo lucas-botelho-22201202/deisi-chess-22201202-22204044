@@ -2,13 +2,12 @@ package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
 import java.io.*;
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class GameManager {
 
-    static final int numOfPieceParametersFromFile = 4;
-    static final int maxMovs = 10;
+    static final int NUM_OF_PIECE_PARAMETERS_FROM_FILE = 4;
+    static final int MAX_MOVS = 10;
     public static int numMoves = 0;
     Board board;
     private int currentTeamId = 0;
@@ -98,7 +97,7 @@ public class GameManager {
         var whiteTeamPiecesCount = 0;
 
         for (Piece piece : board.getPieces()) {
-            if (piece.getTeam() == Piece.blackTeam) {
+            if (piece.getTeam() == Piece.BLACK_TEAM) {
                 blackTeamPiecesCount++;
             } else {
                 whiteTeamPiecesCount++;
@@ -108,7 +107,7 @@ public class GameManager {
         var blackTeamLost = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
         var whiteTeamLost = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
         var isDraw = blackTeamPiecesCount == whiteTeamPiecesCount;
-        var maxMovesReached = GameManager.numMoves == GameManager.maxMovs;
+        var maxMovesReached = GameManager.numMoves == GameManager.MAX_MOVS;
 
         return blackTeamLost || whiteTeamLost || isDraw || maxMovesReached;
     }

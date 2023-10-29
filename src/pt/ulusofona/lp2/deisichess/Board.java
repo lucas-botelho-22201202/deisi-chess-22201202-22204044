@@ -67,7 +67,7 @@ public class Board {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
                 var lineElements = line.split(":");
-                var isPieceFileLine = lineElements.length == GameManager.numOfPieceParametersFromFile;
+                var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_FROM_FILE;
 
                 if (!isPieceFileLine) {
                     return false;
@@ -108,8 +108,8 @@ public class Board {
                         var piece = this.getPiecesById(Integer.parseInt(lineElement));
 
                         if (piece != null) {
-                            piece.setY(col);
-                            piece.setX(row);
+                            piece.setX(col);
+                            piece.setY(row);
                         }
                     }
                     col++;

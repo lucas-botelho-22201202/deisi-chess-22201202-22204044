@@ -2,8 +2,8 @@ package pt.ulusofona.lp2.deisichess;
 
 public class Piece {
 
-    static final int blackTeam = 0;
-    static final int whiteTeam = 1;
+    static final int BLACK_TEAM = 0;
+    static final int WHITE_TEAM = 1;
 
     private int uniqueId;
     private int type;
