@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class GameManager {
 
     static final int numOfPieceParametersFromFile = 4;
+    static final int maxMovs = 10;
+    public static int numMoves = 0;
     Board board;
-
     private int currentTeamId = 0;
+
 
     public GameManager() {
         this.board = new Board();
@@ -91,9 +93,24 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        // Implemente o código para verificar se o jogo acabou e retorne true se o jogo terminou, caso contrário, retorne false.
-        // Exemplo:
-        return false; // Substitua false pelo resultado apropriado.
+
+        var blackTeamPiecesCount = 0;
+        var whiteTeamPiecesCount = 0;
+
+        for (Piece piece : board.getPieces()) {
+            if (piece.getTeam() == Piece.blackTeam) {
+                blackTeamPiecesCount++;
+            } else {
+                whiteTeamPiecesCount++;
+            }
+        }
+
+        var blackTeamLost = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
+        var whiteTeamLost = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
+        var isDraw = blackTeamPiecesCount == whiteTeamPiecesCount;
+        var maxMovesReached = GameManager.numMoves == GameManager.maxMovs;
+
+        return blackTeamLost || whiteTeamLost || isDraw || maxMovesReached;
     }
 
     public ArrayList<String> getGameResults() {
