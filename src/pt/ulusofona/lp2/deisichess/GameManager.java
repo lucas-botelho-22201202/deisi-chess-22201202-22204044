@@ -9,6 +9,8 @@ public class GameManager {
     static final int numOfPieceParametersFromFile = 4;
     Board board;
 
+    private int currentTeamId = 0;
+
     public GameManager() {
         this.board = new Board();
     }
@@ -17,30 +19,24 @@ public class GameManager {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            int countLine = 0;
 
-
-            while ((line = reader.readLine()) != null) {
-                countLine++;
-                if (countLine == 1 && line.length() == 1 && Character.isDigit(line.charAt(0))) {
-                    board.setBoardSize(Integer.parseInt(line));
-                }
-
-                if (countLine == 2 && line.length() == 1 && Character.isDigit(line.charAt(0))) {
-                    board.setAmountOfPieces(Integer.parseInt(line));
-                }
-
-                if (countLine > 2){
-                    reader = board.buildPiecesFromFile(reader);
-                    reader = board.buildBoardFromFile(reader);
-                }
+            if (!board.setBoardSizeFromString(reader.readLine())) {
+                return false;
             }
+
+            if (!board.setAmountOfPiecesFromString(reader.readLine())) {
+                return false;
+            }
+
+            if (!board.buildPiecesFromFile(reader, board.getAmountOfPieces())) {
+                return false;
+            }
+
+            return board.buildBoardFromFile(reader);
+
         } catch (Exception e) {
             return false;
         }
-
-        return false;
     }
 
     public int getBoardSize() {
@@ -71,7 +67,7 @@ public class GameManager {
     }
 
     public int getCurrentTeamID() {
-        return 0; // Substitua 0 pelo ID da equipe atual.
+        return this.currentTeamId;
     }
 
     public boolean gameOver() {
@@ -91,8 +87,5 @@ public class GameManager {
         // Exemplo:
         return null; // Substitua null pelo painel real dos autores.
     }
-
-
-
 
 }
