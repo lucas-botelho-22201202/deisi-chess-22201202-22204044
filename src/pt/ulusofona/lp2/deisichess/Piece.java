@@ -9,8 +9,10 @@ public class Piece {
     private int type;
     private int team;
     private String nickName;
+    private String status; // em jogo ou capturado
     private int x;
     private int y;
+
 
     public Piece(int uniqueId, int type, int team, String nickName) {
         this.uniqueId = uniqueId;
@@ -51,12 +53,17 @@ public class Piece {
         this.y = y;
     }
 
+    public String getStatus(){return status;}
+
     public String[] infoToArray() {
         String[] properties = new String[5];
         properties[0] = String.valueOf(uniqueId);
         properties[1] = String.valueOf(type);
         properties[2] = String.valueOf(team);
         properties[3] = getNickName();
+        properties[4] = getStatus(); // GN
+        properties[5] = String.valueOf(getX()); //GN
+        properties[6] = String.valueOf(getY()); //GN
         // properties[4] = png;
 
         return properties;
