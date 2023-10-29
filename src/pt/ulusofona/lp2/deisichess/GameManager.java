@@ -10,8 +10,6 @@ public class GameManager {
     static final int MAX_MOVS = 10;
     public static int numMoves = 0;
     Board board;
-    private int currentTeamId = 0;
-
 
     public GameManager() {
         this.board = new Board();
@@ -55,6 +53,10 @@ public class GameManager {
             return false;
         }
 
+        if (sourcePiece.getTeam() != getCurrentTeamID()){
+            return false;
+        }
+
         var destinationPiece = board.getPieceAt(x1, y1);
         if (destinationPiece != null) {
 
@@ -67,7 +69,7 @@ public class GameManager {
         }
 
         board.placePieceAt(sourcePiece, x1, y1);
-
+        board.switchPlayingTeam();
         return true;
     }
 
@@ -92,7 +94,7 @@ public class GameManager {
     }
 
     public int getCurrentTeamID() {
-        return this.currentTeamId;
+        return board.getCurrentTeamId();
     }
 
     public boolean gameOver() {
@@ -117,9 +119,7 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        // Implemente o código para obter os resultados do jogo e retorne-os como uma ArrayList de Strings.
-        // Exemplo:
-        return new ArrayList<>(); // Substitua new ArrayList<>() pelos resultados reais.
+        return new ArrayList<>();
     }
 
     public JPanel getAuthorsPanel() {

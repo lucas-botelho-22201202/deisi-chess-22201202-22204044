@@ -8,6 +8,15 @@ public class Board {
     private int amountOfPieces;
     private ArrayList<Piece> boardPieces = new ArrayList<>();
 
+    private int currentTeamId = 0;
+
+    public void setCurrentTeamId(int currentTeamId) {
+        this.currentTeamId = currentTeamId;
+    }
+
+    public int getCurrentTeamId() {
+        return currentTeamId;
+    }
 
     public int getBoardSize() {
         return boardSize;
@@ -171,6 +180,14 @@ public class Board {
     public void placePieceAt(Piece piece, int x, int y) {
         piece.setX(x);
         piece.setY(y);
+    }
+
+    public void switchPlayingTeam(){
+        if (this.getCurrentTeamId() == Piece.BLACK_TEAM){
+            this.setCurrentTeamId(Piece.WHITE_TEAM);
+        }else {
+            this.setCurrentTeamId(Piece.BLACK_TEAM);
+        }
     }
 
 
