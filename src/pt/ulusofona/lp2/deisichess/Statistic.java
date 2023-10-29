@@ -75,7 +75,7 @@ public class Statistic {
         statisticBuilder.append("Equipa das bracas\n")
                 .append(countCaptureWhite).append("\n")
                 .append(countValidMovesWhite).append("\n")
-                .append(countInvalidMovesWhite).append("\n");
+                .append(countInvalidMovesWhite);
 
         return statisticBuilder.toString();
     }
