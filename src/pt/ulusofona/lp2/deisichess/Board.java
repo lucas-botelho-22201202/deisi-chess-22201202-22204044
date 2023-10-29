@@ -106,4 +106,60 @@ public class Board {
 
         return reader;
     }
+
+    public boolean squareHasPiece(int x, int y){
+        for(int i = 0; i < getPieces().size(); i++){
+            Piece piece = getPiecesById(i);
+            if(piece.getX() == x && piece.getY() == y){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Piece getPieceInSquare(int x, int y){
+
+        for(int i = 1; i <= getPieces().size(); i++){
+            Piece piece = getPiecesById(i);
+            if(piece.getX() == x && piece.getY() == y){
+                return piece;
+            }
+        }
+
+        return null;
+    }
+
+    public String[] squareInfoToArray(Piece piece) {
+        String[] properties = new String[5];
+        properties[0] = String.valueOf(piece.getUniqueId());
+        properties[1] = String.valueOf(piece.getType());
+        properties[2] = String.valueOf(piece.getTeam());
+        properties[3] = piece.getNickName();
+        properties[4] = null;
+
+        return properties;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

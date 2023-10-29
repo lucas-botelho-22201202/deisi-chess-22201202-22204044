@@ -59,7 +59,7 @@ public class GameManager {
             int pieceTeam = board.getPiecesById(i).getTeam();
 
             if(pieceX == x0 && pieceY == y0){ //check if piece coordinates match the given coordinates
-                if(pieceTeam == getCurrentTeamID()){ // Check if you belong to the playing team
+                if(pieceTeam == getCurrentTeamID()){ // Check if belongs to the playing team
                     if(((x0 - x1) == 1 || (x0 - x1) == -1) && ((y0 - y1) == 1 || (y0 - y1) == -1)){ // check if it's moving only one square
 
                     }
@@ -71,12 +71,12 @@ public class GameManager {
     }
 
     public String[] getSquareInfo(int x, int y) {
-        // Implemente o código para obter informações sobre o quadrado na posição (x, y) e retorne-as como uma String[].
-        // Exemplo:
+        var piece = board.getPieceInSquare(x, y);
+        if(piece != null){
+            return board.squareInfoToArray(piece);
+        }
 
-
-
-        return new String[0]; // Substitua new String[0] pelas informações reais.
+        return new String[0];
     }
 
     public String[] getPieceInfo(int ID) {
