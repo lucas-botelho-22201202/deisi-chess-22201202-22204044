@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameManager {
 
@@ -10,6 +11,7 @@ public class GameManager {
     static final int MAX_MOVS = 10;
     public static int numMoves = 0;
     Board board;
+    Statistic statistic;
 
     public GameManager() {
         this.board = new Board();
@@ -45,15 +47,18 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
         if (!board.isValidCoordinate(x0, y0) || !board.isValidCoordinate(x1, y1)) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         var sourcePiece = board.getPieceAt(x0, y0);
         if (sourcePiece == null) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         if (sourcePiece.getTeam() != getCurrentTeamID()){
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
@@ -62,13 +67,16 @@ public class GameManager {
 
             var isSameTeam = sourcePiece.getTeam() == destinationPiece.getTeam();
             if (isSameTeam) {
+                statistic.increaseCountInvalidMoves(getCurrentTeamID());
                 return false;
             }
 
             board.eatPiece(destinationPiece);
+            statistic.increaseCountCapture(getCurrentTeamID());
         }
 
         board.placePieceAt(sourcePiece, x1, y1);
+        statistic.increaseCountValidMoves(getCurrentTeamID());
         board.switchPlayingTeam();
         return true;
     }
@@ -98,7 +106,6 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-
         var blackTeamPiecesCount = 0;
         var whiteTeamPiecesCount = 0;
 
@@ -119,7 +126,9 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        return new ArrayList<>();
+        var statsLines = statistic.toString().split("\n");
+
+        return new ArrayList<>(Arrays.asList(statsLines));
     }
 
     public JPanel getAuthorsPanel() {

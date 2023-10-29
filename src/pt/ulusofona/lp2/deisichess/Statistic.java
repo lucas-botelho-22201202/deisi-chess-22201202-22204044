@@ -10,28 +10,37 @@ public class Statistic {
 
     private int winningTeam;
 
-    public void setCountCaptureBlack(int countCaptureBlack) {
-        this.countCaptureBlack = countCaptureBlack;
+    public void increaseCountCapture(int teamId) {
+        switch (teamId) {
+            case Piece.BLACK_TEAM -> {
+                countCaptureBlack++;
+            }
+            case Piece.WHITE_TEAM -> {
+                countCaptureWhite++;
+            }
+        }
     }
 
-    public void increaseCountValidMovesBlack(int countValidMovesBlack) {
-        this.countValidMovesBlack = countValidMovesBlack;
+    public void increaseCountValidMoves(int teamId) {
+        switch (teamId) {
+            case Piece.BLACK_TEAM -> {
+                countValidMovesBlack++;
+            }
+            case Piece.WHITE_TEAM -> {
+                countValidMovesWhite++;
+            }
+        }
     }
 
-    public void increaseCountInvalidMovesBlack(int countInvalidMovesBlack) {
-        this.countInvalidMovesBlack = countInvalidMovesBlack;
-    }
-
-    public void increaseCountCaptureWhite(int countCaptureWhite) {
-        this.countCaptureWhite = countCaptureWhite;
-    }
-
-    public void increaseCountValidMovesWhite(int countValidMovesWhite) {
-        this.countValidMovesWhite = countValidMovesWhite;
-    }
-
-    public void increaseCountInvalidMovesWhite(int countInvalidMovesWhite) {
-        this.countInvalidMovesWhite = countInvalidMovesWhite;
+    public void increaseCountInvalidMoves(int teamId) {
+        switch (teamId) {
+            case Piece.BLACK_TEAM -> {
+                countInvalidMovesBlack++;
+            }
+            case Piece.WHITE_TEAM -> {
+                countInvalidMovesWhite++;
+            }
+        }
     }
 
     @Override
