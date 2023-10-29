@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Board {
     private int boardSize;
     private int amountOfPieces;
-    private ArrayList<Piece> pieces = new ArrayList<>();
+    private ArrayList<Piece> boardPieces = new ArrayList<>();
 
 
     public int getBoardSize() {
@@ -26,15 +26,15 @@ public class Board {
     }
 
     public void addPiece(Piece piece) {
-        pieces.add(piece);
+        boardPieces.add(piece);
     }
 
-    public ArrayList<Piece> getPieces() {
-        return pieces;
+    public ArrayList<Piece> getBoardPieces() {
+        return boardPieces;
     }
 
     public Piece getPiecesById(int Id) {
-        for (Piece piece : this.getPieces()) {
+        for (Piece piece : this.getBoardPieces()) {
             if (piece.getUniqueId() == Id) {
                 return piece;
             }
@@ -125,7 +125,7 @@ public class Board {
     }
 
     public boolean squareHasPiece(int x, int y){
-        for(int i = 0; i < getPieces().size(); i++){
+        for(int i = 0; i < getBoardPieces().size(); i++){
             Piece piece = getPiecesById(i);
             if(piece.getX() == x && piece.getY() == y){
                 return true;
@@ -135,11 +135,10 @@ public class Board {
         return false;
     }
 
-    public Piece getPieceInSquare(int x, int y){
+    public Piece getPieceAt(int x, int y){
 
-        for(int i = 1; i <= getPieces().size(); i++){
-            Piece piece = getPiecesById(i);
-            if(piece.getX() == x && piece.getY() == y){
+        for (Piece piece : boardPieces) {
+            if (piece.getX() == x && piece.getY() == y){
                 return piece;
             }
         }
@@ -159,24 +158,20 @@ public class Board {
     }
 
 
+    public boolean isValidCoordinate(int x, int y) {
+        var isValidX = x >= 0 && x < this.getBoardSize();
+        var isValidY = y >= 0 && y < this.getBoardSize();
+        return isValidX && isValidY;
+    }
 
+    public void eatPiece(Piece piece) {
+        boardPieces.remove(piece);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void placePieceAt(Piece piece, int x, int y) {
+        piece.setX(x);
+        piece.setY(y);
+    }
 
 
 }

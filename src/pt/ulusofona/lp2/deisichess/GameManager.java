@@ -46,29 +46,33 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-        // Implemente o código para mover uma peça do ponto (x0, y0) para o ponto (x1, y1).
-        // Se a movimentação for bem-sucedida, retorne true; caso contrário, retorne false.
-        // Exemplo:
-
-        for(int i = 0; i<board.getPieces().size(); i++){ // iterates all the pieces on the board
-            int pieceX = board.getPieces().get(i).getX();
-            int pieceY = board.getPieces().get(i).getY();
-            int pieceTeam = board.getPiecesById(i).getTeam();
-
-            if(pieceX == x0 && pieceY == y0){ //check if piece coordinates match the given coordinates
-                if(pieceTeam == getCurrentTeamID()){ // Check if belongs to the playing team
-                    if(((x0 - x1) == 1 || (x0 - x1) == -1) && ((y0 - y1) == 1 || (y0 - y1) == -1)){ // check if it's moving only one square
-
-                    }
-                }
-            }
+        if (!board.isValidCoordinate(x0, y0) || !board.isValidCoordinate(x1, y1)) {
+            return false;
         }
 
-        return false; // Substitua false pelo resultado apropriado.
+        var sourcePiece = board.getPieceAt(x0, y0);
+        if (sourcePiece == null) {
+            return false;
+        }
+
+        var destinationPiece = board.getPieceAt(x1, y1);
+        if (destinationPiece != null) {
+
+            var isSameTeam = sourcePiece.getTeam() == destinationPiece.getTeam();
+            if (isSameTeam) {
+                return false;
+            }
+
+            board.eatPiece(destinationPiece);
+        }
+
+        board.placePieceAt(sourcePiece, x1, y1);
+
+        return true;
     }
 
     public String[] getSquareInfo(int x, int y) {
-        var piece = board.getPieceInSquare(x, y);
+        var piece = board.getPieceAt(x, y);
         if(piece != null){
             return board.squareInfoToArray(piece);
         }
@@ -96,7 +100,7 @@ public class GameManager {
         var blackTeamPiecesCount = 0;
         var whiteTeamPiecesCount = 0;
 
-        for (Piece piece : board.getPieces()) {
+        for (Piece piece : board.getBoardPieces()) {
             if (piece.getTeam() == Piece.BLACK_TEAM) {
                 blackTeamPiecesCount++;
             } else {
@@ -106,7 +110,7 @@ public class GameManager {
 
         var blackTeamLost = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
         var whiteTeamLost = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
-        var isDraw = blackTeamPiecesCount == whiteTeamPiecesCount;
+        var isDraw = blackTeamPiecesCount == 1 && whiteTeamPiecesCount == 1;
         var maxMovesReached = GameManager.numMoves == GameManager.MAX_MOVS;
 
         return blackTeamLost || whiteTeamLost || isDraw || maxMovesReached;
@@ -123,5 +127,6 @@ public class GameManager {
         // Exemplo:
         return null; // Substitua null pelo painel real dos autores.
     }
+
 
 }
