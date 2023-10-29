@@ -7,8 +7,11 @@ public class Statistic {
     private int countCaptureWhite;
     private int countValidMovesWhite;
     private int countInvalidMovesWhite;
-
     private int winningTeam;
+
+    public void setWinningTeam(int winningTeam) {
+        this.winningTeam = winningTeam;
+    }
 
     public void increaseCountCapture(int teamId) {
         switch (teamId) {

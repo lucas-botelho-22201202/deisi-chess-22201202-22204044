@@ -10,11 +10,10 @@ public class GameManager {
     static final int NUM_OF_PIECE_PARAMETERS_FROM_FILE = 4;
     static final int MAX_MOVS = 10;
     public static int numMoves = 0;
-    Board board;
-    Statistic statistic;
+    Board board = new Board();
+    Statistic statistic = new Statistic();
 
     public GameManager() {
-        this.board = new Board();
     }
 
     public boolean loadGame(File file) {
@@ -117,12 +116,26 @@ public class GameManager {
             }
         }
 
-        var blackTeamLost = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
-        var whiteTeamLost = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
         var isDraw = blackTeamPiecesCount == 1 && whiteTeamPiecesCount == 1;
-        var maxMovesReached = GameManager.numMoves == GameManager.MAX_MOVS;
+        if (isDraw){
+            statistic.setWinningTeam(-1);
+            return true;
+        }
 
-        return blackTeamLost || whiteTeamLost || isDraw || maxMovesReached;
+        var blackTeamWon = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
+        if (blackTeamWon){
+            statistic.setWinningTeam(Piece.BLACK_TEAM);
+            return true;
+        }
+
+        var whiteTeamWon = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
+        if (whiteTeamWon){
+            statistic.setWinningTeam(Piece.WHITE_TEAM);
+            return true;
+        }
+
+        var maxMovesReached = GameManager.numMoves == GameManager.MAX_MOVS;
+        return maxMovesReached;
     }
 
     public ArrayList<String> getGameResults() {
