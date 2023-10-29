@@ -56,14 +56,14 @@ public class Piece {
     public String getStatus(){return status;}
 
     public String[] infoToArray() {
-        String[] properties = new String[5];
+        String[] properties = new String[7];
         properties[0] = String.valueOf(uniqueId);
         properties[1] = String.valueOf(type);
         properties[2] = String.valueOf(team);
         properties[3] = getNickName();
-        properties[4] = getStatus(); // GN
-        properties[5] = String.valueOf(getX()); //GN
-        properties[6] = String.valueOf(getY()); //GN
+        properties[4] = getStatus();
+        properties[5] = String.valueOf(getX());
+        properties[6] = String.valueOf(getY());
         // properties[4] = png;
 
         return properties;
