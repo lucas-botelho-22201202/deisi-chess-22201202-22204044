@@ -1,6 +1,15 @@
 package pt.ulusofona.lp2.deisichess;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -47,22 +56,7 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
         // Implemente o código para mover uma peça do ponto (x0, y0) para o ponto (x1, y1).
-        // Se a movimentação for bem-sucedida, retorne true; caso contrário, retorne false.
-        // Exemplo:
-
-        for(int i = 0; i<board.getPieces().size(); i++){ // iterates all the pieces on the board
-            int pieceX = board.getPieces().get(i).getX();
-            int pieceY = board.getPieces().get(i).getY();
-            int pieceTeam = board.getPiecesById(i).getTeam();
-
-            if(pieceX == x0 && pieceY == y0){ //check if piece coordinates match the given coordinates
-                if(pieceTeam == getCurrentTeamID()){ // Check if belongs to the playing team
-                    if(((x0 - x1) == 1 || (x0 - x1) == -1) && ((y0 - y1) == 1 || (y0 - y1) == -1)){ // check if it's moving only one square
-
-                    }
                 }
-            }
-        }
 
         return false; // Substitua false pelo resultado apropriado.
     }
@@ -119,9 +113,135 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel() {
-        // Implemente o código para obter o painel dos autores do jogo e retorne-o como um objeto JPanel.
-        // Exemplo:
-        return null; // Substitua null pelo painel real dos autores.
-    }
 
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        JLabel lblTitle = new JLabel("Autores do projeto:");
+        lblTitle.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 36));
+        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblTitle, BorderLayout.NORTH);
+
+        //JLabel Author 1
+        JLabel lblAuthor1 = new JLabel("Gonçalo Neves nº 22204044          ", SwingConstants.RIGHT);
+        lblAuthor1.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
+
+        //JButton Author 1
+        JButton btnAuthor1 = new JButton("Chumbar aluno!");
+        btnAuthor1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        btnAuthor1.setBackground(Color.WHITE);
+        btnAuthor1.setFocusPainted(false);
+
+        //JPanel Author 1
+        JPanel pnlAuthor1 = new JPanel();
+        pnlAuthor1.setLayout(new BorderLayout());
+        pnlAuthor1.add(lblAuthor1, BorderLayout.WEST);
+        pnlAuthor1.add(btnAuthor1, BorderLayout.CENTER);
+
+        //add Mouse Listener to Button 1
+        btnAuthor1.addMouseListener(new MouseListener(){
+            int entrou = 0;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(entrou == 0){
+                    pnlAuthor1.add(lblAuthor1, BorderLayout.CENTER);
+                    pnlAuthor1.add(btnAuthor1, BorderLayout.WEST);
+                    pnlAuthor1.repaint();
+                    pnlAuthor1.revalidate();
+                    entrou = 1;
+                }else{
+                    pnlAuthor1.add(lblAuthor1, BorderLayout.WEST);
+                    pnlAuthor1.add(btnAuthor1, BorderLayout.CENTER);
+                    pnlAuthor1.repaint();
+                    pnlAuthor1.revalidate();
+                    entrou = 0;
+                }
+
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        panel.add(pnlAuthor1, BorderLayout.CENTER);
+
+        //JLabel Author 2
+        JLabel lblAuthor2 = new JLabel("Lucas Botelho nº 22201202           ", SwingConstants.RIGHT);
+        lblAuthor2.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
+
+        //JButton Author 2
+        JButton btnAuthor2 = new JButton("Chumbar aluno!");
+        btnAuthor2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        btnAuthor2.setBackground(Color.WHITE);
+        btnAuthor2.setFocusPainted(false);
+
+        //JPanel Author 2
+        JPanel pnlAuthor2 = new JPanel();
+        pnlAuthor2.setLayout(new BorderLayout());
+        pnlAuthor2.add(lblAuthor2, BorderLayout.WEST);
+        pnlAuthor2.add(btnAuthor2, BorderLayout.CENTER);
+
+        //add Mouse Listener to Button 2
+        btnAuthor2.addMouseListener(new MouseListener(){
+            int entrou = 0;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(entrou == 0){
+                    pnlAuthor2.add(lblAuthor2, BorderLayout.CENTER);
+                    pnlAuthor2.add(btnAuthor2, BorderLayout.WEST);
+                    pnlAuthor2.repaint();
+                    pnlAuthor2.revalidate();
+                    entrou = 1;
+                }else{
+                    pnlAuthor2.add(lblAuthor2, BorderLayout.WEST);
+                    pnlAuthor2.add(btnAuthor2, BorderLayout.CENTER);
+                    pnlAuthor2.repaint();
+                    pnlAuthor2.revalidate();
+                    entrou = 0;
+                }
+
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        panel.add(pnlAuthor2, BorderLayout.SOUTH);
+
+        return panel;
+    }
 }
