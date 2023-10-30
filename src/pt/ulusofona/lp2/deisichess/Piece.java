@@ -4,14 +4,16 @@ public class Piece {
 
     static final int BLACK_TEAM = 0;
     static final int WHITE_TEAM = 1;
-
+    static final String BLACK_PIECE_NAME = "Grey_Pawn.png";
+    static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
     private int uniqueId;
     private int type;
     private int team;
     private String nickName;
-    private String status; // em jogo ou capturado
+    private String status = "em jogo"; // em jogo ou capturado
     private int x;
     private int y;
+    private String png;
 
 
     public Piece(int uniqueId, int type, int team, String nickName) {
@@ -19,6 +21,15 @@ public class Piece {
         this.type = type;
         this.team = team;
         this.nickName = nickName;
+
+        switch (team){
+            case Piece.BLACK_TEAM -> {
+                this.png = Piece.BLACK_PIECE_NAME;
+            }
+            case Piece.WHITE_TEAM -> {
+                this.png = Piece.WHITE_PIECE_PNG;
+            }
+        }
     }
 
     public int getUniqueId() {
@@ -53,7 +64,15 @@ public class Piece {
         this.y = y;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getStatus(){return status;}
+
+    public String getPng() {
+        return png;
+    }
 
     public String[] infoToArray() {
         String[] properties = new String[7];
@@ -68,6 +87,7 @@ public class Piece {
 
         return properties;
     }
+
 
     @Override
     public String toString() {

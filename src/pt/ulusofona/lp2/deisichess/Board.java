@@ -161,7 +161,7 @@ public class Board {
         properties[1] = String.valueOf(piece.getType());
         properties[2] = String.valueOf(piece.getTeam());
         properties[3] = piece.getNickName();
-        properties[4] = null;
+        properties[4] = piece.getPng();
 
         return properties;
     }
@@ -175,6 +175,7 @@ public class Board {
 
     public void eatPiece(Piece piece) {
         boardPieces.remove(piece);
+        piece.setStatus("capturado");
     }
 
     public void placePieceAt(Piece piece, int x, int y) {
