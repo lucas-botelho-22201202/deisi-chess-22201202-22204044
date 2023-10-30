@@ -7,7 +7,7 @@ public class Statistic {
     private int countCaptureWhite;
     private int countValidMovesWhite;
     private int countInvalidMovesWhite;
-    private int winningTeam;
+    private int winningTeam = -1;
 
     public void setWinningTeam(int winningTeam) {
         this.winningTeam = winningTeam;
@@ -58,7 +58,7 @@ public class Statistic {
                 statisticBuilder.append("VENCERAM AS PRETAS");
             }
             case Piece.WHITE_TEAM -> {
-                statisticBuilder.append("VENCERAM AS PRETAS");
+                statisticBuilder.append("VENCERAM AS BRANCAS");
             }
             default -> {
                 statisticBuilder.append("EMPATE");

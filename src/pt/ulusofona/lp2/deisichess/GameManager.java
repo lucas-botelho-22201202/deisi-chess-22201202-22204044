@@ -9,7 +9,7 @@ public class GameManager {
 
     static final int NUM_OF_PIECE_PARAMETERS_FROM_FILE = 4;
     static final int MAX_MOVS = 10;
-    public static int numMoves = 0;
+    private int numMoves = 0;
     Board board = new Board();
     Statistic statistic = new Statistic();
 
@@ -80,6 +80,7 @@ public class GameManager {
         board.placePieceAt(sourcePiece, x1, y1);
         statistic.increaseCountValidMoves(getCurrentTeamID());
         board.switchPlayingTeam();
+        this.increaseNumMoves();
         return true;
     }
 
@@ -128,7 +129,7 @@ public class GameManager {
             return true;
         }
 
-        var maxMovesReached = GameManager.numMoves == GameManager.MAX_MOVS;
+        var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
         return maxMovesReached;
     }
 
@@ -145,4 +146,11 @@ public class GameManager {
     }
 
 
+    public void increaseNumMoves() {
+        this.numMoves++;
+    }
+
+    public int getNumMoves() {
+        return this.numMoves;
+    }
 }
