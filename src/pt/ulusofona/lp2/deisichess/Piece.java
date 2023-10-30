@@ -85,8 +85,8 @@ public class Piece {
         properties[2] = String.valueOf(team);
         properties[3] = getNickName();
         properties[4] = getStatus();
-        properties[5] = getX() == -1 ? "" : String.valueOf(getX());
-        properties[6] = getY() == -1 ? "" : String.valueOf(getY());
+        properties[5] = status.equals(Piece.PIECE_IS_CAPTURED) ? "" : String.valueOf(getX());
+        properties[6] = status.equals(Piece.PIECE_IS_CAPTURED) ? "" : String.valueOf(getY());
 
         return properties;
     }
