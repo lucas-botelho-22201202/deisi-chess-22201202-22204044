@@ -67,12 +67,12 @@ public class Statistic {
 
         statisticBuilder.append("\n---\n");
 
-        statisticBuilder.append("Equipa das pretas\n")
+        statisticBuilder.append("Equipa das Pretas\n")
                 .append(countCaptureBlack).append("\n")
                 .append(countValidMovesBlack).append("\n")
                 .append(countInvalidMovesBlack).append("\n");
 
-        statisticBuilder.append("Equipa das bracas\n")
+        statisticBuilder.append("Equipa das Brancas\n")
                 .append(countCaptureWhite).append("\n")
                 .append(countValidMovesWhite).append("\n")
                 .append(countInvalidMovesWhite);

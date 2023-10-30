@@ -85,7 +85,6 @@ public class Piece {
         properties[4] = getStatus();
         properties[5] = String.valueOf(getX());
         properties[6] = String.valueOf(getY());
-        // properties[4] = png;
 
         return properties;
     }

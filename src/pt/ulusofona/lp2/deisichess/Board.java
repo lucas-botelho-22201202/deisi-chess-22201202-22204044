@@ -52,24 +52,6 @@ public class Board {
         return null;
     }
 
-    public boolean setBoardSizeFromString(String line) {
-        if (line.length() == 1 && Character.isDigit(line.charAt(0))) {
-            this.setBoardSize(Integer.parseInt(line));
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean setAmountOfPiecesFromString(String line) {
-        if (line.length() == 1 && Character.isDigit(line.charAt(0))) {
-            this.setAmountOfPieces(Integer.parseInt(line));
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public boolean buildPiecesFromFile(BufferedReader reader, int numPieces) {
         String line;
         try {
