@@ -25,6 +25,10 @@ public class GameManager {
     public GameManager() {
     }
 
+    public void increaseNumMoves() {
+        this.numMoves++;
+    }
+
     public boolean loadGame(File file) {
 
         try {
@@ -175,8 +179,9 @@ public class GameManager {
         pnlAuthor1.add(btnAuthor1, BorderLayout.CENTER);
 
         //add Mouse Listener to Button 1
-        btnAuthor1.addMouseListener(new MouseListener(){
+        btnAuthor1.addMouseListener(new MouseListener() {
             int entrou = 0;
+
             @Override
             public void mouseClicked(MouseEvent e) {
 
@@ -194,13 +199,13 @@ public class GameManager {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                if(entrou == 0){
+                if (entrou == 0) {
                     pnlAuthor1.add(lblAuthor1, BorderLayout.CENTER);
                     pnlAuthor1.add(btnAuthor1, BorderLayout.WEST);
                     pnlAuthor1.repaint();
                     pnlAuthor1.revalidate();
                     entrou = 1;
-                }else{
+                } else {
                     pnlAuthor1.add(lblAuthor1, BorderLayout.WEST);
                     pnlAuthor1.add(btnAuthor1, BorderLayout.CENTER);
                     pnlAuthor1.repaint();
@@ -235,8 +240,9 @@ public class GameManager {
         pnlAuthor2.add(btnAuthor2, BorderLayout.CENTER);
 
         //add Mouse Listener to Button 2
-        btnAuthor2.addMouseListener(new MouseListener(){
+        btnAuthor2.addMouseListener(new MouseListener() {
             int entrou = 0;
+
             @Override
             public void mouseClicked(MouseEvent e) {
 
@@ -254,13 +260,13 @@ public class GameManager {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                if(entrou == 0){
+                if (entrou == 0) {
                     pnlAuthor2.add(lblAuthor2, BorderLayout.CENTER);
                     pnlAuthor2.add(btnAuthor2, BorderLayout.WEST);
                     pnlAuthor2.repaint();
                     pnlAuthor2.revalidate();
                     entrou = 1;
-                }else{
+                } else {
                     pnlAuthor2.add(lblAuthor2, BorderLayout.WEST);
                     pnlAuthor2.add(btnAuthor2, BorderLayout.CENTER);
                     pnlAuthor2.repaint();
@@ -278,4 +284,6 @@ public class GameManager {
         });
         panel.add(pnlAuthor2, BorderLayout.SOUTH);
 
+        return panel;
+    }
 }
