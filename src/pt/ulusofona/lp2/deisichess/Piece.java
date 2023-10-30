@@ -22,7 +22,7 @@ public class Piece {
         this.team = team;
         this.nickName = nickName;
 
-        switch (team){
+        switch (team) {
             case Piece.BLACK_TEAM -> {
                 this.png = Piece.BLACK_PIECE_NAME;
             }
@@ -68,7 +68,9 @@ public class Piece {
         this.status = status;
     }
 
-    public String getStatus(){return status;}
+    public String getStatus() {
+        return status;
+    }
 
     public String getPng() {
         return png;
@@ -86,6 +88,14 @@ public class Piece {
         // properties[4] = png;
 
         return properties;
+    }
+
+    public boolean isInvalidXMove(int x0, int x1) {
+        return x0 - x1 > 1 || x1 - x0 > 1;
+    }
+
+    public boolean isInvalidYMove(int y0, int y1) {
+        return y0 - y1 > 1 || y1 - y0 > 1;
     }
 
 

@@ -56,14 +56,22 @@ public class GameManager {
             return false;
         }
 
-        if (sourcePiece.getTeam() != getCurrentTeamID()){
+        var isInvalidXMove = sourcePiece.isInvalidXMove(x0, x1);
+        var isInvalidYMove = sourcePiece.isInvalidYMove(y0, y1);
+
+        if (isInvalidXMove || isInvalidYMove){
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
+
+        var triedToMoveOtherTeamsPiece = sourcePiece.getTeam() != getCurrentTeamID();
+        if (triedToMoveOtherTeamsPiece){
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         var destinationPiece = board.getPieceAt(x1, y1);
         if (destinationPiece != null) {
-
             var isSameTeam = sourcePiece.getTeam() == destinationPiece.getTeam();
             if (isSameTeam) {
                 statistic.increaseCountInvalidMoves(getCurrentTeamID());
