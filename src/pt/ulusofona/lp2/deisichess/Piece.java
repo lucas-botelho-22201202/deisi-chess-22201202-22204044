@@ -6,6 +6,8 @@ public class Piece {
     static final int WHITE_TEAM = 1;
     static final String BLACK_PIECE_NAME = "Grey_Pawn.png";
     static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
+    static final String PIECE_IS_CAPTURED = "capturado";
+    static final String PIECE_IN_GAME = "em jogo";
     private int uniqueId;
     private int type;
     private int team;
@@ -97,9 +99,28 @@ public class Piece {
         return y0 - y1 > 1 || y1 - y0 > 1;
     }
 
+    public void killPiece() {
+        this.x = -1;
+        this.y = -1;
+        this.setStatus("capturado");
+    }
+
 
     @Override
     public String toString() {
-        return uniqueId + " | " + type + " | " + team + " | " + nickName + " @ (" + x + ", " + y + ")";
+        var sb = new StringBuilder();
+
+        sb.append(uniqueId).append(" | ")
+                .append(type).append(" | ")
+                .append(team).append(" | ")
+                .append(nickName).append(" @ ");
+
+        if (status.equals(Piece.PIECE_IS_CAPTURED)){
+            sb.append("(n/a)");
+        }else{
+            sb.append("(").append(x).append(", ").append(y).append(")");
+        }
+
+        return sb.toString();
     }
 }

@@ -7,8 +7,18 @@ public class Board {
     private int boardSize;
     private int amountOfPieces;
     private ArrayList<Piece> boardPieces = new ArrayList<>();
-
     private int currentTeamId = 0;
+
+    private int blackTeamPiecesCount;
+    private int whiteTeamPiecesCount;
+
+    public int getBlackTeamPiecesCount() {
+        return blackTeamPiecesCount;
+    }
+
+    public int getWhiteTeamPiecesCount() {
+        return whiteTeamPiecesCount;
+    }
 
     public void setCurrentTeamId(int currentTeamId) {
         this.currentTeamId = currentTeamId;
@@ -155,11 +165,6 @@ public class Board {
         return isValidX && isValidY;
     }
 
-    public void eatPiece(Piece piece) {
-        boardPieces.remove(piece);
-        piece.setStatus("capturado");
-    }
-
     public void placePieceAt(Piece piece, int x, int y) {
         piece.setX(x);
         piece.setY(y);
@@ -172,6 +177,23 @@ public class Board {
             this.setCurrentTeamId(Piece.BLACK_TEAM);
         }
     }
+
+    public void countPiecesInGame() {
+        this.blackTeamPiecesCount = 0;
+        this.whiteTeamPiecesCount = 0;
+
+        for (Piece piece : this.getBoardPieces()) {
+            var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
+            if (pieceIsInGame) {
+                if (piece.getTeam() == Piece.BLACK_TEAM) {
+                    blackTeamPiecesCount++;
+                } else {
+                    whiteTeamPiecesCount++;
+                }
+            }
+        }
+    }
+
 
 
 }

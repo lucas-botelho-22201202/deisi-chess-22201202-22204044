@@ -73,7 +73,7 @@ public class GameManager {
                 return false;
             }
 
-            board.eatPiece(destinationPiece);
+            destinationPiece.killPiece();
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
@@ -108,30 +108,21 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        var blackTeamPiecesCount = 0;
-        var whiteTeamPiecesCount = 0;
+        board.countPiecesInGame();
 
-        for (Piece piece : board.getBoardPieces()) {
-            if (piece.getTeam() == Piece.BLACK_TEAM) {
-                blackTeamPiecesCount++;
-            } else {
-                whiteTeamPiecesCount++;
-            }
-        }
-
-        var isDraw = blackTeamPiecesCount == 1 && whiteTeamPiecesCount == 1;
+        var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;
         if (isDraw) {
             statistic.setWinningTeam(-1);
             return true;
         }
 
-        var blackTeamWon = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
+        var blackTeamWon = board.getWhiteTeamPiecesCount() == 0 && board.getBlackTeamPiecesCount() > 0;
         if (blackTeamWon) {
             statistic.setWinningTeam(Piece.BLACK_TEAM);
             return true;
         }
 
-        var whiteTeamWon = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
+        var whiteTeamWon = board.getBlackTeamPiecesCount() == 0 && board.getWhiteTeamPiecesCount() > 0;
         if (whiteTeamWon) {
             statistic.setWinningTeam(Piece.WHITE_TEAM);
             return true;
