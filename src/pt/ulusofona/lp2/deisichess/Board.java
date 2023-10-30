@@ -6,8 +6,27 @@ import java.util.ArrayList;
 public class Board {
     private int boardSize;
     private int amountOfPieces;
-    private ArrayList<Piece> pieces = new ArrayList<>();
+    private ArrayList<Piece> boardPieces = new ArrayList<>();
+    private int currentTeamId = 0;
 
+    private int blackTeamPiecesCount;
+    private int whiteTeamPiecesCount;
+
+    public int getBlackTeamPiecesCount() {
+        return blackTeamPiecesCount;
+    }
+
+    public int getWhiteTeamPiecesCount() {
+        return whiteTeamPiecesCount;
+    }
+
+    public void setCurrentTeamId(int currentTeamId) {
+        this.currentTeamId = currentTeamId;
+    }
+
+    public int getCurrentTeamId() {
+        return currentTeamId;
+    }
 
     public int getBoardSize() {
         return boardSize;
@@ -26,39 +45,21 @@ public class Board {
     }
 
     public void addPiece(Piece piece) {
-        pieces.add(piece);
+        boardPieces.add(piece);
     }
 
-    public ArrayList<Piece> getPieces() {
-        return pieces;
+    public ArrayList<Piece> getBoardPieces() {
+        return boardPieces;
     }
 
     public Piece getPiecesById(int Id) {
-        for (Piece piece : this.getPieces()) {
+        for (Piece piece : this.getBoardPieces()) {
             if (piece.getUniqueId() == Id) {
                 return piece;
             }
         }
 
         return null;
-    }
-
-    public boolean setBoardSizeFromString(String line) {
-        if (line.length() == 1 && Character.isDigit(line.charAt(0))) {
-            this.setBoardSize(Integer.parseInt(line));
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean setAmountOfPiecesFromString(String line) {
-        if (line.length() == 1 && Character.isDigit(line.charAt(0))) {
-            this.setAmountOfPieces(Integer.parseInt(line));
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public boolean buildPiecesFromFile(BufferedReader reader, int numPieces) {
@@ -125,7 +126,7 @@ public class Board {
     }
 
     public boolean squareHasPiece(int x, int y){
-        for(int i = 0; i < getPieces().size(); i++){
+        for(int i = 0; i < getBoardPieces().size(); i++){
             Piece piece = getPiecesById(i);
             if(piece.getX() == x && piece.getY() == y){
                 return true;
@@ -135,11 +136,10 @@ public class Board {
         return false;
     }
 
-    public Piece getPieceInSquare(int x, int y){
+    public Piece getPieceAt(int x, int y){
 
-        for(int i = 1; i <= getPieces().size(); i++){
-            Piece piece = getPiecesById(i);
-            if(piece.getX() == x && piece.getY() == y){
+        for (Piece piece : boardPieces) {
+            if (piece.getX() == x && piece.getY() == y){
                 return piece;
             }
         }
@@ -153,29 +153,46 @@ public class Board {
         properties[1] = String.valueOf(piece.getType());
         properties[2] = String.valueOf(piece.getTeam());
         properties[3] = piece.getNickName();
-        properties[4] = null;
+        properties[4] = piece.getPng();
 
         return properties;
     }
 
 
+    public boolean isValidCoordinate(int x, int y) {
+        var isValidX = x >= 0 && x < this.getBoardSize();
+        var isValidY = y >= 0 && y < this.getBoardSize();
+        return isValidX && isValidY;
+    }
 
+    public void placePieceAt(Piece piece, int x, int y) {
+        piece.setX(x);
+        piece.setY(y);
+    }
 
+    public void switchPlayingTeam(){
+        if (this.getCurrentTeamId() == Piece.BLACK_TEAM){
+            this.setCurrentTeamId(Piece.WHITE_TEAM);
+        }else {
+            this.setCurrentTeamId(Piece.BLACK_TEAM);
+        }
+    }
 
+    public void countPiecesInGame() {
+        this.blackTeamPiecesCount = 0;
+        this.whiteTeamPiecesCount = 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        for (Piece piece : this.getBoardPieces()) {
+            var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
+            if (pieceIsInGame) {
+                if (piece.getTeam() == Piece.BLACK_TEAM) {
+                    blackTeamPiecesCount++;
+                } else {
+                    whiteTeamPiecesCount++;
+                }
+            }
+        }
+    }
 
 
 

@@ -12,18 +12,17 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameManager {
 
     static final int NUM_OF_PIECE_PARAMETERS_FROM_FILE = 4;
     static final int MAX_MOVS = 10;
-    public static int numMoves = 0;
-    Board board;
-    private int currentTeamId = 0;
-
+    private int numMoves = 0;
+    Board board = new Board();
+    Statistic statistic = new Statistic();
 
     public GameManager() {
-        this.board = new Board();
     }
 
     public boolean loadGame(File file) {
@@ -31,13 +30,8 @@ public class GameManager {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
-            if (!board.setBoardSizeFromString(reader.readLine())) {
-                return false;
-            }
-
-            if (!board.setAmountOfPiecesFromString(reader.readLine())) {
-                return false;
-            }
+            board.setBoardSize(Integer.parseInt(reader.readLine()));
+            board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
 
             if (!board.buildPiecesFromFile(reader, board.getAmountOfPieces())) {
                 return false;
@@ -55,15 +49,53 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-        // Implemente o código para mover uma peça do ponto (x0, y0) para o ponto (x1, y1).
-                }
+        if (!board.isValidCoordinate(x0, y0) || !board.isValidCoordinate(x1, y1)) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
 
-        return false; // Substitua false pelo resultado apropriado.
+        var sourcePiece = board.getPieceAt(x0, y0);
+        if (sourcePiece == null) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
+
+        var isInvalidXMove = sourcePiece.isInvalidXMove(x0, x1);
+        var isInvalidYMove = sourcePiece.isInvalidYMove(y0, y1);
+
+        if (isInvalidXMove || isInvalidYMove) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
+
+        var triedToMoveOtherTeamsPiece = sourcePiece.getTeam() != getCurrentTeamID();
+        if (triedToMoveOtherTeamsPiece) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
+
+        var destinationPiece = board.getPieceAt(x1, y1);
+        if (destinationPiece != null) {
+            var isSameTeam = sourcePiece.getTeam() == destinationPiece.getTeam();
+            if (isSameTeam) {
+                statistic.increaseCountInvalidMoves(getCurrentTeamID());
+                return false;
+            }
+
+            destinationPiece.killPiece();
+            statistic.increaseCountCapture(getCurrentTeamID());
+        }
+
+        board.placePieceAt(sourcePiece, x1, y1);
+        statistic.increaseCountValidMoves(getCurrentTeamID());
+        board.switchPlayingTeam();
+        this.increaseNumMoves();
+        return true;
     }
 
     public String[] getSquareInfo(int x, int y) {
-        var piece = board.getPieceInSquare(x, y);
-        if(piece != null){
+        var piece = board.getPieceAt(x, y);
+        if (piece != null) {
             return board.squareInfoToArray(piece);
         }
 
@@ -82,34 +114,38 @@ public class GameManager {
     }
 
     public int getCurrentTeamID() {
-        return this.currentTeamId;
+        return board.getCurrentTeamId();
     }
 
     public boolean gameOver() {
+        board.countPiecesInGame();
 
-        var blackTeamPiecesCount = 0;
-        var whiteTeamPiecesCount = 0;
-
-        for (Piece piece : board.getPieces()) {
-            if (piece.getTeam() == Piece.BLACK_TEAM) {
-                blackTeamPiecesCount++;
-            } else {
-                whiteTeamPiecesCount++;
-            }
+        var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;
+        if (isDraw) {
+            statistic.setWinningTeam(-1);
+            return true;
         }
 
-        var blackTeamLost = blackTeamPiecesCount == 0 && whiteTeamPiecesCount > 0;
-        var whiteTeamLost = whiteTeamPiecesCount == 0 && blackTeamPiecesCount > 0;
-        var isDraw = blackTeamPiecesCount == whiteTeamPiecesCount;
-        var maxMovesReached = GameManager.numMoves == GameManager.MAX_MOVS;
+        var blackTeamWon = board.getWhiteTeamPiecesCount() == 0 && board.getBlackTeamPiecesCount() > 0;
+        if (blackTeamWon) {
+            statistic.setWinningTeam(Piece.BLACK_TEAM);
+            return true;
+        }
 
-        return blackTeamLost || whiteTeamLost || isDraw || maxMovesReached;
+        var whiteTeamWon = board.getBlackTeamPiecesCount() == 0 && board.getWhiteTeamPiecesCount() > 0;
+        if (whiteTeamWon) {
+            statistic.setWinningTeam(Piece.WHITE_TEAM);
+            return true;
+        }
+
+        var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
+        return maxMovesReached;
     }
 
     public ArrayList<String> getGameResults() {
-        // Implemente o código para obter os resultados do jogo e retorne-os como uma ArrayList de Strings.
-        // Exemplo:
-        return new ArrayList<>(); // Substitua new ArrayList<>() pelos resultados reais.
+        var statsLines = statistic.toString().split("\n");
+
+        return new ArrayList<>(Arrays.asList(statsLines));
     }
 
     public JPanel getAuthorsPanel() {
@@ -242,6 +278,4 @@ public class GameManager {
         });
         panel.add(pnlAuthor2, BorderLayout.SOUTH);
 
-        return panel;
-    }
 }
