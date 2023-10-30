@@ -13,8 +13,8 @@ public class Piece {
     private int team;
     private String nickName;
     private String status = "em jogo"; // em jogo ou capturado
-    private int x;
-    private int y;
+    private int x = -1;
+    private int y = -1;
     private String png;
 
 
@@ -122,5 +122,11 @@ public class Piece {
         }
 
         return sb.toString();
+    }
+
+    public void setInitialStatus(){
+        if (this.getX() == -1){
+            this.setStatus(Piece.PIECE_IS_CAPTURED);
+        }
     }
 }

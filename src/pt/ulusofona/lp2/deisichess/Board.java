@@ -62,7 +62,7 @@ public class Board {
         return null;
     }
 
-    public boolean buildPiecesFromFile(BufferedReader reader, int numPieces) {
+    public boolean createPiecesFromFile(BufferedReader reader, int numPieces) {
         String line;
         try {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
@@ -91,7 +91,6 @@ public class Board {
     }
 
     public boolean buildBoardFromFile(BufferedReader reader) {
-
         String line;
         int row = 0;
 
@@ -158,7 +157,6 @@ public class Board {
         return properties;
     }
 
-
     public boolean isValidCoordinate(int x, int y) {
         var isValidX = x >= 0 && x < this.getBoardSize();
         var isValidY = y >= 0 && y < this.getBoardSize();
@@ -193,7 +191,4 @@ public class Board {
             }
         }
     }
-
-
-
 }

@@ -1,15 +1,9 @@
 package pt.ulusofona.lp2.deisichess;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +24,9 @@ public class GameManager {
     }
 
     public boolean loadGame(File file) {
+        if (file == null){
+            return false;
+        }
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -37,11 +34,20 @@ public class GameManager {
             board.setBoardSize(Integer.parseInt(reader.readLine()));
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
 
-            if (!board.buildPiecesFromFile(reader, board.getAmountOfPieces())) {
+            if (!board.createPiecesFromFile(reader, board.getAmountOfPieces())) {
                 return false;
             }
 
-            return board.buildBoardFromFile(reader);
+            var boardWasSuccessfullyCreated = board.buildBoardFromFile(reader);
+            if(boardWasSuccessfullyCreated){
+                for (Piece boardPiece : board.getBoardPieces()) {
+                    boardPiece.setInitialStatus();
+                }
+
+                return true;
+            }
+
+            return false;
 
         } catch (Exception e) {
             return false;
