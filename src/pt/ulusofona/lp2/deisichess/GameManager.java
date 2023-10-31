@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 public class GameManager {
 
-    static final int NUM_OF_PIECE_PARAMETERS_FROM_FILE = 4;
+    static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
     private int numMoves = 0;
-    Board board = new Board();
-    Statistic statistic = new Statistic();
+    private Board board = new Board();
+    private Statistic statistic = new Statistic();
 
     public GameManager() {
     }
@@ -38,16 +38,7 @@ public class GameManager {
                 return false;
             }
 
-            var boardWasSuccessfullyCreated = board.buildBoardFromFile(reader);
-            if(boardWasSuccessfullyCreated){
-                for (Piece boardPiece : board.getBoardPieces()) {
-                    boardPiece.setInitialStatus();
-                }
-
-                return true;
-            }
-
-            return false;
+            return board.buildBoardFromFile(reader);
 
         } catch (Exception e) {
             return false;
@@ -96,7 +87,7 @@ public class GameManager {
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
-        board.placePieceAt(sourcePiece, x1, y1);
+        sourcePiece.moveTo(x1, y1);
         statistic.increaseCountValidMoves(getCurrentTeamID());
         board.switchPlayingTeam();
         this.increaseNumMoves();
@@ -114,7 +105,6 @@ public class GameManager {
 
     public String[] getPieceInfo(int ID) {
         var piece = board.getPiecesById(ID);
-
         return piece == null ? new String[0] : piece.infoToArray();
     }
 
@@ -128,7 +118,7 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        board.countPiecesInGame();
+        board.countHowManyPiecesAreInGameForEachTeam();
 
         var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;
         if (isDraw) {

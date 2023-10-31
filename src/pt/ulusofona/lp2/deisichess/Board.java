@@ -68,7 +68,7 @@ public class Board {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
                 var lineElements = line.split(":");
-                var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_FROM_FILE;
+                var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE;
 
                 if (!isPieceFileLine) {
                     return false;
@@ -92,29 +92,18 @@ public class Board {
 
     public boolean buildBoardFromFile(BufferedReader reader) {
         String line;
-        int row = 0;
+        int y = 0;
 
         try {
             while ((line = reader.readLine()) != null) {
                 var lineElements = line.split(":");
                 var isBoardFileLine = lineElements.length == this.getBoardSize();
                 if (!isBoardFileLine) {
-                    break;
+                    return false;
                 }
 
-                int col = 0;
-                for (String lineElement : lineElements) {
-                    if (Integer.parseInt(lineElement) != 0) {
-                        var piece = this.getPiecesById(Integer.parseInt(lineElement));
-
-                        if (piece != null) {
-                            piece.setX(col);
-                            piece.setY(row);
-                        }
-                    }
-                    col++;
-                }
-                row++;
+                this.processBoardFileLine(lineElements, y);
+                y++;
             }
 
         } catch (Exception e) {
@@ -163,11 +152,6 @@ public class Board {
         return isValidX && isValidY;
     }
 
-    public void placePieceAt(Piece piece, int x, int y) {
-        piece.setX(x);
-        piece.setY(y);
-    }
-
     public void switchPlayingTeam(){
         if (this.getCurrentTeamId() == Piece.BLACK_TEAM){
             this.setCurrentTeamId(Piece.WHITE_TEAM);
@@ -176,7 +160,7 @@ public class Board {
         }
     }
 
-    public void countPiecesInGame() {
+    public void countHowManyPiecesAreInGameForEachTeam() {
         this.blackTeamPiecesCount = 0;
         this.whiteTeamPiecesCount = 0;
 
@@ -191,4 +175,22 @@ public class Board {
             }
         }
     }
+
+    public void processBoardFileLine(String[] lineElements, int y) {
+        var x = 0;
+
+        for (String lineElement : lineElements) {
+
+            var lineHasPieceId = Integer.parseInt(lineElement) != 0;
+            if (lineHasPieceId) {
+                Piece piece = getPiecesById(Integer.parseInt(lineElement));
+                if (piece != null) {
+                    piece.setPieceInBoard(x, y);
+                }
+            }
+
+            x++;
+        }
+    }
+
 }

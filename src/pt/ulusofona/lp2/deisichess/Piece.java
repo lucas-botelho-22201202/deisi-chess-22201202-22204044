@@ -12,7 +12,7 @@ public class Piece {
     private int type;
     private int team;
     private String nickName;
-    private String status = "em jogo"; // em jogo ou capturado
+    private String status = Piece.PIECE_IS_CAPTURED; // em jogo ou capturado
     private int x = -1;
     private int y = -1;
     private String png;
@@ -115,18 +115,23 @@ public class Piece {
                 .append(team).append(" | ")
                 .append(nickName).append(" @ ");
 
-        if (status.equals(Piece.PIECE_IS_CAPTURED)){
+        if (status.equals(Piece.PIECE_IS_CAPTURED)) {
             sb.append("(n/a)");
-        }else{
+        } else {
             sb.append("(").append(x).append(", ").append(y).append(")");
         }
 
         return sb.toString();
     }
 
-    public void setInitialStatus(){
-        if (this.getX() == -1){
-            this.setStatus(Piece.PIECE_IS_CAPTURED);
-        }
+    public void setPieceInBoard(int x, int y) {
+        this.setStatus(Piece.PIECE_IN_GAME);
+        this.setX(x);
+        this.setY(y);
+    }
+
+    public void moveTo(int x, int y) {
+        this.setX(x);
+        this.setY(y);
     }
 }
