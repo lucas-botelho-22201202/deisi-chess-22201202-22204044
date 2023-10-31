@@ -23,6 +23,10 @@ public class GameManager {
         this.numMoves++;
     }
 
+    public void resetNumMoves(){
+        this.numMoves = -1;
+    }
+
     public boolean loadGame(File file) {
         if (file == null){
             return false;
@@ -93,6 +97,7 @@ public class GameManager {
             }
 
             destinationPiece.killPiece();
+            resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
@@ -148,8 +153,13 @@ public class GameManager {
             return true;
         }
 
+
         var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
-        return maxMovesReached;
+        if(statistic.getNumTotalCaptures() > 0){
+            return maxMovesReached;
+        }
+
+        return false;
     }
 
     public ArrayList<String> getGameResults() {

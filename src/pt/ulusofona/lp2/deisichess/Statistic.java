@@ -46,6 +46,11 @@ public class Statistic {
         }
     }
 
+    public int getNumTotalCaptures(){
+
+        return countCaptureBlack + countCaptureWhite;
+    }
+
     @Override
     public String toString() {
 
