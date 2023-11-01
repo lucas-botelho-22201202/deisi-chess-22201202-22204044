@@ -4,7 +4,7 @@ public class Piece {
 
     static final int BLACK_TEAM = 0;
     static final int WHITE_TEAM = 1;
-    static final String BLACK_PIECE_NAME = "Grey_Pawn.png";
+    static final String BLACK_PIECE_PNG = "Grey_Pawn.png";
     static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
     static final String PIECE_IS_CAPTURED = "capturado";
     static final String PIECE_IN_GAME = "em jogo";
@@ -26,7 +26,7 @@ public class Piece {
 
         switch (team) {
             case Piece.BLACK_TEAM -> {
-                this.png = Piece.BLACK_PIECE_NAME;
+                this.png = Piece.BLACK_PIECE_PNG;
             }
             case Piece.WHITE_TEAM -> {
                 this.png = Piece.WHITE_PIECE_PNG;
@@ -102,7 +102,7 @@ public class Piece {
     public void killPiece() {
         this.x = -1;
         this.y = -1;
-        this.setStatus("capturado");
+        this.setStatus(PIECE_IS_CAPTURED);
     }
 
 
