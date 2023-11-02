@@ -3,8 +3,8 @@
 
 Personalizamos o nosso painel de créditos, criando dois botões para chumbar os alunos.
 
-![](step1creditos?raw=true "Painel inicial")
+![](step1creditos.png?raw=true "Painel inicial")
 
 Este botões não sao clicáveis, logo os alunos não podem ser chumbados :smile:
 
-![](step2creditos?raw=true "Botao inclicavel")
+![](step2creditos.png?raw=true "Botao inclicavel")
