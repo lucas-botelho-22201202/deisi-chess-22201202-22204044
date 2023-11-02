@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
@@ -158,138 +159,61 @@ public class GameManager {
         return new ArrayList<>(Arrays.asList(statsLines));
     }
 
-    public JPanel getAuthorsPanel() {
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
+    private JLabel createTitleLabel() {
         JLabel lblTitle = new JLabel("Autores do projeto:");
         lblTitle.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 36));
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblTitle, BorderLayout.NORTH);
+        return lblTitle;
+    }
 
-        //JLabel Author 1
-        JLabel lblAuthor1 = new JLabel("Gonçalo Neves nº 22204044          ", SwingConstants.RIGHT);
-        lblAuthor1.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
+    private JPanel createAuthorPanel(String authorInfo) {
+        JLabel lblAuthor = new JLabel(authorInfo+"          ", SwingConstants.CENTER);
+        lblAuthor.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
 
-        //JButton Author 1
-        JButton btnAuthor1 = new JButton("Chumbar aluno!");
-        btnAuthor1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
-        btnAuthor1.setBackground(Color.WHITE);
-        btnAuthor1.setFocusPainted(false);
+        JButton btnAuthor = new JButton("Chumbar aluno!");
+        btnAuthor.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        btnAuthor.setBackground(Color.WHITE);
+        btnAuthor.setFocusPainted(false);
 
-        //JPanel Author 1
-        JPanel pnlAuthor1 = new JPanel();
-        pnlAuthor1.setLayout(new BorderLayout());
-        pnlAuthor1.add(lblAuthor1, BorderLayout.WEST);
-        pnlAuthor1.add(btnAuthor1, BorderLayout.CENTER);
+        JPanel pnlAuthor = new JPanel();
+        pnlAuthor.setLayout(new BorderLayout());
+        pnlAuthor.add(lblAuthor, BorderLayout.WEST);
+        pnlAuthor.add(btnAuthor, BorderLayout.CENTER);
 
-        //add Mouse Listener to Button 1
-        btnAuthor1.addMouseListener(new MouseListener() {
-            int entrou = 0;
+        addMouseHoverEffect(btnAuthor, pnlAuthor, lblAuthor);
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        return pnlAuthor;
+    }
 
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
+    private void addMouseHoverEffect(JButton button, JPanel panel, JLabel label) {
+        button.addMouseListener(new MouseAdapter() {
+            int hover = 0;
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (entrou == 0) {
-                    pnlAuthor1.add(lblAuthor1, BorderLayout.CENTER);
-                    pnlAuthor1.add(btnAuthor1, BorderLayout.WEST);
-                    pnlAuthor1.repaint();
-                    pnlAuthor1.revalidate();
-                    entrou = 1;
+                if (hover == 0) {
+                    panel.add(label, BorderLayout.CENTER);
+                    panel.add(button, BorderLayout.WEST);
+                    panel.repaint();
+                    panel.revalidate();
+                    hover = 1;
                 } else {
-                    pnlAuthor1.add(lblAuthor1, BorderLayout.WEST);
-                    pnlAuthor1.add(btnAuthor1, BorderLayout.CENTER);
-                    pnlAuthor1.repaint();
-                    pnlAuthor1.revalidate();
-                    entrou = 0;
+                    panel.add(label, BorderLayout.WEST);
+                    panel.add(button, BorderLayout.CENTER);
+                    panel.repaint();
+                    panel.revalidate();
+                    hover = 0;
                 }
-
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
             }
         });
-        panel.add(pnlAuthor1, BorderLayout.CENTER);
+    }
 
-        //JLabel Author 2
-        JLabel lblAuthor2 = new JLabel("Lucas Botelho nº 22201202           ", SwingConstants.RIGHT);
-        lblAuthor2.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
-
-        //JButton Author 2
-        JButton btnAuthor2 = new JButton("Chumbar aluno!");
-        btnAuthor2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
-        btnAuthor2.setBackground(Color.WHITE);
-        btnAuthor2.setFocusPainted(false);
-
-        //JPanel Author 2
-        JPanel pnlAuthor2 = new JPanel();
-        pnlAuthor2.setLayout(new BorderLayout());
-        pnlAuthor2.add(lblAuthor2, BorderLayout.WEST);
-        pnlAuthor2.add(btnAuthor2, BorderLayout.CENTER);
-
-        //add Mouse Listener to Button 2
-        btnAuthor2.addMouseListener(new MouseListener() {
-            int entrou = 0;
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (entrou == 0) {
-                    pnlAuthor2.add(lblAuthor2, BorderLayout.CENTER);
-                    pnlAuthor2.add(btnAuthor2, BorderLayout.WEST);
-                    pnlAuthor2.repaint();
-                    pnlAuthor2.revalidate();
-                    entrou = 1;
-                } else {
-                    pnlAuthor2.add(lblAuthor2, BorderLayout.WEST);
-                    pnlAuthor2.add(btnAuthor2, BorderLayout.CENTER);
-                    pnlAuthor2.repaint();
-                    pnlAuthor2.revalidate();
-                    entrou = 0;
-                }
-
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-        panel.add(pnlAuthor2, BorderLayout.SOUTH);
-
+    public JPanel getAuthorsPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(createTitleLabel(), BorderLayout.NORTH);
+        panel.add(createAuthorPanel("Gonçalo Neves nº 22204044"), BorderLayout.CENTER);
+        panel.add(createAuthorPanel("Lucas Botelho nº 22201202 "), BorderLayout.SOUTH);
         return panel;
     }
 }
