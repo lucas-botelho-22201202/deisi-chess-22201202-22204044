@@ -1,6 +1,5 @@
 # deisi-chess-22201202-22204044
-Diagrama UML
-![](deisi-chess-22201202-22204044.pdf?raw=true "Diagrama UML")
+![](uml.png?raw=true "Diagrama UML")
 
 Personalizamos o nosso painel de créditos, criando dois botões para chumbar os alunos.
 
