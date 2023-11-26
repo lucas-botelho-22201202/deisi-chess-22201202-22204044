@@ -2,8 +2,8 @@ package pt.ulusofona.lp2.deisichess;
 
 public class Piece {
 
-    static final int BLACK_TEAM = 0;
-    static final int WHITE_TEAM = 1;
+    static final int BLACK_TEAM = 10;
+    static final int WHITE_TEAM = 20;
     static final String BLACK_PIECE_PNG = "Grey_Pawn.png";
     static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
     static final String PIECE_IS_CAPTURED = "capturado";
