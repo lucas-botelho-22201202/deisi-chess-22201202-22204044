@@ -67,21 +67,7 @@ public class Board {
         try {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
-                var lineElements = line.split(":");
-                var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE;
-
-                if (!isPieceFileLine) {
-                    return false;
-                }
-
-                this.addPiece(
-                        new Piece(
-                                Integer.parseInt(lineElements[0]),
-                                Integer.parseInt(lineElements[1]),
-                                Integer.parseInt(lineElements[2]),
-                                lineElements[3]
-                        )
-                );
+                addPiece(PieceFactory.CreatePiece(line));
             }
         } catch (Exception e) {
             return false;

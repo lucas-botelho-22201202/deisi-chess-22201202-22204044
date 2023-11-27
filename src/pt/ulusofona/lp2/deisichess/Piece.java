@@ -1,11 +1,9 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class Piece {
+public abstract class Piece {
 
     static final int BLACK_TEAM = 10;
     static final int WHITE_TEAM = 20;
-    static final String BLACK_PIECE_PNG = "Grey_Pawn.png";
-    static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
     static final String PIECE_IS_CAPTURED = "capturado";
     static final String PIECE_IN_GAME = "em jogo";
     private int uniqueId;
@@ -16,23 +14,6 @@ public class Piece {
     private int x = -1;
     private int y = -1;
     private String png;
-
-
-    public Piece(int uniqueId, int type, int team, String nickName) {
-        this.uniqueId = uniqueId;
-        this.type = type;
-        this.team = team;
-        this.nickName = nickName;
-
-        switch (team) {
-            case Piece.BLACK_TEAM -> {
-                this.png = Piece.BLACK_PIECE_PNG;
-            }
-            case Piece.WHITE_TEAM -> {
-                this.png = Piece.WHITE_PIECE_PNG;
-            }
-        }
-    }
 
     public int getUniqueId() {
         return uniqueId;
@@ -133,5 +114,25 @@ public class Piece {
     public void moveTo(int x, int y) {
         this.setX(x);
         this.setY(y);
+    }
+
+    protected void setUniqueId(int uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    protected void setType(int type) {
+        this.type = type;
+    }
+
+    protected void setTeam(int team) {
+        this.team = team;
+    }
+
+    protected void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    protected void setPng(String png) {
+        this.png = png;
     }
 }
