@@ -22,13 +22,13 @@ public class GameManager {
         this.numMoves++;
     }
 
-    public void resetNumMoves(){
+    public void resetNumMoves() {
         this.numMoves = -1;
     }
 
     public void loadGame(File file) throws InvalidGameInputException, IOException {
-        if (file == null){
-//            return false;
+        if (file == null) {
+            throw new IOException();
         }
 
         try {
@@ -36,15 +36,12 @@ public class GameManager {
 
             board.setBoardSize(Integer.parseInt(reader.readLine()));
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
+            board.createPiecesFromFile(reader, board.getAmountOfPieces());
 
-            if (!board.createPiecesFromFile(reader, board.getAmountOfPieces())) {
-//                return false;
-            }
-
-//            return board.buildBoardFromFile(reader);
-
+        } catch (InvalidGameInputException e) {
+            throw new InvalidGameInputException();
         } catch (Exception e) {
-//            return false;
+            throw new IOException();
         }
     }
 
@@ -144,7 +141,7 @@ public class GameManager {
 
 
         var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
-        if(statistic.getNumTotalCaptures() > 0){
+        if (statistic.getNumTotalCaptures() > 0) {
             return maxMovesReached;
         }
 
@@ -161,16 +158,18 @@ public class GameManager {
         return new AuthorsPanelBuilder().GetCustomJPanel();
     }
 
-    public void saveGame(File file) throws IOException{
+    public void saveGame(File file) throws IOException {
 
     }
-    public void undo(){
+
+    public void undo() {
     }
-    public java.util.List<Comparable> getHints(int x, int y){
+
+    public java.util.List<Comparable> getHints(int x, int y) {
         return null;
     }
 
-    public Map<String,String> customizeBoard(){
+    public Map<String, String> customizeBoard() {
         return new HashMap<>();
     }
 }

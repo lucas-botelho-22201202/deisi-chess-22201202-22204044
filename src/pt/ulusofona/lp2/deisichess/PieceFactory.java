@@ -4,12 +4,12 @@ public class PieceFactory {
     public PieceFactory() {
     }
 
-    public static Piece CreatePiece(String pieceLine) throws Exception{
+    public static Piece CreatePiece(String pieceLine) throws InvalidGameInputException{
         var lineElements = pieceLine.split(":");
         var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE;
 
         if (!isPieceFileLine) {
-            throw new Exception(); //to do: refactor to throw invalid line exception
+            throw new InvalidGameInputException();
         }
 
         var uId = Integer.parseInt(lineElements[0]);
@@ -26,7 +26,7 @@ public class PieceFactory {
             case 5 -> new TorreVertical(uId, type, team, nickName);
             case 6 -> new HomerSimpson(uId, type, team, nickName);
             case 7 -> new Joker(uId, type, team, nickName);
-            default -> throw new Exception(); //to do: refactor to throw invalid line exception
+            default -> throw new InvalidGameInputException();
         };
 
     }

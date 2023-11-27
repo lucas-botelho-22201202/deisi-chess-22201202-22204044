@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Board {
@@ -62,15 +63,17 @@ public class Board {
         return null;
     }
 
-    public boolean createPiecesFromFile(BufferedReader reader, int numPieces) {
+    public boolean createPiecesFromFile(BufferedReader reader, int numPieces) throws InvalidGameInputException, IOException {
         String line;
         try {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
                 addPiece(PieceFactory.CreatePiece(line));
             }
+        } catch (InvalidGameInputException e) {
+            throw new InvalidGameInputException();
         } catch (Exception e) {
-            return false;
+            throw new IOException();
         }
 
         return true;
@@ -99,10 +102,10 @@ public class Board {
         return true;
     }
 
-    public boolean squareHasPiece(int x, int y){
-        for(int i = 0; i < getBoardPieces().size(); i++){
+    public boolean squareHasPiece(int x, int y) {
+        for (int i = 0; i < getBoardPieces().size(); i++) {
             Piece piece = getPiecesById(i);
-            if(piece.getX() == x && piece.getY() == y){
+            if (piece.getX() == x && piece.getY() == y) {
                 return true;
             }
         }
@@ -110,10 +113,10 @@ public class Board {
         return false;
     }
 
-    public Piece getPieceAt(int x, int y){
+    public Piece getPieceAt(int x, int y) {
 
         for (Piece piece : boardPieces) {
-            if (piece.getX() == x && piece.getY() == y){
+            if (piece.getX() == x && piece.getY() == y) {
                 return piece;
             }
         }
@@ -138,10 +141,10 @@ public class Board {
         return isValidX && isValidY;
     }
 
-    public void switchPlayingTeam(){
-        if (this.getCurrentTeamId() == Piece.BLACK_TEAM){
+    public void switchPlayingTeam() {
+        if (this.getCurrentTeamId() == Piece.BLACK_TEAM) {
             this.setCurrentTeamId(Piece.WHITE_TEAM);
-        }else {
+        } else {
             this.setCurrentTeamId(Piece.BLACK_TEAM);
         }
     }
