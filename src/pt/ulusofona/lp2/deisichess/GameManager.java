@@ -8,6 +8,8 @@ import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameManager {
 
@@ -28,9 +30,9 @@ public class GameManager {
         this.numMoves = -1;
     }
 
-    public boolean loadGame(File file) {
+    public void loadGame(File file) throws InvalidGameInputException, IOException {
         if (file == null){
-            return false;
+//            return false;
         }
 
         try {
@@ -40,13 +42,13 @@ public class GameManager {
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
 
             if (!board.createPiecesFromFile(reader, board.getAmountOfPieces())) {
-                return false;
+//                return false;
             }
 
-            return board.buildBoardFromFile(reader);
+//            return board.buildBoardFromFile(reader);
 
         } catch (Exception e) {
-            return false;
+//            return false;
         }
     }
 
@@ -215,5 +217,19 @@ public class GameManager {
         panel.add(createAuthorPanel("Gonçalo Neves nº 22204044"), BorderLayout.CENTER);
         panel.add(createAuthorPanel("Lucas Botelho nº 22201202 "), BorderLayout.SOUTH);
         return panel;
+    }
+
+
+    public void saveGame(File file) throws IOException{
+
+    }
+    public void undo(){
+    }
+    public java.util.List<Comparable> getHints(int x, int y){
+        return null;
+    }
+
+    public Map<String,String> customizeBoard(){
+        return new HashMap<>();
     }
 }
