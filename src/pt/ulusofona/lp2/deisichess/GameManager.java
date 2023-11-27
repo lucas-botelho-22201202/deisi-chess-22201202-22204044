@@ -1,10 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -162,7 +158,7 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel() {
-        return new AuthorsPanelRepository().GetCustomJPanel();
+        return new AuthorsPanelBuilder().GetCustomJPanel();
     }
 
     public void saveGame(File file) throws IOException{

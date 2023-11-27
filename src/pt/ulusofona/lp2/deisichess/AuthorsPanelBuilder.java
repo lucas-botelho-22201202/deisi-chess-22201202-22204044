@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AuthorsPanelRepository {
+public class AuthorsPanelBuilder {
     public JPanel GetCustomJPanel(){
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
