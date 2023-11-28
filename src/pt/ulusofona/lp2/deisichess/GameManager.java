@@ -88,7 +88,7 @@ public class GameManager {
         }
 
         statistic.increaseCountValidMoves(getCurrentTeamID());
-//        board.switchPlayingTeam(); todo remove if no issue is found
+        board.switchPlayingTeam();
         this.increaseNumMoves();
         return true;
     }
@@ -117,7 +117,6 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        board.switchPlayingTeam();
         board.countHowManyPiecesAreInGameForEachTeam();
 
         var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;
