@@ -33,9 +33,9 @@ public class GameManager {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
-            board.setBoardSize(Integer.parseInt(reader.readLine()));
-            board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
-            board.createPiecesFromFile(reader, board.getAmountOfPieces());
+            board.setSize(Integer.parseInt(reader.readLine()));
+            var totalPiecesFromFile = Integer.parseInt(reader.readLine());
+            board.createPiecesFromFile(reader, totalPiecesFromFile);
             board.buildBoardFromFile(reader);
 
         } catch (InvalidGameInputException e) {
@@ -46,7 +46,7 @@ public class GameManager {
     }
 
     public int getBoardSize() {
-        return board.getBoardSize();
+        return board.getSize();
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
@@ -88,7 +88,7 @@ public class GameManager {
         }
 
         statistic.increaseCountValidMoves(getCurrentTeamID());
-//        board.switchPlayingTeam(); todo remove if no issue is found
+        board.switchPlayingTeam();
         this.increaseNumMoves();
         return true;
     }
@@ -117,24 +117,21 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        board.switchPlayingTeam();
-        board.countHowManyPiecesAreInGameForEachTeam();
-
-        var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;
+        var isDraw = board.countBlackTeamPieces() == 1 && board.countWhiteTeamPieces() == 1;
         if (isDraw) {
             statistic.setWinningTeam(-1);
             return true;
         }
 
-        var blackTeamWon = board.getWhiteTeamPiecesCount() == 0 && board.getBlackTeamPiecesCount() > 0;
+        var blackTeamWon = board.countWhiteTeamPieces() == 0 && board.countBlackTeamPieces() > 0;
         if (blackTeamWon) {
-            statistic.setWinningTeam(Piece.BLACK_TEAM);
+            statistic.setWinningTeam(Team.BLACK_TEAM);
             return true;
         }
 
-        var whiteTeamWon = board.getBlackTeamPiecesCount() == 0 && board.getWhiteTeamPiecesCount() > 0;
+        var whiteTeamWon = board.countBlackTeamPieces() == 0 && board.countWhiteTeamPieces() > 0;
         if (whiteTeamWon) {
-            statistic.setWinningTeam(Piece.WHITE_TEAM);
+            statistic.setWinningTeam(Team.WHITE_TEAM);
             return true;
         }
 

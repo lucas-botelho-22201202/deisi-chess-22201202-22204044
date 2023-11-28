@@ -5,28 +5,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Board {
-    private int boardSize;
-    private int amountOfPieces;
-    private ArrayList<Piece> boardPieces;
+    private int size;
+    private Team whiteTeam = new Team();
+    private Team blackTeam= new Team();
     private int currentTeamId;
-    private int blackTeamPiecesCount;
-    private int whiteTeamPiecesCount;
 
     public Board() {
-        defineStartingTeam(Piece.BLACK_TEAM);
-        boardPieces = new ArrayList<>();
+        defineStartingTeam(Team.BLACK_TEAM);
     }
 
     private void defineStartingTeam(int startingTeam) {
         currentTeamId = startingTeam;
     }
 
-    public int getBlackTeamPiecesCount() {
-        return blackTeamPiecesCount;
+    public int countBlackTeamPieces() {
+        return blackTeam.getPieces().size();
     }
 
-    public int getWhiteTeamPiecesCount() {
-        return whiteTeamPiecesCount;
+    public int countWhiteTeamPieces() {
+        return whiteTeam.getPieces().size();
     }
 
     public void setCurrentTeamId(int currentTeamId) {
@@ -37,38 +34,24 @@ public class Board {
         return currentTeamId;
     }
 
-    public int getBoardSize() {
-        return boardSize;
+    public int getSize() {
+        return size;
     }
 
-    public int getAmountOfPieces() {
-        return amountOfPieces;
+    public int countTotalPieces() {
+        return countBlackTeamPieces() + countWhiteTeamPieces();
     }
 
-    public void setBoardSize(int boardSize) {
-        this.boardSize = boardSize;
+    public void setSize(int size) {
+        this.size = size;
     }
 
-    public void setAmountOfPieces(int amountOfPieces) {
-        this.amountOfPieces = amountOfPieces;
-    }
+    public Piece getPiecesById(int id) {
+        Piece blackPiece = getPieceByIdFrom(blackTeam.getPieces(), id);
 
-    public void addPiece(Piece piece) {
-        boardPieces.add(piece);
-    }
-
-    public ArrayList<Piece> getBoardPieces() {
-        return boardPieces;
-    }
-
-    public Piece getPiecesById(int Id) {
-        for (Piece piece : this.getBoardPieces()) {
-            if (piece.getUniqueId() == Id) {
-                return piece;
-            }
-        }
-
-        return null;
+        return blackPiece != null
+                ? blackPiece
+                : getPieceByIdFrom(whiteTeam.getPieces(), id);
     }
 
     public void createPiecesFromFile(BufferedReader reader, int numPieces) throws InvalidGameInputException, IOException {
@@ -76,7 +59,8 @@ public class Board {
         try {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
-                addPiece(PieceFactory.CreatePiece(line));
+                var piece = PieceFactory.CreatePiece(line);
+                AddPieceToCorrespondingTeam(piece);
             }
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException();
@@ -86,6 +70,10 @@ public class Board {
 
     }
 
+    private void AddPieceToCorrespondingTeam(Piece piece) {
+        (piece.getTeam() == Team.BLACK_TEAM ? blackTeam : whiteTeam).addPiece(piece);
+    }
+
     public void buildBoardFromFile(BufferedReader reader) throws IOException {
         String line;
         int y = 0;
@@ -93,7 +81,7 @@ public class Board {
         try {
             while ((line = reader.readLine()) != null) {
                 var lineElements = line.split(":");
-                var isBoardFileLine = lineElements.length == this.getBoardSize();
+                var isBoardFileLine = lineElements.length == this.getSize();
                 if (!isBoardFileLine) {
                     return;
                 }
@@ -108,21 +96,28 @@ public class Board {
 
     }
 
-    public boolean squareHasPiece(int x, int y) {
-        for (int i = 0; i < getBoardPieces().size(); i++) {
-            Piece piece = getPiecesById(i);
+    public Piece getPieceAt(int x, int y) {
+        Piece blackPiece = getPieceAtFrom(blackTeam.getPieces(), x, y);
+
+        return blackPiece != null
+                ? blackPiece
+                : getPieceAtFrom(whiteTeam.getPieces(), x, y);
+
+    }
+
+    private Piece getPieceAtFrom(ArrayList<Piece> pieces, int x, int y) {
+        for (Piece piece : pieces) {
             if (piece.getX() == x && piece.getY() == y) {
-                return true;
+                return piece;
             }
         }
 
-        return false;
+        return null;
     }
 
-    public Piece getPieceAt(int x, int y) {
-
-        for (Piece piece : boardPieces) {
-            if (piece.getX() == x && piece.getY() == y) {
+    private Piece getPieceByIdFrom(ArrayList<Piece> pieces, int id) {
+        for (Piece piece : pieces) {
+            if (piece.getUniqueId() == id) {
                 return piece;
             }
         }
@@ -142,29 +137,13 @@ public class Board {
     }
 
     public boolean isValidCoordinate(int x, int y) {
-        var isValidX = x >= 0 && x < this.getBoardSize();
-        var isValidY = y >= 0 && y < this.getBoardSize();
+        var isValidX = x >= 0 && x < this.getSize();
+        var isValidY = y >= 0 && y < this.getSize();
         return isValidX && isValidY;
     }
 
     public void switchPlayingTeam() {
-        setCurrentTeamId(getCurrentTeamId() == Piece.BLACK_TEAM ? Piece.WHITE_TEAM : Piece.BLACK_TEAM);
-    }
-
-    public void countHowManyPiecesAreInGameForEachTeam() {
-        this.blackTeamPiecesCount = 0;
-        this.whiteTeamPiecesCount = 0;
-
-        for (Piece piece : this.getBoardPieces()) {
-            var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
-            if (pieceIsInGame) {
-                if (piece.getTeam() == Piece.BLACK_TEAM) {
-                    blackTeamPiecesCount++;
-                } else {
-                    whiteTeamPiecesCount++;
-                }
-            }
-        }
+        setCurrentTeamId(getCurrentTeamId() == Team.BLACK_TEAM ? Team.WHITE_TEAM : Team.BLACK_TEAM);
     }
 
     public void processBoardFileLine(String[] lineElements, int y) {
