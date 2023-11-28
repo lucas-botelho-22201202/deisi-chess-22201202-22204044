@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameManager {
-
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
     private int numMoves = 0;
@@ -37,6 +36,8 @@ public class GameManager {
             board.setBoardSize(Integer.parseInt(reader.readLine()));
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
             board.createPiecesFromFile(reader, board.getAmountOfPieces());
+            board.buildBoardFromFile(reader);
+            return;
 
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException();

@@ -1,8 +1,8 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class TorreHorizontal extends Piece{
-    static final String BLACK_PIECE_PNG = "Grey_Pawn.png";
-    static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
+    static final String BLACK_PIECE_PNG = "Grey_HorTower.png";
+    static final String WHITE_PIECE_PNG = "Beige_HorTower.png";
     public TorreHorizontal(int uniqueId, int type, int team, String nickName) {
         setUniqueId(uniqueId);
         setType(type);

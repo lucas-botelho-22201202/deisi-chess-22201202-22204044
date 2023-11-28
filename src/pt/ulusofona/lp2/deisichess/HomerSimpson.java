@@ -1,8 +1,10 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class HomerSimpson extends Piece {
-    static final String BLACK_PIECE_PNG = "Grey_Pawn.png";
-    static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
+    static final String BLACK_PIECE_PNG = "Grey_Homer.png";
+    static final String WHITE_PIECE_PNG = "Beige_Homer.png";
+    static final String SLEEP_BLACK_PIECE_PNG = "Grey_HomerSleep.png";
+    static final String SLEEP_WHITE_PIECE_PNG = "Beige_HomerSleep.png";
     public HomerSimpson(int uniqueId, int type, int team, String nickName) {
         setUniqueId(uniqueId);
         setType(type);

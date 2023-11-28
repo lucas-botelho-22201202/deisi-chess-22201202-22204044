@@ -8,7 +8,7 @@ public class Board {
     private int boardSize;
     private int amountOfPieces;
     private ArrayList<Piece> boardPieces = new ArrayList<>();
-    private int currentTeamId = 0;
+    private int currentTeamId = Piece.BLACK_TEAM;
 
     private int blackTeamPiecesCount;
     private int whiteTeamPiecesCount;

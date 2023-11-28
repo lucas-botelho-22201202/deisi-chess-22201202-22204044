@@ -1,8 +1,8 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class Joker extends Piece {
-    static final String BLACK_PIECE_PNG = "Grey_Pawn.png";
-    static final String WHITE_PIECE_PNG = "Beige_Pawn.png";
+    static final String BLACK_PIECE_PNG = "Grey_Joker.png";
+    static final String WHITE_PIECE_PNG = "Beige_Joker.png";
 
     public Joker(int uniqueId, int type, int team, String nickName) {
         setUniqueId(uniqueId);
