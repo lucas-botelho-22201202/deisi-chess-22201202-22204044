@@ -1,7 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
 public abstract class Piece {
-
     static final int BLACK_TEAM = 10;
     static final int WHITE_TEAM = 20;
     static final String PIECE_IS_CAPTURED = "capturado";
@@ -14,6 +13,29 @@ public abstract class Piece {
     private int x = -1;
     private int y = -1;
     private String png;
+
+    protected abstract boolean isInvalidXMove(int x0, int x1);
+    protected abstract boolean isInvalidYMove(int y0, int y1);
+
+    protected void setUniqueId(int uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    protected void setType(int type) {
+        this.type = type;
+    }
+
+    protected void setTeam(int team) {
+        this.team = team;
+    }
+
+    protected void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    protected void setPng(String png) {
+        this.png = png;
+    }
 
     public int getUniqueId() {
         return uniqueId;
@@ -72,17 +94,26 @@ public abstract class Piece {
         return properties;
     }
 
-    protected abstract boolean isInvalidXMove(int x0, int x1);
-    protected abstract boolean isInvalidYMove(int y0, int y1);
-
-
-
     public void kill() {
         this.x = -1;
         this.y = -1;
         this.setStatus(PIECE_IS_CAPTURED);
     }
 
+    public void setPieceInBoard(int x, int y) {
+        this.setStatus(Piece.PIECE_IN_GAME);
+        this.setX(x);
+        this.setY(y);
+    }
+
+    public void tryMoveTo(int targetX, int targetY) throws InvalidMoveException {
+        if (isInvalidXMove(getX(), targetX) || isInvalidYMove(getY(), targetY)) {
+            throw new InvalidMoveException();
+        }
+
+        this.setX(targetX);
+        this.setY(targetY);
+    }
 
     @Override
     public String toString() {
@@ -100,33 +131,5 @@ public abstract class Piece {
         }
 
         return sb.toString();
-    }
-
-    public void setPieceInBoard(int x, int y) {
-        this.setStatus(Piece.PIECE_IN_GAME);
-        this.setX(x);
-        this.setY(y);
-    }
-
-    public abstract void tryMoveTo(int x, int y) throws InvalidMoveException;
-
-    protected void setUniqueId(int uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    protected void setType(int type) {
-        this.type = type;
-    }
-
-    protected void setTeam(int team) {
-        this.team = team;
-    }
-
-    protected void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    protected void setPng(String png) {
-        this.png = png;
     }
 }

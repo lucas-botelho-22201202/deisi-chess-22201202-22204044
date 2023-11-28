@@ -28,9 +28,4 @@ public class TorreVertical extends Piece {
     protected boolean isInvalidYMove(int y0, int y1) {
         return false;
     }
-
-    @Override
-    public void tryMoveTo(int x, int y) throws InvalidMoveException {
-
-    }
 }

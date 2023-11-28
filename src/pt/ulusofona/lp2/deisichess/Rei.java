@@ -30,15 +30,4 @@ public class Rei extends Piece {
     protected boolean isInvalidYMove(int y0, int y1) {
         return y0 - y1 > 1 || y1 - y0 > 1;
     }
-
-    @Override
-    public void tryMoveTo(int targetX, int targetY) throws InvalidMoveException {
-
-        if (isInvalidXMove(getX(), targetX) || isInvalidYMove(getY(), targetY)) {
-            throw new InvalidMoveException();
-        }
-
-        this.setX(targetX);
-        this.setY(targetY);
-    }
 }

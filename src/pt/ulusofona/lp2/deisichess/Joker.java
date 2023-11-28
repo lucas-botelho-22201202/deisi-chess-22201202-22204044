@@ -30,8 +30,4 @@ public class Joker extends Piece {
         return false;
     }
 
-    @Override
-    public void tryMoveTo(int x, int y) throws InvalidMoveException {
-
-    }
 }

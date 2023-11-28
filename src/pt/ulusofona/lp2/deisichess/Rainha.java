@@ -21,16 +21,11 @@ public class Rainha extends Piece{
 
     @Override
     protected boolean isInvalidXMove(int x0, int x1) {
-        return false;
+        return x0 - x1 > 5 || x1 - x0 > 5;
     }
 
     @Override
     protected boolean isInvalidYMove(int y0, int y1) {
-        return false;
-    }
-
-    @Override
-    public void tryMoveTo(int x, int y) throws InvalidMoveException {
-
+        return y0 - y1 > 5 || y1 - y0 > 5;
     }
 }
