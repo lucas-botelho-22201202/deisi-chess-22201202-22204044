@@ -129,16 +129,20 @@ public class TestGameManager {
 //    @Test
 //    public void test_White_Instant_Victory() {
 //        var gameManager = new GameManager();
+//        try {
+//            gameManager.loadGame(new File("test-files/4x4_white_win_instantly.txt"));
+//            gameManager.gameOver();
+//            var gameResult = gameManager.getGameResults();
 //
-//        gameManager.loadGame(new File("test-files/4x4_white_win_instantly.txt"));
-//        gameManager.gameOver();
-//        var gameResult = gameManager.getGameResults();
+////            String expectedText = "JOGO DE CRAZY CHESS,Resultado: VENCERAM AS BRANCAS,---,Equipa das Pretas,0,3,0,Equipa das Brancas,3,3,0";
+//            String expectedText = "JOGO DE CRAZY CHESS,Resultado: VENCERAM AS BRANCAS";
 //
-////        String expectedText = "JOGO DE CRAZY CHESS,Resultado: VENCERAM AS BRANCAS,---,Equipa das Pretas,0,3,0,Equipa das Brancas,3,3,0";
-//        String expectedText = "JOGO DE CRAZY CHESS,Resultado: VENCERAM AS BRANCAS";
+//            ArrayList<String> listOfExpectedTexts = new ArrayList<>(Arrays.asList(expectedText.split(",")));
 //
-//        ArrayList<String> listOfExpectedTexts = new ArrayList<>(Arrays.asList(expectedText.split(",")));
+//            Assertions.assertEquals(listOfExpectedTexts.get(1), gameResult.get(1), "test_White_Victory");
 //
-//        Assertions.assertEquals(listOfExpectedTexts.get(1), gameResult.get(1), "test_White_Victory");
+//        } catch (Exception e) {
+//
+//        }
 //    }
 }

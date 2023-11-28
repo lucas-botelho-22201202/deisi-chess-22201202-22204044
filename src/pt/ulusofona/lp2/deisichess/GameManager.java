@@ -61,12 +61,6 @@ public class GameManager {
             return false;
         }
 
-
-        //todo: mover validacoes para dentro da classe da peca, mandar excepcao para fora par tratar increaseCountInvalidMoves()
-        if (piecePlaying.isInvalidXMove(x0, x1) || piecePlaying.isInvalidYMove(y0, y1)) {
-
-        }
-
         var triedToMoveOtherTeamsPiece = piecePlaying.getTeam() != getCurrentTeamID();
         if (triedToMoveOtherTeamsPiece) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
@@ -88,13 +82,13 @@ public class GameManager {
 
         try {
             piecePlaying.tryMoveTo(x1, y1);
-        } catch (Exception e) {
+        } catch (InvalidMoveException e) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         statistic.increaseCountValidMoves(getCurrentTeamID());
-        board.switchPlayingTeam();
+//        board.switchPlayingTeam(); todo remove if no issue is found
         this.increaseNumMoves();
         return true;
     }
@@ -123,6 +117,7 @@ public class GameManager {
     }
 
     public boolean gameOver() {
+        board.switchPlayingTeam();
         board.countHowManyPiecesAreInGameForEachTeam();
 
         var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;

@@ -30,7 +30,7 @@ public class TorreHorizontal extends Piece{
     }
 
     @Override
-    public void tryMoveTo(int x, int y) throws Exception {
+    public void tryMoveTo(int x, int y) throws InvalidMoveException {
 
     }
 }

@@ -72,16 +72,8 @@ public abstract class Piece {
         return properties;
     }
 
-//    public boolean isInvalidXMove(int x0, int x1) {
-//        return x0 - x1 > 1 || x1 - x0 > 1;
-//    }
-//
-//    public boolean isInvalidYMove(int y0, int y1) {
-//        return y0 - y1 > 1 || y1 - y0 > 1;
-//    }
-
-        protected abstract boolean isInvalidXMove(int x0, int x1);
-        protected abstract boolean isInvalidYMove(int y0, int y1);
+    protected abstract boolean isInvalidXMove(int x0, int x1);
+    protected abstract boolean isInvalidYMove(int y0, int y1);
 
 
 
@@ -116,12 +108,7 @@ public abstract class Piece {
         this.setY(y);
     }
 
-//    public void tryMoveTo(int x, int y) {
-//        this.setX(x);
-//        this.setY(y);
-//    }
-
-    public abstract void tryMoveTo(int x, int y) throws Exception;
+    public abstract void tryMoveTo(int x, int y) throws InvalidMoveException;
 
     protected void setUniqueId(int uniqueId) {
         this.uniqueId = uniqueId;
