@@ -7,11 +7,19 @@ import java.util.ArrayList;
 public class Board {
     private int boardSize;
     private int amountOfPieces;
-    private ArrayList<Piece> boardPieces = new ArrayList<>();
-    private int currentTeamId = Piece.BLACK_TEAM;
-
+    private ArrayList<Piece> boardPieces;
+    private int currentTeamId;
     private int blackTeamPiecesCount;
     private int whiteTeamPiecesCount;
+
+    public Board() {
+        defineStartingTeam(Piece.BLACK_TEAM);
+        boardPieces = new ArrayList<>();
+    }
+
+    private void defineStartingTeam(int startingTeam) {
+        currentTeamId = startingTeam;
+    }
 
     public int getBlackTeamPiecesCount() {
         return blackTeamPiecesCount;
@@ -63,7 +71,7 @@ public class Board {
         return null;
     }
 
-    public boolean createPiecesFromFile(BufferedReader reader, int numPieces) throws InvalidGameInputException, IOException {
+    public void createPiecesFromFile(BufferedReader reader, int numPieces) throws InvalidGameInputException, IOException {
         String line;
         try {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
@@ -76,10 +84,9 @@ public class Board {
             throw new IOException();
         }
 
-        return true;
     }
 
-    public boolean buildBoardFromFile(BufferedReader reader) {
+    public void buildBoardFromFile(BufferedReader reader) throws IOException {
         String line;
         int y = 0;
 
@@ -88,7 +95,7 @@ public class Board {
                 var lineElements = line.split(":");
                 var isBoardFileLine = lineElements.length == this.getBoardSize();
                 if (!isBoardFileLine) {
-                    return false;
+                    return;
                 }
 
                 this.processBoardFileLine(lineElements, y);
@@ -96,10 +103,9 @@ public class Board {
             }
 
         } catch (Exception e) {
-            return false;
+            throw new IOException();
         }
 
-        return true;
     }
 
     public boolean squareHasPiece(int x, int y) {
@@ -142,11 +148,7 @@ public class Board {
     }
 
     public void switchPlayingTeam() {
-        if (this.getCurrentTeamId() == Piece.BLACK_TEAM) {
-            this.setCurrentTeamId(Piece.WHITE_TEAM);
-        } else {
-            this.setCurrentTeamId(Piece.BLACK_TEAM);
-        }
+        setCurrentTeamId(getCurrentTeamId() == Piece.BLACK_TEAM ? Piece.WHITE_TEAM : Piece.BLACK_TEAM);
     }
 
     public void countHowManyPiecesAreInGameForEachTeam() {

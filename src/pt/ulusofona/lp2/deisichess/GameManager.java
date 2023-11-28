@@ -37,7 +37,6 @@ public class GameManager {
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
             board.createPiecesFromFile(reader, board.getAmountOfPieces());
             board.buildBoardFromFile(reader);
-            return;
 
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException();
@@ -56,40 +55,44 @@ public class GameManager {
             return false;
         }
 
-        var sourcePiece = board.getPieceAt(x0, y0);
-        if (sourcePiece == null) {
+        var piecePlaying = board.getPieceAt(x0, y0);
+        if (piecePlaying == null) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
-        var isInvalidXMove = sourcePiece.isInvalidXMove(x0, x1);
-        var isInvalidYMove = sourcePiece.isInvalidYMove(y0, y1);
 
-        if (isInvalidXMove || isInvalidYMove) {
-            statistic.increaseCountInvalidMoves(getCurrentTeamID());
-            return false;
+        //todo: mover validacoes para dentro da classe da peca, mandar excepcao para fora par tratar increaseCountInvalidMoves()
+        if (piecePlaying.isInvalidXMove(x0, x1) || piecePlaying.isInvalidYMove(y0, y1)) {
+
         }
 
-        var triedToMoveOtherTeamsPiece = sourcePiece.getTeam() != getCurrentTeamID();
+        var triedToMoveOtherTeamsPiece = piecePlaying.getTeam() != getCurrentTeamID();
         if (triedToMoveOtherTeamsPiece) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
-        var destinationPiece = board.getPieceAt(x1, y1);
-        if (destinationPiece != null) {
-            var isSameTeam = sourcePiece.getTeam() == destinationPiece.getTeam();
+        var pieceAtDestination = board.getPieceAt(x1, y1);
+        if (pieceAtDestination != null) {
+            var isSameTeam = piecePlaying.getTeam() == pieceAtDestination.getTeam();
             if (isSameTeam) {
                 statistic.increaseCountInvalidMoves(getCurrentTeamID());
                 return false;
             }
 
-            destinationPiece.killPiece();
+            pieceAtDestination.kill();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
-        sourcePiece.moveTo(x1, y1);
+        try {
+            piecePlaying.tryMoveTo(x1, y1);
+        } catch (Exception e) {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
+
         statistic.increaseCountValidMoves(getCurrentTeamID());
         board.switchPlayingTeam();
         this.increaseNumMoves();

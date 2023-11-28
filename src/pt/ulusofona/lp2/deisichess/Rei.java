@@ -19,4 +19,19 @@ public class Rei extends Piece {
             }
         }
     }
+
+    @Override
+    protected boolean isInvalidXMove(int x0, int x1) {
+        return false;
+    }
+
+    @Override
+    protected boolean isInvalidYMove(int y0, int y1) {
+        return false;
+    }
+
+    @Override
+    public void tryMoveTo(int x, int y) throws Exception {
+
+    }
 }
