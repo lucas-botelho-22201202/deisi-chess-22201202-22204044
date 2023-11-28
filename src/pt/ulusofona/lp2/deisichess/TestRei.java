@@ -8,8 +8,6 @@ import java.io.File;
 public class TestRei {
     @Test
     public void test_Rei_valid_moves() {
-        var gameManager = new GameManager();
-
         var x = 3;
         var y = 4;
 
@@ -27,6 +25,7 @@ public class TestRei {
 
 
         for (int[] move : moves) {
+            var gameManager = new GameManager();
 
             try {
                 //ensures that piece is always starting on the same place
@@ -53,7 +52,6 @@ public class TestRei {
 
     @Test
     public void test_Rei_invalid_moves() {
-        var gameManager = new GameManager();
 
         var x = 3;
         var y = 4;
@@ -68,6 +66,7 @@ public class TestRei {
         };
 
         for (int[] move : moves) {
+            var gameManager = new GameManager();
 
             try {
                 //ensures that piece is always starting on the same place

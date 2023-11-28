@@ -8,7 +8,6 @@ import java.io.File;
 public class TestRainha {
     @Test
     public void test_Rainha_valid_moves_freely_from_top_left() {
-        var gameManager = new GameManager();
 
         var x = 0;
         var y = 0;
@@ -24,6 +23,7 @@ public class TestRainha {
 
 
         for (int[] move : moves) {
+            var gameManager = new GameManager();
 
             try {
                 //ensures that piece is always starting on the same place
@@ -50,7 +50,6 @@ public class TestRainha {
 
     @Test
     public void test_Rainha_valid_moves_freely_from_bottom_right() {
-        var gameManager = new GameManager();
 
         var x = 7;
         var y = 7;
@@ -66,6 +65,7 @@ public class TestRainha {
 
 
         for (int[] move : moves) {
+            var gameManager = new GameManager();
 
             try {
                 //ensures that piece is always starting on the same place

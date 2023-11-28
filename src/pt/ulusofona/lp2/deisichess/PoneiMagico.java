@@ -21,12 +21,11 @@ public class PoneiMagico extends Piece {
 
     @Override
     protected boolean isInvalidXMove(int x0, int x1) {
-        return false;
-    }
+        return !(Math.abs(x1 - x0) == 2);    }
 
     @Override
     protected boolean isInvalidYMove(int y0, int y1) {
-        return false;
+        return !(Math.abs(y1 - y0) == 2);
     }
 
 }
