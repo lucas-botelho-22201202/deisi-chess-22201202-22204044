@@ -15,10 +15,10 @@ public class Statistic {
 
     public void increaseCountCapture(int teamId) {
         switch (teamId) {
-            case Piece.BLACK_TEAM -> {
+            case Team.BLACK_TEAM -> {
                 countCaptureBlack++;
             }
-            case Piece.WHITE_TEAM -> {
+            case Team.WHITE_TEAM -> {
                 countCaptureWhite++;
             }
         }
@@ -26,10 +26,10 @@ public class Statistic {
 
     public void increaseCountValidMoves(int teamId) {
         switch (teamId) {
-            case Piece.BLACK_TEAM -> {
+            case Team.BLACK_TEAM -> {
                 countValidMovesBlack++;
             }
-            case Piece.WHITE_TEAM -> {
+            case Team.WHITE_TEAM -> {
                 countValidMovesWhite++;
             }
         }
@@ -37,10 +37,10 @@ public class Statistic {
 
     public void increaseCountInvalidMoves(int teamId) {
         switch (teamId) {
-            case Piece.BLACK_TEAM -> {
+            case Team.BLACK_TEAM -> {
                 countInvalidMovesBlack++;
             }
-            case Piece.WHITE_TEAM -> {
+            case Team.WHITE_TEAM -> {
                 countInvalidMovesWhite++;
             }
         }
@@ -59,10 +59,10 @@ public class Statistic {
                 .append("Resultado: ");
 
         switch (winningTeam) {
-            case Piece.BLACK_TEAM -> {
+            case Team.BLACK_TEAM -> {
                 statisticBuilder.append("VENCERAM AS PRETAS");
             }
-            case Piece.WHITE_TEAM -> {
+            case Team.WHITE_TEAM -> {
                 statisticBuilder.append("VENCERAM AS BRANCAS");
             }
             default -> {

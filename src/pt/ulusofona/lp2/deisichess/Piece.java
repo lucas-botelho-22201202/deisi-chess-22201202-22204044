@@ -1,8 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
 public abstract class Piece {
-    static final int BLACK_TEAM = 10;
-    static final int WHITE_TEAM = 20;
     static final String PIECE_IS_CAPTURED = "capturado";
     static final String PIECE_IN_GAME = "em jogo";
     private int uniqueId;

@@ -10,10 +10,10 @@ public class Rainha extends Piece{
         setNickName(nickName);
 
         switch (team) {
-            case Piece.BLACK_TEAM -> {
+            case Team.BLACK_TEAM -> {
                 setPng(Rainha.BLACK_PIECE_PNG);
             }
-            case Piece.WHITE_TEAM -> {
+            case Team.WHITE_TEAM -> {
                 setPng(Rainha.WHITE_PIECE_PNG);
             }
         }
