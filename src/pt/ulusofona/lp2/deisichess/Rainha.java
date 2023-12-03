@@ -23,13 +23,16 @@ public class Rainha extends Piece {
     @Override
     public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
         var behaviourData = new BehaviourData(getX(), getY(), x, y);
-        var behaviour = Behaviour.getValidMovementBehaviour(behaviourData, getBehaviours(), movementRange);
+        Behaviour behaviour;
 
-        if (behaviour == null){
+        try {
+            behaviour = Behaviour.getValidMovementBehaviour(behaviourData, getBehaviours(), movementRange);
+        } catch (InvalidBehaviourException e) {
             return false;
         }
 
         behaviour.calculateDirection(behaviourData);
+
 
         return !behaviour.hasCollision(behaviourData, boardPieces);
     }

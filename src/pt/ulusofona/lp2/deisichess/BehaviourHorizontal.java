@@ -31,8 +31,10 @@ public class BehaviourHorizontal extends Behaviour {
     @Override
     public boolean isValid(BehaviourData behaviorData) {
         var isValidHorizontal = behaviorData.xStart != behaviorData.xEnd;
-        return isValidHorizontal && isDifferentThanStartingPosition(behaviorData);
+        var isValidVertical = behaviorData.yStart != behaviorData.yEnd;
+        return isValidHorizontal && !isValidVertical && isDifferentThanStartingPosition(behaviorData);
     }
+
 
     @Override
     public void calculateDirection(BehaviourData behaviorData) {

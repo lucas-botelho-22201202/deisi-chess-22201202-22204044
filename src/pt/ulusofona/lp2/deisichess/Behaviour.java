@@ -49,7 +49,7 @@ public abstract class Behaviour {
         return isXMovementShorterThanMaximumRange && isYMovementShorterThanMaximumRange;
     }
 
-    public static Behaviour getValidMovementBehaviour(BehaviourData behaviourData, ArrayList<Behaviour> behaviours, int movementRange) {
+    public static Behaviour getValidMovementBehaviour(BehaviourData behaviourData, ArrayList<Behaviour> behaviours, int movementRange) throws InvalidBehaviourException {
         for (Behaviour behaviour : behaviours) {
             var isValidBehavirour = behaviour.isValid(behaviourData);
             var isValidRangeOfMovement = behaviour.isInMovementRange(behaviourData, movementRange);
@@ -58,7 +58,7 @@ public abstract class Behaviour {
             }
         }
 
-        return null;
+        throw new InvalidBehaviourException();
     }
 
     public Direction getDirection() {
