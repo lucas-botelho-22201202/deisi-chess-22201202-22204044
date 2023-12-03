@@ -111,7 +111,7 @@ public class Board {
         return false;
     }
 
-    public Piece getPieceAt(int x, int y) {
+    public static Piece getPieceAt(int x, int y, ArrayList<Piece> boardPieces) {
 
         for (Piece piece : boardPieces) {
             if (piece.getX() == x && piece.getY() == y) {

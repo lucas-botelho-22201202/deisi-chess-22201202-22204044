@@ -55,7 +55,7 @@ public class GameManager {
             return false;
         }
 
-        var piecePlaying = board.getPieceAt(x0, y0);
+        var piecePlaying = Board.getPieceAt(x0, y0, board.pieces());
         if (piecePlaying == null) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
@@ -67,14 +67,13 @@ public class GameManager {
             return false;
         }
 
-        var isValidMovement = piecePlaying.validateMovement(board.pieces(), x1, y1);
-        if (!isValidMovement)
+        if (!piecePlaying.isValidMove(board.pieces(), x1, y1))
         {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
-        var pieceAtDestination = board.getPieceAt(x1, y1);
+        var pieceAtDestination = Board.getPieceAt(x1, y1, board.pieces());
         if (pieceAtDestination != null) {
             var isFriendlyFire = piecePlaying.getTeam() == pieceAtDestination.getTeam();
             if (isFriendlyFire) {
@@ -95,7 +94,7 @@ public class GameManager {
     }
 
     public String[] getSquareInfo(int x, int y) {
-        var piece = board.getPieceAt(x, y);
+        var piece = Board.getPieceAt(x, y, board.pieces());
         if (piece != null) {
             return board.squareInfoToArray(piece);
         }

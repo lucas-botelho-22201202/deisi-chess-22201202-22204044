@@ -5,119 +5,32 @@ import java.util.ArrayList;
 public class Rainha extends Piece {
     static final String BLACK_PNG = "Grey_Queen.png";
     static final String WHITE_PNG = "Beige_Queen.png";
-
-    int virtualX;
-    int virtualY;
+    static final int DEFAULT_OFFSET = 5;
 
     public Rainha(int uniqueId, int type, int team, String nickName) {
-        this.uniqueId = uniqueId;
-        this.type = type;
-        this.team = team;
-        this.nickName = nickName;
-        this.movementRange = 5;
+        super(uniqueId, type, team, nickName, Rainha.DEFAULT_OFFSET);
 
         switch (team) {
-            case Piece.BLACK_TEAM -> {
-                this.png = Rainha.BLACK_PNG;
-            }
-            case Piece.WHITE_TEAM -> {
-                this.png = Rainha.WHITE_PNG;
-            }
+            case Piece.BLACK_TEAM -> this.png = Rainha.BLACK_PNG;
+            case Piece.WHITE_TEAM -> this.png = Rainha.WHITE_PNG;
         }
+
+        addBehaviour(new BehaviourDiagonal());
+        addBehaviour(new BehaviourHorizontal());
+        addBehaviour(new BehaviourVertical());
     }
 
     @Override
-    public boolean isValidMovement(ArrayList<Piece> boardPieces, int x, int y) {
+    public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
+        var behaviourData = new BehaviourData(getX(), getY(), x, y);
+        var behaviour = Behaviour.getValidMovementBehaviour(behaviourData, getBehaviours(), movementRange);
 
-
-        return isValidBehaviour(x, y) && isValidOffset(x, y);
-    }
-
-    @Override
-    public boolean simulateBehaviour(ArrayList<Piece> boardPieces, int x, int y) {
-
-        if (isDiagonalMovement(getX(), getY(), x, y)) {
-            DirectionDiagonal direction = calculateDiagonalDirection(getX(), getY(), x, y);
-
-
-            virtualX = getX();
-            virtualY = getY();
-
-            for (int i = 0; i < movementRange; i++) {
-
-                switch (direction) {
-                    case UP_LEFT -> moveUpLeft();
-                    case UP_RIGHT -> moveUpRight();
-                    case DOWN_LEFT -> moveDownLeft();
-                    case DOWN_RIGHT -> moveDownRight();
-                }
-
-//                if ()
-            }
-
-
-
-        }
-        return false;
-    }
-
-
-    private boolean isValidBehaviour(int x, int y) {
-        if (isDiagonalMovement(getX(), getY(), x, y)) {
-            return true;
+        if (behaviour == null){
+            return false;
         }
 
-        var isAxisMovement = !isXMovement(x, y) || !isYMovement(x, y);
-        return isAxisMovement;
+        behaviour.calculateDirection(behaviourData);
+
+        return !behaviour.hasCollision(behaviourData, boardPieces);
     }
-
-    private boolean isDiagonalMovement(int x0, int y0, int x1, int y1) {
-        return Math.abs(x1 - x0) == Math.abs(y1 - y0);
-    }
-
-    private DirectionDiagonal calculateDiagonalDirection(int x0, int y0, int x1, int y1) {
-        if (x1 < x0) {
-            return y1 < y0 ? DirectionDiagonal.UP_LEFT : DirectionDiagonal.DOWN_LEFT;
-        }
-
-        return y1 < y0 ? DirectionDiagonal.UP_RIGHT : DirectionDiagonal.DOWN_RIGHT;
-    }
-
-    private void moveUpLeft() {
-        moveUp();
-        moveLeft();
-    }
-
-    private void moveUpRight() {
-        moveUp();
-        moveRight();
-    }
-
-    private void moveDownLeft() {
-        moveLeft();
-        moveDown();
-    }
-
-    private void moveDownRight() {
-        moveRight();
-        moveDown();
-    }
-
-    private void moveUp() {
-        virtualY -= 1;
-    }
-
-    private void moveDown() {
-        virtualY += 1;
-    }
-
-    private void moveLeft() {
-        virtualX -= 1;
-    }
-
-    private void moveRight() {
-        virtualX += 1;
-    }
-
-
 }

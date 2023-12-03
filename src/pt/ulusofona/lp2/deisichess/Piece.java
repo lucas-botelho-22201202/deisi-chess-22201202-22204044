@@ -10,21 +10,31 @@ public abstract class Piece {
     static final String PIECE_IN_GAME = "em jogo";
     //endregion
 
-    //region sub class fields
-    protected int uniqueId;
-    protected int type;
-    protected int team;
-    protected String nickName;
-    protected String png;
-    protected int movementRange;
-    //endregion
-
+    //region fields
+    private int uniqueId;
+    private int type;
+    private int team;
+    private String nickName;
     private int x;
     private int y;
     private String status = Piece.PIECE_IS_CAPTURED; // em jogo ou capturado
+    protected String png;
+    protected int movementRange;
+    private ArrayList<Behaviour> behaviours = new ArrayList<>();
 
-    public abstract boolean isValidMovement(ArrayList<Piece> boardPieces, int x, int y);
-    public abstract boolean simulateBehaviour(ArrayList<Piece> boardPieces, int x, int y);
+    //endregion
+
+    public Piece(int uniqueId, int type, int team, String nickName, int movementRange) {
+        this.uniqueId = uniqueId;
+        this.type = type;
+        this.team = team;
+        this.nickName = nickName;
+        this.movementRange = movementRange;
+    }
+
+    public abstract boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y);
+
+
     //region getters
     public int getUniqueId() {
         return uniqueId;
@@ -101,7 +111,6 @@ public abstract class Piece {
         setY(y);
     }
 
-
     @Override
     public String toString() {
         var sb = new StringBuilder();
@@ -120,27 +129,33 @@ public abstract class Piece {
         return sb.toString();
     }
 
-    protected boolean isXMovement(int x, int y) {
-        return getX() != x;
+
+    public void moveX(int distance) {
+        this.x += distance;
     }
 
-    protected boolean isYMovement(int x, int y) {
-        return getY() != y;
+    public void moveY(int distance) {
+        this.y += distance;
     }
 
-    private boolean isDifferentThanStartingPosition(int x, int y) {
-        return getX() != x || getY() != y;
+    protected void addBehaviour(Behaviour behaviour) {
+        behaviours.add(behaviour);
     }
 
-    public boolean validateMovement(ArrayList<Piece> boardPieces, int x, int y) {
-        return isDifferentThanStartingPosition(x, y) && isValidMovement(boardPieces, x, y);
-    }
-
-    protected boolean isValidOffset(int x, int y){
-        var isValidXOffset = Math.abs(x - getX()) <= movementRange;
-        var isValidYOffset = Math.abs(y - getY()) <= movementRange;
-        return isValidXOffset && isValidYOffset;
+    public ArrayList<Behaviour> getBehaviours() {
+        return behaviours;
     }
 
 
+//    protected Direction getMovementDirection(int x, int y) throws InvalidDirectionException {
+//
+//        var behaviourData = new BehaviourData(getX(), getY(), x, y);
+//        Direction direction = null;
+//
+//        for (Behaviour behaviour : getBehaviours()) {
+//            behaviour.calculateDirection(behaviourData);
+//        }
+//
+//        return direction;
+//    }
 }
