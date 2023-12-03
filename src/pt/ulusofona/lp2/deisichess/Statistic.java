@@ -12,6 +12,9 @@ public class Statistic {
     public void setWinningTeam(int winningTeam) {
         this.winningTeam = winningTeam;
     }
+    public int getWinningTeam() {
+        return winningTeam;
+    }
 
     public void increaseCountCapture(int teamId) {
         switch (teamId) {
@@ -49,6 +52,22 @@ public class Statistic {
     public int getNumTotalCaptures(){
 
         return countCaptureBlack + countCaptureWhite;
+    }
+
+    public String statisticsToFile(){
+        StringBuilder statistics = new StringBuilder();
+
+        statistics.append("Equipa das Pretas\n")
+                .append(countCaptureBlack).append("\n")
+                .append(countValidMovesBlack).append("\n")
+                .append(countInvalidMovesBlack).append("\n");
+
+        statistics.append("Equipa das Brancas\n")
+                .append(countCaptureWhite).append("\n")
+                .append(countValidMovesWhite).append("\n")
+                .append(countInvalidMovesWhite);
+
+        return statistics.toString();
     }
 
     @Override

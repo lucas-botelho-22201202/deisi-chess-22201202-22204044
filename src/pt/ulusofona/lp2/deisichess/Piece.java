@@ -113,6 +113,19 @@ public abstract class Piece {
         this.setY(targetY);
     }
 
+    public String infoToFile(){
+        String pieceID = String.valueOf(uniqueId);
+        String pieceType = String.valueOf(type);
+        String pieceTeam = String.valueOf(team);
+        String pieceNickName = getNickName();
+        int x = getX();
+        int y = getY();
+
+        String result = pieceID + ":" + pieceType + ":" + pieceTeam + ":" + pieceNickName + ": (" + x + ", " + y + ")";
+
+        return result;
+    }
+
     @Override
     public String toString() {
         var sb = new StringBuilder();
