@@ -26,7 +26,8 @@ public class PieceFactory {
 //            case 5 -> new TorreVertical(uId, type, team, nickName);
 //            case 6 -> new HomerSimpson(uId, type, team, nickName);
 //            case 7 -> new Joker(uId, type, team, nickName);
-            default -> throw new InvalidGameInputException();
+//            default -> throw new InvalidGameInputException(); todo change back to this instead of line below
+            default -> new Rainha(uId, type, team, nickName);
         };
 
     }
