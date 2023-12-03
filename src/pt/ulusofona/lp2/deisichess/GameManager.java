@@ -67,10 +67,17 @@ public class GameManager {
             return false;
         }
 
+        var isValidMovement = piecePlaying.validateMovement(board.pieces(), x1, y1);
+        if (!isValidMovement)
+        {
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            return false;
+        }
+
         var pieceAtDestination = board.getPieceAt(x1, y1);
         if (pieceAtDestination != null) {
-            var isSameTeam = piecePlaying.getTeam() == pieceAtDestination.getTeam();
-            if (isSameTeam) {
+            var isFriendlyFire = piecePlaying.getTeam() == pieceAtDestination.getTeam();
+            if (isFriendlyFire) {
                 statistic.increaseCountInvalidMoves(getCurrentTeamID());
                 return false;
             }
@@ -80,15 +87,9 @@ public class GameManager {
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
-        try {
-            piecePlaying.tryMoveTo(x1, y1);
-        } catch (InvalidMoveException e) {
-            statistic.increaseCountInvalidMoves(getCurrentTeamID());
-            return false;
-        }
-
+        piecePlaying.move(x1, y1);
         statistic.increaseCountValidMoves(getCurrentTeamID());
-//        board.switchPlayingTeam(); todo remove if no issue is found
+        board.switchPlayingTeam();
         this.increaseNumMoves();
         return true;
     }
@@ -117,22 +118,22 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        board.switchPlayingTeam();
-        board.countHowManyPiecesAreInGameForEachTeam();
+        var countBlackPiecesInGame = board.countPiecesIngame(Piece.BLACK_TEAM);
+        var countWhitePiecesInGame = board.countPiecesIngame(Piece.WHITE_TEAM);
 
-        var isDraw = board.getBlackTeamPiecesCount() == 1 && board.getWhiteTeamPiecesCount() == 1;
+        var isDraw = countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1;
         if (isDraw) {
             statistic.setWinningTeam(-1);
             return true;
         }
 
-        var blackTeamWon = board.getWhiteTeamPiecesCount() == 0 && board.getBlackTeamPiecesCount() > 0;
+        var blackTeamWon = countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0;
         if (blackTeamWon) {
             statistic.setWinningTeam(Piece.BLACK_TEAM);
             return true;
         }
 
-        var whiteTeamWon = board.getBlackTeamPiecesCount() == 0 && board.getWhiteTeamPiecesCount() > 0;
+        var whiteTeamWon = countBlackPiecesInGame == 0 && countWhitePiecesInGame > 0;
         if (whiteTeamWon) {
             statistic.setWinningTeam(Piece.WHITE_TEAM);
             return true;

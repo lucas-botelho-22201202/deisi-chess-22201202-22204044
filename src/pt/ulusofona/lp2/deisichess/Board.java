@@ -9,8 +9,8 @@ public class Board {
     private int amountOfPieces;
     private ArrayList<Piece> boardPieces;
     private int currentTeamId;
-    private int blackTeamPiecesCount;
-    private int whiteTeamPiecesCount;
+//    private int blackTeamPiecesCount;
+//    private int whiteTeamPiecesCount;
 
     public Board() {
         defineStartingTeam(Piece.BLACK_TEAM);
@@ -19,14 +19,6 @@ public class Board {
 
     private void defineStartingTeam(int startingTeam) {
         currentTeamId = startingTeam;
-    }
-
-    public int getBlackTeamPiecesCount() {
-        return blackTeamPiecesCount;
-    }
-
-    public int getWhiteTeamPiecesCount() {
-        return whiteTeamPiecesCount;
     }
 
     public void setCurrentTeamId(int currentTeamId) {
@@ -57,12 +49,12 @@ public class Board {
         boardPieces.add(piece);
     }
 
-    public ArrayList<Piece> getBoardPieces() {
+    public ArrayList<Piece> pieces() {
         return boardPieces;
     }
 
     public Piece getPiecesById(int Id) {
-        for (Piece piece : this.getBoardPieces()) {
+        for (Piece piece : this.pieces()) {
             if (piece.getUniqueId() == Id) {
                 return piece;
             }
@@ -109,7 +101,7 @@ public class Board {
     }
 
     public boolean squareHasPiece(int x, int y) {
-        for (int i = 0; i < getBoardPieces().size(); i++) {
+        for (int i = 0; i < pieces().size(); i++) {
             Piece piece = getPiecesById(i);
             if (piece.getX() == x && piece.getY() == y) {
                 return true;
@@ -151,20 +143,17 @@ public class Board {
         setCurrentTeamId(getCurrentTeamId() == Piece.BLACK_TEAM ? Piece.WHITE_TEAM : Piece.BLACK_TEAM);
     }
 
-    public void countHowManyPiecesAreInGameForEachTeam() {
-        this.blackTeamPiecesCount = 0;
-        this.whiteTeamPiecesCount = 0;
-
-        for (Piece piece : this.getBoardPieces()) {
+    public int countPiecesIngame(int teamId) {
+        var count = 0;
+        for (Piece piece : this.pieces()) {
             var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
-            if (pieceIsInGame) {
-                if (piece.getTeam() == Piece.BLACK_TEAM) {
-                    blackTeamPiecesCount++;
-                } else {
-                    whiteTeamPiecesCount++;
-                }
+            var belongsToTeam = piece.getTeam() == teamId;
+            if (pieceIsInGame && belongsToTeam) {
+                count++;
             }
         }
+
+        return count;
     }
 
     public void processBoardFileLine(String[] lineElements, int y) {
@@ -176,7 +165,7 @@ public class Board {
             if (lineHasPieceId) {
                 Piece piece = getPiecesById(Integer.parseInt(lineElement));
                 if (piece != null) {
-                    piece.setPieceInBoard(x, y);
+                    piece.initiateIngame(x, y);
                 }
             }
 

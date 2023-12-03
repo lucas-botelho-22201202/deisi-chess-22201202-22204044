@@ -8,7 +8,6 @@ import java.io.File;
 public class TestRainha {
     @Test
     public void test_Rainha_valid_moves_freely_from_top_left() {
-        var gameManager = new GameManager();
 
         var x = 0;
         var y = 0;
@@ -24,6 +23,7 @@ public class TestRainha {
 
 
         for (int[] move : moves) {
+            var gameManager = new GameManager();
 
             try {
                 //ensures that piece is always starting on the same place
@@ -50,7 +50,6 @@ public class TestRainha {
 
     @Test
     public void test_Rainha_valid_moves_freely_from_bottom_right() {
-        var gameManager = new GameManager();
 
         var x = 7;
         var y = 7;
@@ -66,6 +65,7 @@ public class TestRainha {
 
 
         for (int[] move : moves) {
+            var gameManager = new GameManager();
 
             try {
                 //ensures that piece is always starting on the same place
@@ -81,6 +81,46 @@ public class TestRainha {
 
             Assertions.assertTrue(gameManager.move(startingX, startingY, endingX, endingY),
                     new StringBuilder("test_Rainha_valid_moves_freely_from_top_left failed moving from: (")
+                            .append(startingX).append(":")
+                            .append(startingY).append(")")
+                            .append(" to: (")
+                            .append(endingX).append(":")
+                            .append(endingY).append(")")
+                            .toString());
+        }
+    }
+
+    @Test
+    public void test_Rainha_invalid_moves_from_center(){
+
+        var x = 3;
+        var y = 4;
+
+        int[][] moves = {
+                {x, y, x + 1, y + 2},       // valido direita baixo baixo
+                {x, y, x + 1, y - 2},       // valido direita cima cima
+                {x, y, x -1 , y - 2},       // valido esquerda cima cima
+                {x, y, x -1 , y + 2},       // valido esquerda cima cima
+        };
+
+
+        for (int[] move : moves) {
+            var gameManager = new GameManager();
+
+            try {
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
+            } catch (Exception e) {
+            }
+
+            int startingX = move[0];
+            int startingY = move[1];
+            int endingX = move[2];
+            int endingY = move[3];
+
+
+            Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
+                    new StringBuilder("test_Rainha_valid_moves_freely_from_top_left moved successfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")

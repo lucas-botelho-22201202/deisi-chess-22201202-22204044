@@ -1,42 +1,31 @@
 package pt.ulusofona.lp2.deisichess;
 
+import java.util.ArrayList;
+
 public abstract class Piece {
+    //region constants
     static final int BLACK_TEAM = 10;
     static final int WHITE_TEAM = 20;
     static final String PIECE_IS_CAPTURED = "capturado";
     static final String PIECE_IN_GAME = "em jogo";
-    private int uniqueId;
-    private int type;
-    private int team;
-    private String nickName;
+    //endregion
+
+    //region sub class fields
+    protected int uniqueId;
+    protected int type;
+    protected int team;
+    protected String nickName;
+    protected String png;
+    protected int movementRange;
+    //endregion
+
+    private int x;
+    private int y;
     private String status = Piece.PIECE_IS_CAPTURED; // em jogo ou capturado
-    private int x = -1;
-    private int y = -1;
-    private String png;
 
-    protected abstract boolean isInvalidXMove(int x0, int x1);
-    protected abstract boolean isInvalidYMove(int y0, int y1);
-
-    protected void setUniqueId(int uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    protected void setType(int type) {
-        this.type = type;
-    }
-
-    protected void setTeam(int team) {
-        this.team = team;
-    }
-
-    protected void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    protected void setPng(String png) {
-        this.png = png;
-    }
-
+    public abstract boolean isValidMovement(ArrayList<Piece> boardPieces, int x, int y);
+    public abstract boolean simulateBehaviour(ArrayList<Piece> boardPieces, int x, int y);
+    //region getters
     public int getUniqueId() {
         return uniqueId;
     }
@@ -61,6 +50,16 @@ public abstract class Piece {
         return y;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public String getPng() {
+        return png;
+    }
+//endregion
+    //region setters
+
     public void setX(int x) {
         this.x = x;
     }
@@ -72,14 +71,7 @@ public abstract class Piece {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getPng() {
-        return png;
-    }
+//endregion
 
     public String[] infoToArray() {
         String[] properties = new String[7];
@@ -95,25 +87,20 @@ public abstract class Piece {
     }
 
     public void kill() {
-        this.x = -1;
-        this.y = -1;
         this.setStatus(PIECE_IS_CAPTURED);
     }
 
-    public void setPieceInBoard(int x, int y) {
+    public void initiateIngame(int x, int y) {
         this.setStatus(Piece.PIECE_IN_GAME);
         this.setX(x);
         this.setY(y);
     }
 
-    public void tryMoveTo(int targetX, int targetY) throws InvalidMoveException {
-        if (isInvalidXMove(getX(), targetX) || isInvalidYMove(getY(), targetY)) {
-            throw new InvalidMoveException();
-        }
-
-        this.setX(targetX);
-        this.setY(targetY);
+    public void move(int x, int y) {
+        setX(x);
+        setY(y);
     }
+
 
     @Override
     public String toString() {
@@ -132,4 +119,28 @@ public abstract class Piece {
 
         return sb.toString();
     }
+
+    protected boolean isXMovement(int x, int y) {
+        return getX() != x;
+    }
+
+    protected boolean isYMovement(int x, int y) {
+        return getY() != y;
+    }
+
+    private boolean isDifferentThanStartingPosition(int x, int y) {
+        return getX() != x || getY() != y;
+    }
+
+    public boolean validateMovement(ArrayList<Piece> boardPieces, int x, int y) {
+        return isDifferentThanStartingPosition(x, y) && isValidMovement(boardPieces, x, y);
+    }
+
+    protected boolean isValidOffset(int x, int y){
+        var isValidXOffset = Math.abs(x - getX()) <= movementRange;
+        var isValidYOffset = Math.abs(y - getY()) <= movementRange;
+        return isValidXOffset && isValidYOffset;
+    }
+
+
 }
