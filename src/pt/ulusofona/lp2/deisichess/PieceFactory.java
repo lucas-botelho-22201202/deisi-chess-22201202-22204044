@@ -26,11 +26,12 @@ public class PieceFactory {
             case 1 -> new Rainha(uId, type, team, nickName);
 //            case 2 -> new PoneiMagico(uId, type, team, nickName);
             case 3 -> new PadreDaVila(uId, type, team, nickName);
-//            case 4 -> new TorreHorizontal(uId, type, team, nickName);
-//            case 5 -> new TorreVertical(uId, type, team, nickName);
+            case 4 -> new TorreHorizontal(uId, type, team, nickName);
+            case 5 -> new TorreVertical(uId, type, team, nickName);
 //            case 6 -> new HomerSimpson(uId, type, team, nickName);
 //            case 7 -> new Joker(uId, type, team, nickName);
-            default -> throw new InvalidGameInputException();
+//            default -> throw new InvalidGameInputException();
+            default -> new Rainha(uId, type, team, nickName);
         };
 
     }
