@@ -18,7 +18,7 @@ public class PieceFactory {
         var nickName = lineElements[3];
 
         return switch (type) {
-//            case 0 -> new Rei(uId, type, team, nickName);
+            case 0 -> new Rei(uId, type, team, nickName);
             case 1 -> new Rainha(uId, type, team, nickName);
 //            case 2 -> new PoneiMagico(uId, type, team, nickName);
 //            case 3 -> new PadreDaVila(uId, type, team, nickName);
