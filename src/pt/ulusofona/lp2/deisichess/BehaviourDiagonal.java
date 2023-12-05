@@ -7,29 +7,44 @@ import java.util.ArrayList;
 public class BehaviourDiagonal extends Behaviour {
 
     @Override
-    public boolean isDiagonal(BehaviourData behaviorData) {
+    public boolean isDiagonal() {
         return true;
     }
 
     @Override
-    public boolean isHorizontal(BehaviourData behaviorData) {
+    public boolean isHorizontal() {
         return false;
     }
 
     @Override
-    public boolean isVertical(BehaviourData behaviorData) {
+    public boolean isVertical() {
         return false;
     }
 
     @Override
-    public void simulateBehaviour(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
-        switch (this.getDirection()) {
-            case UP_LEFT -> moveUpLeft();
-            case UP_RIGHT -> moveUpRight();
-            case DOWN_LEFT -> moveDownLeft();
-            case DOWN_RIGHT -> moveDownRight();
+    public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
 
+        virtualX = behaviorData.xStart;
+        virtualY = behaviorData.yStart;
+
+        while (virtualX != behaviorData.xEnd || virtualY != behaviorData.yEnd) {
+
+            switch (this.getDirection()) {
+                case UP_LEFT -> moveUpLeft();
+                case UP_RIGHT -> moveUpRight();
+                case DOWN_LEFT -> moveDownLeft();
+                case DOWN_RIGHT -> moveDownRight();
+
+            }
+
+            var hasCollided = Board.getPieceAt(virtualX, virtualY, boardPieces) != null;
+
+            if (hasCollided) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     @Override

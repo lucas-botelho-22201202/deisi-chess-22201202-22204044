@@ -5,26 +5,40 @@ import java.util.ArrayList;
 public class BehaviourHorizontal extends Behaviour {
 
     @Override
-    public boolean isDiagonal(BehaviourData behaviorData) {
+    public boolean isDiagonal() {
         return false;
     }
 
     @Override
-    public boolean isHorizontal(BehaviourData behaviorData) {
+    public boolean isHorizontal() {
         return true;
     }
 
     @Override
-    public boolean isVertical(BehaviourData behaviorData) {
+    public boolean isVertical() {
         return false;
     }
 
     @Override
-    public void simulateBehaviour(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
-        switch (this.getDirection()) {
-            case LEFT -> moveLeft();
-            case RIGHT -> moveRight();
+    public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
+        virtualX = behaviorData.xStart;
+        virtualY = behaviorData.yStart;
+
+        while (virtualX != behaviorData.xEnd || virtualY != behaviorData.yEnd) {
+
+            switch (this.getDirection()) {
+                case LEFT -> moveLeft();
+                case RIGHT -> moveRight();
+            }
+
+            var hasCollided = Board.getPieceAt(virtualX, virtualY, boardPieces) != null;
+
+            if (hasCollided) {
+                return true;
+            }
         }
+
+        return false;
     }
 
 

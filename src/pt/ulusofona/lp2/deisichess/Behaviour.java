@@ -9,35 +9,17 @@ public abstract class Behaviour {
     protected int virtualX;
     protected int virtualY;
 
-    public abstract boolean isDiagonal(BehaviourData behaviorData);
+    public abstract boolean isDiagonal();
 
-    public abstract boolean isHorizontal(BehaviourData behaviorData);
+    public abstract boolean isHorizontal();
 
-    public abstract boolean isVertical(BehaviourData behaviorData);
+    public abstract boolean isVertical();
 
-    public abstract void simulateBehaviour(BehaviourData behaviorData, ArrayList<Piece> boardPieces);
+    public abstract boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces);
 
     public abstract boolean isValid(BehaviourData behaviorData);
 
     public abstract void calculateDirection(BehaviourData behaviorData);
-
-    public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces){
-        virtualX = behaviorData.xStart;
-        virtualY = behaviorData.yStart;
-
-        for (int i = 0; i < behaviorData.calculateDistance(); i++) {
-
-            simulateBehaviour(behaviorData, boardPieces);
-
-            var hasCollided = Board.getPieceAt(virtualX, virtualY, boardPieces) != null;
-
-            if (hasCollided){
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     protected boolean isDifferentThanStartingPosition(BehaviourData behaviorData) {
         return behaviorData.xStart != behaviorData.xEnd || behaviorData.yStart != behaviorData.yEnd;

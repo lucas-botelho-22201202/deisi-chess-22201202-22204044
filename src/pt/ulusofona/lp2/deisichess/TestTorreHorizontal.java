@@ -140,7 +140,7 @@ public class TestTorreHorizontal {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8-colisao.txt"));
+                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8-colisao-even-quadrants.txt"));
             } catch (Exception e) {
             }
 
