@@ -36,10 +36,10 @@ public class TestSaveGame {
 
             expectedBoard = gameManager.getBoard();
 
-            gameManager.saveGame(new File("test-files/test-saveGame/TestBoard.txt"));
+            gameManager.saveGame(new File("test-files/test-save-game/TestBoard.txt"));
 
             try {
-                gameManager.loadGame(new File("test-files/test-saveGame/TestBoard.txt"));
+                gameManager.loadGame(new File("test-files/test-save-game/TestBoard.txt"));
             } catch (Exception e) {
             }
 

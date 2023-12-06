@@ -162,7 +162,7 @@ public class GameManager {
     }
 
     public String getPieceIDInEachSquare(){
-        int boardSize = board.getSize();
+        int boardSize = board.getBoardSize();
         String result = "";
 
         for (int row = 0; row < boardSize; row++) {
@@ -190,8 +190,8 @@ public class GameManager {
 
     public void saveGame(File file) throws IOException {
         if (!isGameOver()){
-            int boardSize = board.getSize();
-            int numPieces = board.countTotalPieces();
+            int boardSize = board.getBoardSize();
+            int numPieces = board.getAmountOfPieces();
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(boardSize + "\n" + numPieces);
