@@ -15,6 +15,10 @@ public class GameManager {
     public GameManager() {
     }
 
+    public Board getBoard() {
+        return this.board;
+    }
+
     public void increaseNumMoves() {
         this.numMoves++;
     }
@@ -156,8 +160,53 @@ public class GameManager {
         return new AuthorsPanelBuilder().GetCustomJPanel();
     }
 
-    public void saveGame(File file) throws IOException {
+    public String getPieceIDInEachSquare(){
+        int boardSize = board.getBoardSize();
+        String result = "";
 
+        for (int row = 0; row < boardSize; row++) {
+            String line = "";
+            for (int column = 0; column < boardSize; column++) {
+                String id = "0";
+                if(getSquareInfo(column, row) != null && getSquareInfo(column, row).length > 0){
+                    id = getSquareInfo(column,row)[0];
+                }
+
+                if(column == boardSize-1){
+                    line += id;
+                }else{
+                    line += id + ":";
+                }
+            }
+            result += line +"\n";
+        }
+        return result;
+    }
+
+    public boolean isGameOver(){
+        return statistic.getWinningTeam() != -1;
+    }
+
+    public void saveGame(File file) throws IOException {
+        if (!isGameOver()){
+            int boardSize = board.getBoardSize();
+            int numPieces = board.getAmountOfPieces();
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(boardSize + "\n" + numPieces);
+                writer.newLine();
+                for(int i = 0; i<numPieces;i++){
+                    Piece piece = board.getPiecesById(i+1);
+                    writer.write(piece.infoToFile() + "\n");
+                }
+                writer.write(getPieceIDInEachSquare());
+                writer.write(getCurrentTeamID() + "\n");
+                writer.write(statistic.statisticsToFile());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void undo() {
