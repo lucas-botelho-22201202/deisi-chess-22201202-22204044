@@ -2,10 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameManager {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
@@ -13,6 +10,7 @@ public class GameManager {
     private int numMoves = 0;
     private Board board = new Board();
     private Statistic statistic = new Statistic();
+    private Stack<GameState> gameStates = new Stack<>();
 
     public GameManager() {
     }
@@ -50,6 +48,8 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
+
+        gameStates.push(new GameState((Board) board.clone(), (Statistic) statistic.clone()));
         if (!board.isValidCoordinate(x0, y0) || !board.isValidCoordinate(x1, y1)) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
@@ -67,8 +67,7 @@ public class GameManager {
             return false;
         }
 
-        if (!piecePlaying.isValidMove(board.pieces(), x1, y1))
-        {
+        if (!piecePlaying.isValidMove(board.pieces(), x1, y1)) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
@@ -162,6 +161,12 @@ public class GameManager {
     }
 
     public void undo() {
+        var previousState = gameStates.pop();
+
+        if (previousState != null) {
+            this.board = previousState.getBoard();
+            this.statistic = previousState.getStatistic();
+        }
     }
 
     public java.util.List<Comparable> getHints(int x, int y) {

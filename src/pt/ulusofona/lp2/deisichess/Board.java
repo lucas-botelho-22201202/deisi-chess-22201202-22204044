@@ -4,13 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Board {
+public class Board implements Cloneable{
     private int boardSize;
     private int amountOfPieces;
     private ArrayList<Piece> boardPieces;
     private int currentTeamId;
-//    private int blackTeamPiecesCount;
-//    private int whiteTeamPiecesCount;
 
     public Board() {
         defineStartingTeam(Piece.BLACK_TEAM);
@@ -173,4 +171,17 @@ public class Board {
         }
     }
 
+    @Override
+    public Object clone() {
+        try {
+            Board clonedBoard = (Board) super.clone();
+            clonedBoard.boardPieces = new ArrayList<>(this.boardPieces.size());
+            for (Piece piece : this.boardPieces) {
+                clonedBoard.boardPieces.add((Piece) piece.clone());
+            }
+            return clonedBoard;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
+    }
 }

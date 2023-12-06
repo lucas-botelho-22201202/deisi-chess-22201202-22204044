@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class Statistic {
+public class Statistic implements Cloneable {
     private int countCaptureBlack;
     private int countValidMovesBlack;
     private int countInvalidMovesBlack;
@@ -83,5 +83,14 @@ public class Statistic {
                 .append(countInvalidMovesWhite);
 
         return statisticBuilder.toString();
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
     }
 }

@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import java.util.ArrayList;
 
-public abstract class Piece {
+public abstract class Piece implements Cloneable {
     //region constants
     static final int BLACK_TEAM = 10;
     static final int WHITE_TEAM = 20;
@@ -145,5 +145,17 @@ public abstract class Piece {
     public ArrayList<Behaviour> getBehaviours() {
         return behaviours;
     }
-
+    @Override
+    public Object clone() {
+        try {
+            Piece clonedPiece = (Piece) super.clone();
+            clonedPiece.behaviours = new ArrayList<>(this.behaviours.size());
+            for (Behaviour behaviour : this.behaviours) {
+                clonedPiece.behaviours.add((Behaviour) behaviour.clone());
+            }
+            return clonedPiece;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
+    }
 }

@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import java.util.ArrayList;
 
-public abstract class Behaviour {
+public abstract class Behaviour implements Cloneable{
 
     private Direction direction;
 
@@ -67,4 +67,14 @@ public abstract class Behaviour {
         virtualX += 1;
     }
 
+    @Override
+    public Object clone() {
+        try {
+            Behaviour clonedBehaviour = (Behaviour) super.clone();
+            clonedBehaviour.direction = this.direction;
+            return clonedBehaviour;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
+    }
 }
