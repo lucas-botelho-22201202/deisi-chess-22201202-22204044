@@ -100,6 +100,19 @@ public abstract class Piece {
         this.setStatus(PIECE_IS_CAPTURED);
     }
 
+    public String infoToFile(){
+        String pieceID = String.valueOf(uniqueId);
+        String pieceType = String.valueOf(type);
+        String pieceTeam = String.valueOf(team);
+        String pieceNickName = getNickName();
+        int x = getX();
+        int y = getY();
+
+        String result = pieceID + ":" + pieceType + ":" + pieceTeam + ":" + pieceNickName + ": (" + x + ", " + y + ")";
+
+        return result;
+    }
+
     public void initiateIngame(int x, int y) {
         this.setStatus(Piece.PIECE_IN_GAME);
         this.setX(x);
