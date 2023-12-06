@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PadreDaVila extends Piece {
     static final String BLACK_PNG = "BishopGrey.png";
     static final String WHITE_PNG = "BishopBeije.png";
-    static final int DEFAULT_OFFSET = 1000;
+    static final int DEFAULT_OFFSET = 3;
 
     public PadreDaVila(int uniqueId, int type, int team, String nickName) {
         super(uniqueId, type, team, nickName, PadreDaVila.DEFAULT_OFFSET);

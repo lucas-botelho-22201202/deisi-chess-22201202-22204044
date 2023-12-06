@@ -146,16 +146,4 @@ public abstract class Piece {
         return behaviours;
     }
 
-
-//    protected Direction getMovementDirection(int x, int y) throws InvalidDirectionException {
-//
-//        var behaviourData = new BehaviourData(getX(), getY(), x, y);
-//        Direction direction = null;
-//
-//        for (Behaviour behaviour : getBehaviours()) {
-//            behaviour.calculateDirection(behaviourData);
-//        }
-//
-//        return direction;
-//    }
 }
