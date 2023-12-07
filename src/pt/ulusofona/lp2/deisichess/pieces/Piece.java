@@ -1,13 +1,15 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.pieces;
+
+import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
 
 import java.util.ArrayList;
 
 public abstract class Piece implements Cloneable {
     //region constants
-    static final int BLACK_TEAM = 10;
-    static final int WHITE_TEAM = 20;
-    static final String PIECE_IS_CAPTURED = "capturado";
-    static final String PIECE_IN_GAME = "em jogo";
+    public static final int BLACK_TEAM = 10;
+    public static final int WHITE_TEAM = 20;
+    public static final String PIECE_IS_CAPTURED = "capturado";
+    public static final String PIECE_IN_GAME = "em jogo";
     //endregion
 
     //region fields

@@ -1,4 +1,4 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.tests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;

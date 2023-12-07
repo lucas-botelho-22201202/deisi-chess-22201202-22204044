@@ -1,10 +1,13 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.behaviour;
+
+import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
+import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
 import java.util.ArrayList;
 
 public abstract class Behaviour implements Cloneable{
 
-    private Direction direction;
+    protected Direction direction;
 
     protected int virtualX;
     protected int virtualY;

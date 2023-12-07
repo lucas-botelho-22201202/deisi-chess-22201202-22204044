@@ -1,8 +1,10 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.pieces.*;
+
 public class PieceFactory {
 
-    public static Piece CreatePiece(String pieceLine) throws InvalidGameInputException{
+    public static Piece CreatePiece(String pieceLine) throws InvalidGameInputException {
         var lineElements = pieceLine.split(":");
         var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE;
 

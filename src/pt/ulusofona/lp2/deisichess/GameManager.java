@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.pieces.Piece;
+
 import javax.swing.*;
 import java.io.*;
 import java.util.*;

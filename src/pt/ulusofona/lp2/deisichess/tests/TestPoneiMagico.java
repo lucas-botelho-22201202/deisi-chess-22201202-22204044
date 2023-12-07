@@ -1,23 +1,22 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pt.ulusofona.lp2.deisichess.GameManager;
 
 import java.io.File;
 
-public class TestTorreVertical {
+public class TestPoneiMagico {
+
     @Test
-    public void test_TorreVertical_invalid_vertical() {
+    public void test_PoneiMagico_colisionsEvenQuadrants() {
 
         var x = 3;
         var y = 4;
 
         int[][] moves = {
-                {x, y, x + 1, y},  // Horizontal move to the right (one step)
-                {x, y, x + 3, y},  // Horizontal move to the right (three step)
-                {x, y, x - 1, y},  // Horizontal move to the left (one step)
-                {x, y, x - 3, y},  // Horizontal move to the left (three step)
-
+                {x, y, x + 2, y - 2},
+                {x, y, x - 2, y + 2},
         };
 
 
@@ -26,7 +25,7 @@ public class TestTorreVertical {
 
             try {
                 //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-torre-vertical/8x8.txt"));
+                gameManager.loadGame(new File("test-files/test-ponei-magico/8x8-colisao-even-quadrants.txt"));
             } catch (Exception e) {
             }
 
@@ -37,7 +36,7 @@ public class TestTorreVertical {
 
 
             Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreVertical_invalid_vertical successfully from: (")
+                    new StringBuilder("test_PoneiMagico_colisionsEvenQuadrants moved successfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -48,16 +47,14 @@ public class TestTorreVertical {
     }
 
     @Test
-    public void test_TorreVertical_invalid_diagonals() {
+    public void test_PoneiMagico_colisionsOddQuadrants() {
 
         var x = 3;
         var y = 4;
 
         int[][] moves = {
-                {x, y, x + 1, y + 1},  // Diagonal move (invalid)
-                {x, y, x - 1, y + 1},  // Diagonal move (invalid)
-                {x, y, x + 1, y - 1},  // Diagonal move (invalid)
-                {x, y, x - 1, y - 1},  // Diagonal move (invalid)
+                {x, y, x + 2, y + 2},
+                {x, y, x - 2, y - 2},
         };
 
 
@@ -65,7 +62,8 @@ public class TestTorreVertical {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-vertical/8x8.txt"));
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-ponei-magico/8x8-colisao-odd-quadrants.txt"));
             } catch (Exception e) {
             }
 
@@ -76,7 +74,7 @@ public class TestTorreVertical {
 
 
             Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreVertical_invalid_diagonals moved successfuly: (")
+                    new StringBuilder("test_PoneiMagico_colisionsEvenQuadrants moved successfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -86,16 +84,18 @@ public class TestTorreVertical {
         }
     }
 
+
     @Test
-    public void test_TorreVertical_valid_verticals() {
+    public void test_PoneiMagico_validMovementsFromCenter() {
 
         var x = 3;
         var y = 4;
 
-        //vertical moves
         int[][] moves = {
-                {x, y, x, y + 2},
-                {x, y, x, y - 1},
+                {x, y, x - 2, y - 2},
+                {x, y, x + 2, y - 2},
+                {x, y, x + 2, y + 2},
+                {x, y, x - 2, y + 2},
         };
 
 
@@ -103,7 +103,8 @@ public class TestTorreVertical {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-vertical/8x8.txt"));
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-ponei-magico/8x8.txt"));
             } catch (Exception e) {
             }
 
@@ -114,7 +115,7 @@ public class TestTorreVertical {
 
 
             Assertions.assertTrue(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreVertical_valid_verticals moved unsuccessfuly: (")
+                    new StringBuilder("test_PoneiMagico_validMovementsFromCenter moved unsuccessfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -125,14 +126,13 @@ public class TestTorreVertical {
     }
 
     @Test
-    public void test_TorreVertical_collisions() {
+    public void test_PoneiMagico_with_obstruction_in_one_path() {
 
-        var x = 3;
-        var y = 4;
+        var x = 4;
+        var y = 2;
 
         int[][] moves = {
-                {x, y, x, y + 2},
-                {x, y, x, y - 2},
+                {x, y, x + 2, y + 2},
         };
 
 
@@ -140,7 +140,8 @@ public class TestTorreVertical {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-vertical/8x8-colisao-even-quadrants.txt"));
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-ponei-magico/8x8-colisao.txt"));
             } catch (Exception e) {
             }
 
@@ -150,8 +151,8 @@ public class TestTorreVertical {
             int endingY = move[3];
 
 
-            Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreVertical_collisions moved successfuly: (")
+            Assertions.assertTrue(gameManager.move(startingX, startingY, endingX, endingY),
+                    new StringBuilder("test_PoneiMagico_validMovementsFromCenter moved unsuccessfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -160,6 +161,7 @@ public class TestTorreVertical {
                             .toString());
         }
     }
+
 
 
 }

@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.pieces.Piece;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;

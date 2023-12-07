@@ -1,4 +1,4 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.behaviour;
 
 public class BehaviourData {
     int xStart;

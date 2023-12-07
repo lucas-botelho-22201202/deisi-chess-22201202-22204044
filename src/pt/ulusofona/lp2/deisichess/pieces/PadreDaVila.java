@@ -1,4 +1,9 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.pieces;
+
+import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
+import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
+import pt.ulusofona.lp2.deisichess.behaviour.BehaviourDiagonal;
+import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
 
 import java.util.ArrayList;
 

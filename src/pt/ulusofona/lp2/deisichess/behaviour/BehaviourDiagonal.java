@@ -1,6 +1,7 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.behaviour;
 
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.beans.BeanHelper;
+import pt.ulusofona.lp2.deisichess.Board;
+import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
 import java.util.ArrayList;
 

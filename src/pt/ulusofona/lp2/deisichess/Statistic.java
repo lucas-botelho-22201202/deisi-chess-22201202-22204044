@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.pieces.Piece;
+
 public class Statistic implements Cloneable {
     private int countCaptureBlack;
     private int countValidMovesBlack;
@@ -19,10 +21,10 @@ public class Statistic implements Cloneable {
 
     public void increaseCountCapture(int teamId) {
         switch (teamId) {
-            case Team.BLACK_TEAM -> {
+            case Piece.BLACK_TEAM -> {
                 countCaptureBlack++;
             }
-            case Team.WHITE_TEAM -> {
+            case Piece.WHITE_TEAM -> {
                 countCaptureWhite++;
             }
         }
@@ -30,10 +32,10 @@ public class Statistic implements Cloneable {
 
     public void increaseCountValidMoves(int teamId) {
         switch (teamId) {
-            case Team.BLACK_TEAM -> {
+            case Piece.BLACK_TEAM -> {
                 countValidMovesBlack++;
             }
-            case Team.WHITE_TEAM -> {
+            case Piece.WHITE_TEAM -> {
                 countValidMovesWhite++;
             }
         }
@@ -41,10 +43,10 @@ public class Statistic implements Cloneable {
 
     public void increaseCountInvalidMoves(int teamId) {
         switch (teamId) {
-            case Team.BLACK_TEAM -> {
+            case Piece.BLACK_TEAM -> {
                 countInvalidMovesBlack++;
             }
-            case Team.WHITE_TEAM -> {
+            case Piece.WHITE_TEAM -> {
                 countInvalidMovesWhite++;
             }
         }
@@ -79,10 +81,10 @@ public class Statistic implements Cloneable {
                 .append("Resultado: ");
 
         switch (winningTeam) {
-            case Team.BLACK_TEAM -> {
+            case Piece.BLACK_TEAM -> {
                 statisticBuilder.append("VENCERAM AS PRETAS");
             }
-            case Team.WHITE_TEAM -> {
+            case Piece.WHITE_TEAM -> {
                 statisticBuilder.append("VENCERAM AS BRANCAS");
             }
             default -> {

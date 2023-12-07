@@ -1,23 +1,25 @@
-package pt.ulusofona.lp2.deisichess;
+package pt.ulusofona.lp2.deisichess.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pt.ulusofona.lp2.deisichess.GameManager;
 
 import java.io.File;
 
-public class TestTorreHorizontal {
+public class TestRainha {
     @Test
-    public void test_TorreHorizontal_valid_horizontal() {
+    public void test_Rainha_valid_moves_top_left() {
 
-        var x = 3;
-        var y = 4;
+        var x = 0;
+        var y = 0;
 
         int[][] moves = {
-                {x, y, x + 1, y},  // Horizontal move to the right (one step)
-                {x, y, x + 3, y},  // Horizontal move to the right (three step)
-                {x, y, x - 1, y},  // Horizontal move to the left (one step)
-                {x, y, x - 3, y},  // Horizontal move to the left (three step)
-
+                {x, y, x + 1, y},       // valido direita
+                {x, y, x + 5, y},       // valido direita
+                {x, y, x, y + 1},       // valido baixo
+                {x, y, x, y + 5},       // valido baixo
+                {x, y, x + 5, y + 5},       // valido direita baixo
+                {x, y, x + 1, y + 1},       // valido baixo direita
         };
 
 
@@ -26,7 +28,7 @@ public class TestTorreHorizontal {
 
             try {
                 //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
+                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
             } catch (Exception e) {
             }
 
@@ -37,7 +39,7 @@ public class TestTorreHorizontal {
 
 
             Assertions.assertTrue(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreHorizontal_valid_horizontal failed moving from: (")
+                    new StringBuilder("test_Rainha_valid_moves_freely_from_top_left failed moving from: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -48,17 +50,18 @@ public class TestTorreHorizontal {
     }
 
     @Test
-    public void test_TorreHorizontal_invalid_diagonals(){
+    public void test_Rainha_valid_moves_bottom_right() {
 
-        var x = 3;
-        var y = 4;
+        var x = 7;
+        var y = 7;
 
-        //bad diagonals
         int[][] moves = {
-                {x, y, x + 1, y + 1},  // Diagonal move (invalid)
-                {x, y, x - 1, y + 1},  // Diagonal move (invalid)
-                {x, y, x + 1, y - 1},  // Diagonal move (invalid)
-                {x, y, x - 1, y - 1},  // Diagonal move (invalid)
+                {x, y, x - 1, y},       // valido direita
+                {x, y, x - 5, y},       // valido direita
+                {x, y, x, y - 1},       // valido baixo
+                {x, y, x, y - 5},       // valido baixo
+                {x, y, x - 5, y - 5},       // valido direita baixo
+                {x, y, x - 1, y - 1},       // valido baixo preto
         };
 
 
@@ -66,7 +69,8 @@ public class TestTorreHorizontal {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
             } catch (Exception e) {
             }
 
@@ -76,8 +80,8 @@ public class TestTorreHorizontal {
             int endingY = move[3];
 
 
-            Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreHorizontal_invalid_diagonals moved successfuly: (")
+            Assertions.assertTrue(gameManager.move(startingX, startingY, endingX, endingY),
+                    new StringBuilder("test_Rainha_valid_moves_freely_from_top_left failed moving from: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -88,15 +92,16 @@ public class TestTorreHorizontal {
     }
 
     @Test
-    public void test_TorreHorizontal_invalid_verticals(){
+    public void test_Rainha_invalid_moves_from_center(){
 
         var x = 3;
         var y = 4;
 
-        //vertical moves
         int[][] moves = {
-                {x, y, x, y + 2},
-                {x, y, x, y - 1},
+                {x, y, x + 1, y + 2},
+                {x, y, x + 1, y - 2},
+                {x, y, x -1 , y - 2},
+                {x, y, x -1 , y + 2},
         };
 
 
@@ -104,7 +109,8 @@ public class TestTorreHorizontal {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
             } catch (Exception e) {
             }
 
@@ -115,7 +121,7 @@ public class TestTorreHorizontal {
 
 
             Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreHorizontal_invalid_verticals moved successfuly: (")
+                    new StringBuilder("test_Rainha_invalid_moves_from_center moved successfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
@@ -124,15 +130,17 @@ public class TestTorreHorizontal {
                             .toString());
         }
     }
+
+
     @Test
-    public void test_TorreHorizontal_collisions(){
+    public void test_Rainha_colisions(){
 
         var x = 3;
         var y = 4;
 
         int[][] moves = {
-                {x, y, x + 2, y},
-                {x, y, x - 2, y},
+                {x, y, x - 1, y - 1},
+                {x, y, x + 1, y},
         };
 
 
@@ -140,7 +148,8 @@ public class TestTorreHorizontal {
             var gameManager = new GameManager();
 
             try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8-colisao-even-quadrants.txt"));
+                //ensures that piece is always starting on the same place
+                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha-colisao.txt"));
             } catch (Exception e) {
             }
 
@@ -151,7 +160,7 @@ public class TestTorreHorizontal {
 
 
             Assertions.assertFalse(gameManager.move(startingX, startingY, endingX, endingY),
-                    new StringBuilder("test_TorreHorizontal_collisions moved successfuly: (")
+                    new StringBuilder("test_Rainha_colisions moved successfuly: (")
                             .append(startingX).append(":")
                             .append(startingY).append(")")
                             .append(" to: (")
