@@ -15,6 +15,12 @@ public class TestGameManager {
 
         var gameManager = new GameManager();
 
+        try {
+            gameManager.loadGame(new File("test-files/4x4.txt"));
+
+        } catch (Exception e) {
+        }
+
         int[][] moves = {
                 {1, 0, 1, 1},
                 {1, 2, 1, 1},
@@ -25,13 +31,6 @@ public class TestGameManager {
         };
 
         for (int[] move : moves) {
-
-
-            try {
-                gameManager.loadGame(new File("test-files/4x4.txt"));
-
-            } catch (Exception e) {
-            }
 
             int x0 = move[0];
             int y0 = move[1];
@@ -58,6 +57,11 @@ public class TestGameManager {
     public void test_White_Victory_1Move() {
         var gameManager = new GameManager();
 
+        try {
+            gameManager.loadGame(new File("test-files/4x4_1move_victory_white.txt"));
+
+        } catch (Exception e) {
+        }
 
         int[][] moves = {
                 {0, 0, 1, 1},
@@ -65,13 +69,6 @@ public class TestGameManager {
         };
 
         for (int[] move : moves) {
-
-            try {
-                gameManager.loadGame(new File("test-files/4x4_1move_victory_white.txt"));
-
-            } catch (Exception e) {
-            }
-
             int x0 = move[0];
             int y0 = move[1];
             int x1 = move[2];
@@ -99,6 +96,12 @@ public class TestGameManager {
     public void test_Draw_10_Sequencial_moves_without_capturing() {
         var gameManager = new GameManager();
 
+        try {
+            gameManager.loadGame(new File("test-files/4x4.txt"));
+
+        } catch (Exception e) {
+
+        }
 
         int[][] moves = {
                 {1, 0, 1, 1},//preta
@@ -117,13 +120,6 @@ public class TestGameManager {
 
         int countMoves = 0;
         for (int[] move : moves) {
-
-            try {
-                gameManager.loadGame(new File("test-files/4x4.txt"));
-
-            } catch (Exception e) {
-
-            }
 
             int x0 = move[0];
             int y0 = move[1];
