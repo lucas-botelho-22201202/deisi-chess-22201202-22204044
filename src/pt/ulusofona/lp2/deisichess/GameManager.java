@@ -2,10 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameManager {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
@@ -13,8 +10,13 @@ public class GameManager {
     private int numMoves = 0;
     private Board board = new Board();
     private Statistic statistic = new Statistic();
+    private Stack<GameState> gameStates = new Stack<>();
 
     public GameManager() {
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     public void increaseNumMoves() {
@@ -50,6 +52,8 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
+
+        gameStates.push(new GameState((Board) board.clone(), (Statistic) statistic.clone()));
         if (!board.isValidCoordinate(x0, y0) || !board.isValidCoordinate(x1, y1)) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
@@ -67,8 +71,7 @@ public class GameManager {
             return false;
         }
 
-        if (!piecePlaying.isValidMove(board.pieces(), x1, y1))
-        {
+        if (!piecePlaying.isValidMove(board.pieces(), x1, y1)) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
@@ -157,11 +160,62 @@ public class GameManager {
         return new AuthorsPanelBuilder().GetCustomJPanel();
     }
 
-    public void saveGame(File file) throws IOException {
+    public String getPieceIDInEachSquare(){
+        int boardSize = board.getBoardSize();
+        String result = "";
 
+        for (int row = 0; row < boardSize; row++) {
+            String line = "";
+            for (int column = 0; column < boardSize; column++) {
+                String id = "0";
+                if(getSquareInfo(column, row) != null && getSquareInfo(column, row).length > 0){
+                    id = getSquareInfo(column,row)[0];
+                }
+
+                if(column == boardSize-1){
+                    line += id;
+                }else{
+                    line += id + ":";
+                }
+            }
+            result += line +"\n";
+        }
+        return result;
+    }
+
+    public boolean isGameOver(){
+        return statistic.getWinningTeam() != -1;
+    }
+
+    public void saveGame(File file) throws IOException {
+        if (!isGameOver()){
+            int boardSize = board.getBoardSize();
+            int numPieces = board.getAmountOfPieces();
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(boardSize + "\n" + numPieces);
+                writer.newLine();
+                for(int i = 0; i<numPieces;i++){
+                    Piece piece = board.getPiecesById(i+1);
+                    writer.write(piece.infoToFile() + "\n");
+                }
+                writer.write(getPieceIDInEachSquare());
+                writer.write(getCurrentTeamID() + "\n");
+                writer.write(statistic.statisticsToFile());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void undo() {
+        var previousState = gameStates.pop();
+
+        if (previousState != null) {
+            this.board = previousState.getBoard();
+            this.statistic = previousState.getStatistic();
+        }
     }
 
     public java.util.List<Comparable> getHints(int x, int y) {

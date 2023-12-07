@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import java.util.ArrayList;
 
-public abstract class Piece {
+public abstract class Piece implements Cloneable {
     //region constants
     static final int BLACK_TEAM = 10;
     static final int WHITE_TEAM = 20;
@@ -100,6 +100,19 @@ public abstract class Piece {
         this.setStatus(PIECE_IS_CAPTURED);
     }
 
+    public String infoToFile(){
+        String pieceID = String.valueOf(uniqueId);
+        String pieceType = String.valueOf(type);
+        String pieceTeam = String.valueOf(team);
+        String pieceNickName = getNickName();
+        int x = getX();
+        int y = getY();
+
+        String result = pieceID + ":" + pieceType + ":" + pieceTeam + ":" + pieceNickName + ": (" + x + ", " + y + ")";
+
+        return result;
+    }
+
     public void initiateIngame(int x, int y) {
         this.setStatus(Piece.PIECE_IN_GAME);
         this.setX(x);
@@ -145,17 +158,17 @@ public abstract class Piece {
     public ArrayList<Behaviour> getBehaviours() {
         return behaviours;
     }
-
-
-//    protected Direction getMovementDirection(int x, int y) throws InvalidDirectionException {
-//
-//        var behaviourData = new BehaviourData(getX(), getY(), x, y);
-//        Direction direction = null;
-//
-//        for (Behaviour behaviour : getBehaviours()) {
-//            behaviour.calculateDirection(behaviourData);
-//        }
-//
-//        return direction;
-//    }
+    @Override
+    public Object clone() {
+        try {
+            Piece clonedPiece = (Piece) super.clone();
+            clonedPiece.behaviours = new ArrayList<>(this.behaviours.size());
+            for (Behaviour behaviour : this.behaviours) {
+                clonedPiece.behaviours.add((Behaviour) behaviour.clone());
+            }
+            return clonedPiece;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
+    }
 }
