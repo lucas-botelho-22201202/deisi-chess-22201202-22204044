@@ -162,7 +162,7 @@ public class GameManager {
         return new AuthorsPanelBuilder().GetCustomJPanel();
     }
 
-    public String getPieceIDInEachSquare(){
+    public String getPieceIDInEachSquare() {
         int boardSize = board.getBoardSize();
         String result = "";
 
@@ -170,35 +170,35 @@ public class GameManager {
             String line = "";
             for (int column = 0; column < boardSize; column++) {
                 String id = "0";
-                if(getSquareInfo(column, row) != null && getSquareInfo(column, row).length > 0){
-                    id = getSquareInfo(column,row)[0];
+                if (getSquareInfo(column, row) != null && getSquareInfo(column, row).length > 0) {
+                    id = getSquareInfo(column, row)[0];
                 }
 
-                if(column == boardSize-1){
+                if (column == boardSize - 1) {
                     line += id;
-                }else{
+                } else {
                     line += id + ":";
                 }
             }
-            result += line +"\n";
+            result += line + "\n";
         }
         return result;
     }
 
-    public boolean isGameOver(){
+    public boolean isGameOver() {
         return statistic.getWinningTeam() != -1;
     }
 
     public void saveGame(File file) throws IOException {
-        if (!isGameOver()){
+        if (!isGameOver()) {
             int boardSize = board.getBoardSize();
             int numPieces = board.getAmountOfPieces();
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(boardSize + "\n" + numPieces);
                 writer.newLine();
-                for(int i = 0; i<numPieces;i++){
-                    Piece piece = board.getPieceById(i+1);
+                for (int i = 0; i < numPieces; i++) {
+                    Piece piece = board.getPieceById(i + 1);
                     writer.write(piece.infoToFile() + "\n");
                 }
                 writer.write(getPieceIDInEachSquare());
@@ -212,11 +212,13 @@ public class GameManager {
     }
 
     public void undo() {
-        var previousState = gameStates.pop();
+        if (!gameStates.empty()) {
+            var previousState = gameStates.pop();
 
-        if (previousState != null) {
-            this.board = previousState.getBoard();
-            this.statistic = previousState.getStatistic();
+            if (previousState != null) {
+                this.board = previousState.getBoard();
+                this.statistic = previousState.getStatistic();
+            }
         }
     }
 
