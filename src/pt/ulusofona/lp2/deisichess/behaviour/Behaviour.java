@@ -80,4 +80,15 @@ public abstract class Behaviour implements Cloneable{
             throw new InternalError(e);
         }
     }
+
+    protected void setInitialVirtualPosition(BehaviourData behaviorData) {
+        virtualX = behaviorData.xStart;
+        virtualY = behaviorData.yStart;
+    }
+
+    protected boolean isOneSlotBehindDestination(int currentX, int currentY, int endX, int endY) {
+        return Math.abs(currentX - endX) <= 1 && Math.abs(currentY - endY) <= 1;
+    }
+
+
 }

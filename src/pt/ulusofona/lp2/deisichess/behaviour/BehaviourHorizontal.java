@@ -24,10 +24,9 @@ public class BehaviourHorizontal extends Behaviour {
 
     @Override
     public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
-        virtualX = behaviorData.xStart;
-        virtualY = behaviorData.yStart;
+        setInitialVirtualPosition(behaviorData);
 
-        while (virtualX != behaviorData.xEnd || virtualY != behaviorData.yEnd) {
+        while (!isOneSlotBehindDestination(virtualX, virtualY, behaviorData.xEnd, behaviorData.yEnd)) {
 
             switch (this.getDirection()) {
                 case LEFT -> moveLeft();
@@ -56,16 +55,15 @@ public class BehaviourHorizontal extends Behaviour {
     @Override
     public void calculateDirection(BehaviourData behaviorData) {
         var isLeft = BehaviourHorizontal.isLeft(behaviorData.xStart, behaviorData.xEnd);
-        setDirection( isLeft ? Direction.LEFT : Direction.RIGHT);
+        setDirection(isLeft ? Direction.LEFT : Direction.RIGHT);
     }
 
 
-
-    public static boolean isLeft(int xStart, int xEnd){
+    public static boolean isLeft(int xStart, int xEnd) {
         return xEnd < xStart;
     }
 
-    public static boolean isRight(int xStart, int xEnd){
+    public static boolean isRight(int xStart, int xEnd) {
         return xEnd > xStart;
     }
 }

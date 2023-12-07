@@ -53,7 +53,7 @@ public class Board implements Cloneable{
         return boardPieces;
     }
 
-    public Piece getPiecesById(int Id) {
+    public Piece getPieceById(int Id) {
         for (Piece piece : this.pieces()) {
             if (piece.getUniqueId() == Id) {
                 return piece;
@@ -102,7 +102,7 @@ public class Board implements Cloneable{
 
     public boolean squareHasPiece(int x, int y) {
         for (int i = 0; i < pieces().size(); i++) {
-            Piece piece = getPiecesById(i);
+            Piece piece = getPieceById(i);
             if (piece.getX() == x && piece.getY() == y) {
                 return true;
             }
@@ -163,7 +163,7 @@ public class Board implements Cloneable{
 
             var lineHasPieceId = Integer.parseInt(lineElement) != 0;
             if (lineHasPieceId) {
-                Piece piece = getPiecesById(Integer.parseInt(lineElement));
+                Piece piece = getPieceById(Integer.parseInt(lineElement));
                 if (piece != null) {
                     piece.initiateIngame(x, y);
                 }

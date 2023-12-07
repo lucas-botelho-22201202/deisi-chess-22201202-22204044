@@ -44,12 +44,6 @@ public class BehaviourLShape extends Behaviour {
         return hasCollisionOnCurrentSection(behaviorData, boardPieces);
     }
 
-
-    private void setInitialVirtualPosition(BehaviourData behaviorData) {
-        virtualX = behaviorData.xStart;
-        virtualY = behaviorData.yStart;
-    }
-
     private void simulateMovement() {
         switch (direction) {
             case UP_LEFT, UP_RIGHT -> moveUp();

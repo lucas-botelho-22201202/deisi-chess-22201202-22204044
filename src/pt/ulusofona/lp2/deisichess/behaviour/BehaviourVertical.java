@@ -25,10 +25,9 @@ public class BehaviourVertical extends Behaviour {
 
     @Override
     public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
-        virtualX = behaviorData.xStart;
-        virtualY = behaviorData.yStart;
+        setInitialVirtualPosition(behaviorData);
 
-        while (virtualX != behaviorData.xEnd || virtualY != behaviorData.yEnd) {
+        while (!isOneSlotBehindDestination(virtualX, virtualY, behaviorData.xEnd, behaviorData.yEnd)) {
 
             switch (this.getDirection()) {
                 case UP -> moveUp();

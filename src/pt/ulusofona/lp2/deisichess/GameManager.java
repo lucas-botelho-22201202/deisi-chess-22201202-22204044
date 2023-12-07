@@ -108,12 +108,12 @@ public class GameManager {
     }
 
     public String[] getPieceInfo(int ID) {
-        var piece = board.getPiecesById(ID);
+        var piece = board.getPieceById(ID);
         return piece == null ? new String[0] : piece.infoToArray();
     }
 
     public String getPieceInfoAsString(int ID) {
-        var piece = board.getPiecesById(ID);
+        var piece = board.getPieceById(ID);
         return piece == null ? "" : piece.toString();
     }
 
@@ -198,7 +198,7 @@ public class GameManager {
                 writer.write(boardSize + "\n" + numPieces);
                 writer.newLine();
                 for(int i = 0; i<numPieces;i++){
-                    Piece piece = board.getPiecesById(i+1);
+                    Piece piece = board.getPieceById(i+1);
                     writer.write(piece.infoToFile() + "\n");
                 }
                 writer.write(getPieceIDInEachSquare());

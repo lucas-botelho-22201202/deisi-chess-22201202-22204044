@@ -99,6 +99,8 @@ public abstract class Piece implements Cloneable {
     }
 
     public void kill() {
+        x = -1;
+        y = -1;
         this.setStatus(PIECE_IS_CAPTURED);
     }
 
@@ -142,15 +144,6 @@ public abstract class Piece implements Cloneable {
         }
 
         return sb.toString();
-    }
-
-
-    public void moveX(int distance) {
-        this.x += distance;
-    }
-
-    public void moveY(int distance) {
-        this.y += distance;
     }
 
     protected void addBehaviour(Behaviour behaviour) {
