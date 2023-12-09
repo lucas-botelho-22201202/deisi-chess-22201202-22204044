@@ -19,8 +19,11 @@ public abstract class Behaviour implements Cloneable {
     public abstract boolean isVertical();
 
     public abstract boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces);
+
     public abstract boolean isValid(BehaviourData behaviorData);
+
     public abstract void calculateDirection(BehaviourData behaviorData);
+
     public abstract ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize);
 
     protected boolean isDifferentThanStartingPosition(BehaviourData behaviorData) {
@@ -67,6 +70,26 @@ public abstract class Behaviour implements Cloneable {
 
     protected void moveRight() {
         virtualX += 1;
+    }
+
+    protected void moveUpLeft() {
+        moveUp();
+        moveLeft();
+    }
+
+    protected void moveUpRight() {
+        moveUp();
+        moveRight();
+    }
+
+    protected void moveDownLeft() {
+        moveLeft();
+        moveDown();
+    }
+
+    protected void moveDownRight() {
+        moveRight();
+        moveDown();
     }
 
     @Override

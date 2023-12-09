@@ -57,6 +57,19 @@ public class BehaviourLShape extends Behaviour {
         }
     }
 
+    private void simulateMovement(Direction direction) {
+        switch (direction) {
+            case UP_LEFT, UP_RIGHT -> moveUp();
+            case DOWN_LEFT, DOWN_RIGHT -> moveDown();
+            case LEFT_DOWN, LEFT_UP -> moveLeft();
+            case RIGHT_DOWN, RIGHT_UP -> moveRight();
+            case UP -> moveUp();
+            case DOWN -> moveDown();
+            case LEFT -> moveLeft();
+            case RIGHT -> moveRight();
+        }
+    }
+
     private void switchMovementDirection(BehaviourData behaviorData) {
 
         setInitialVirtualPosition(behaviorData);
@@ -138,7 +151,43 @@ public class BehaviourLShape extends Behaviour {
 
     @Override
     public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
-        return null;
+        var directions = new ArrayList<Direction>();
+        directions.add(Direction.UP_LEFT);
+        directions.add(Direction.UP_RIGHT);
+        directions.add(Direction.DOWN_LEFT);
+        directions.add(Direction.DOWN_RIGHT);
+        setDirection(Direction.UP_LEFT);
+
+        var possibleMovements = new ArrayList<ArrayList<Integer>>();
+        for (Direction d : directions) {
+
+            setInitialVirtualPosition(behaviorData);
+
+            for (int i = 1; i <= range; i++) {
+                switch (this.getDirection()) {
+                    case UP_LEFT -> moveUpLeft();
+                    case UP_RIGHT -> moveUpRight();
+                    case DOWN_LEFT -> moveDownLeft();
+                    case DOWN_RIGHT -> moveDownRight();
+
+                }
+            }
+
+            if (Board.isValidCoordinate(virtualX, virtualY, boardSize)) {
+                var xyPair = new ArrayList<Integer>();
+                xyPair.add(virtualX);
+                xyPair.add(virtualY);
+                possibleMovements.add(xyPair);
+            }
+
+            switch (d) {
+                case UP_LEFT -> setDirection(Direction.UP_RIGHT);
+                case UP_RIGHT -> setDirection(Direction.DOWN_LEFT);
+                case DOWN_LEFT -> setDirection(Direction.DOWN_RIGHT);
+            }
+        }
+
+        return possibleMovements;
     }
 
 }

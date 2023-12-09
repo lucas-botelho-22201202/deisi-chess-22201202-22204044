@@ -110,28 +110,4 @@ public class BehaviourDiagonal extends Behaviour {
 
         return possibleMovements;
     }
-
-    //region static methods
-    public void moveUpLeft() {
-        moveUp();
-        moveLeft();
-    }
-
-    public void moveUpRight() {
-        moveUp();
-        moveRight();
-    }
-
-    public void moveDownLeft() {
-        moveLeft();
-        moveDown();
-    }
-
-    public void moveDownRight() {
-        moveRight();
-        moveDown();
-    }
-    //endregion
-
-
 }
