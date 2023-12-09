@@ -136,4 +136,9 @@ public class BehaviourLShape extends Behaviour {
 
     }
 
+    @Override
+    public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
+        return null;
+    }
+
 }

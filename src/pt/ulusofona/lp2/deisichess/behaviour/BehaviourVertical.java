@@ -58,6 +58,43 @@ public class BehaviourVertical extends Behaviour {
         setDirection(isUp ? Direction.UP : Direction.DOWN);
     }
 
+    @Override
+    public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
+
+        var directions = new ArrayList<Direction>();
+        directions.add(Direction.UP);
+        directions.add(Direction.DOWN);
+        setDirection(Direction.UP);
+
+        var possibleMovements = new ArrayList<ArrayList<Integer>>();
+        for (Direction direction : directions) {
+
+            setInitialVirtualPosition(behaviorData);
+
+            for (int i = 1; i <= range; i++) {
+
+                switch (this.getDirection()) {
+                    case UP -> moveUp();
+                    case DOWN -> moveDown();
+                }
+
+                if (Board.isValidCoordinate(virtualX, virtualY, boardSize)) {
+                    var xyPair = new ArrayList<Integer>();
+                    xyPair.add(virtualX);
+                    xyPair.add(virtualY);
+                    possibleMovements.add(xyPair);
+                }
+            }
+
+            switch (direction) {
+                case UP -> setDirection(Direction.DOWN);
+                case DOWN -> setDirection(Direction.UP);
+            }
+        }
+
+        return possibleMovements;
+    }
+
     public static boolean isUp(int yStart, int yEnd) {
         return yEnd < yStart;
     }

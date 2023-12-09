@@ -225,24 +225,32 @@ public class GameManager {
     public java.util.List<Comparable> getHints(int x, int y) {
         var piece = Board.getPieceAt(x, y, board.pieces());
 
-        var movements = piece.forseeMovements(board.pieces(), board.getBoardSize());
+        var isValidPiece = piece != null && piece.getTeam() == getCurrentTeamID();
+        if (isValidPiece) {
+            var movements = piece.forseeMovements(board.pieces(), board.getBoardSize());
 
-        var hintList = new ArrayList<Comparable>();
+            var hintList = new ArrayList<Comparable>();
 
-        for (ArrayList<Integer> positions : movements) {
+            for (ArrayList<Integer> position : movements) {
 
-            if (piece.isValidMove(board.pieces(), positions.get(0), positions.get(1))) {
-
-                var pieceAtDestination = Board.getPieceAt(positions.get(0), positions.get(1), board.pieces());
-                int points = (pieceAtDestination != null && this.getCurrentTeamID() != pieceAtDestination.getTeam())
-                        ? pieceAtDestination.getPoints()
-                        : 0;
-
-                hintList.add(new Hint(points, positions.get(0), positions.get(1)));
+                if (piece.isValidMove(board.pieces(), position.get(0), position.get(1))) {
+                    var pieceAtDestination = Board.getPieceAt(position.get(0), position.get(1), board.pieces());
+                    if (pieceAtDestination != null) {
+                        if (this.getCurrentTeamID() != pieceAtDestination.getTeam()) {
+                            hintList.add(new Hint(pieceAtDestination.getPoints(), position.get(0), position.get(1)));
+                        }
+                    } else {
+                        hintList.add(new Hint(position.get(0), position.get(1)));
+                    }
+                }
             }
+
+            Collections.sort(hintList);
+
+            return hintList;
         }
 
-        return hintList;
+        return new ArrayList<>();
     }
 
     public Map<String, String> customizeBoard() {

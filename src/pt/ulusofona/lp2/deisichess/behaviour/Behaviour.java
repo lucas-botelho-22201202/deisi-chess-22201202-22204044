@@ -19,10 +19,9 @@ public abstract class Behaviour implements Cloneable {
     public abstract boolean isVertical();
 
     public abstract boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces);
-
     public abstract boolean isValid(BehaviourData behaviorData);
-
     public abstract void calculateDirection(BehaviourData behaviorData);
+    public abstract ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize);
 
     protected boolean isDifferentThanStartingPosition(BehaviourData behaviorData) {
         return behaviorData.xStart != behaviorData.xEnd || behaviorData.yStart != behaviorData.yEnd;
@@ -86,13 +85,7 @@ public abstract class Behaviour implements Cloneable {
         virtualY = behaviorData.yStart;
     }
 
-
     protected boolean isOneSlotBehindDestination(int currentX, int currentY, int endX, int endY) {
         return Math.abs(currentX - endX) <= 1 && Math.abs(currentY - endY) <= 1;
     }
-
-    public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
-        return null;
-    }
-
 }

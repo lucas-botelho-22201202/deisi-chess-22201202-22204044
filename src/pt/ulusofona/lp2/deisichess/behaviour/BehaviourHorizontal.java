@@ -59,6 +59,43 @@ public class BehaviourHorizontal extends Behaviour {
     }
 
 
+    @Override
+    public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
+
+        var directions = new ArrayList<Direction>();
+        directions.add(Direction.LEFT);
+        directions.add(Direction.RIGHT);
+        setDirection(Direction.LEFT);
+
+        var possibleMovements = new ArrayList<ArrayList<Integer>>();
+        for (Direction direction : directions) {
+
+            setInitialVirtualPosition(behaviorData);
+
+            for (int i = 1; i <= range; i++) {
+
+                switch (this.getDirection()) {
+                    case LEFT -> moveLeft();
+                    case RIGHT -> moveRight();
+                }
+
+                if (Board.isValidCoordinate(virtualX, virtualY, boardSize)) {
+                    var xyPair = new ArrayList<Integer>();
+                    xyPair.add(virtualX);
+                    xyPair.add(virtualY);
+                    possibleMovements.add(xyPair);
+                }
+            }
+
+            switch (direction) {
+                case LEFT -> setDirection(Direction.RIGHT);
+                case RIGHT -> setDirection(Direction.LEFT);
+            }
+        }
+
+        return possibleMovements;
+    }
+
     public static boolean isLeft(int xStart, int xEnd) {
         return xEnd < xStart;
     }

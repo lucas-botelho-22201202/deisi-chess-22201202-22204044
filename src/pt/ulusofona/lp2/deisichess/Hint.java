@@ -12,6 +12,12 @@ public class Hint implements Comparable<Hint> {
         this.y = y;
     }
 
+    public Hint(int x, int y) {
+        this.x = x;
+        this.y = y;
+        points = 0;
+    }
+
     public int getPoints() {
         return points;
     }
@@ -26,6 +32,12 @@ public class Hint implements Comparable<Hint> {
 
     @Override
     public int compareTo(Hint o) {
-        return Math.max(this.points, o.getPoints());
+        return Integer.compare(o.getPoints(), this.points);
+    }
+
+
+    @Override
+    public String toString() {
+        return "(" + x + ","+y+")->" + points;
     }
 }
