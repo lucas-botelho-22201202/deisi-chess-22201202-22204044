@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
 import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
+import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public abstract class Piece implements Cloneable {
     private String status = Piece.PIECE_IS_CAPTURED; // em jogo ou capturado
     protected String png;
     protected int movementRange;
+    protected int points;
+
     private ArrayList<Behaviour> behaviours = new ArrayList<>();
 
     //endregion
@@ -69,7 +72,12 @@ public abstract class Piece implements Cloneable {
     public String getPng() {
         return png;
     }
-//endregion
+
+    public int getPoints() {
+        return points;
+    }
+
+    //endregion
     //region setters
 
     public void setX(int x) {
@@ -153,6 +161,18 @@ public abstract class Piece implements Cloneable {
     public ArrayList<Behaviour> getBehaviours() {
         return behaviours;
     }
+
+    public ArrayList<ArrayList<Integer>> forseeMovements(ArrayList<Piece> boardPieces, int boardSize) {
+
+        var possibleMovements = new ArrayList<ArrayList<Integer>>();
+
+        for (Behaviour behaviour : behaviours) {
+            possibleMovements.addAll(behaviour.forseeMovements(new BehaviourData(x, y, -1,-1), boardPieces, movementRange, boardSize));
+        }
+
+        return possibleMovements;
+    }
+
     @Override
     public Object clone() {
         try {

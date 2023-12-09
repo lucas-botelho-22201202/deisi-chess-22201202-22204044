@@ -17,6 +17,7 @@ public class Rei extends Piece {
             case Piece.BLACK_TEAM -> this.png = Rei.BLACK_PNG;
             case Piece.WHITE_TEAM -> this.png = Rei.WHITE_PNG;
         }
+        points = 1000;
 
         addBehaviour(new BehaviourDiagonal());
         addBehaviour(new BehaviourHorizontal());

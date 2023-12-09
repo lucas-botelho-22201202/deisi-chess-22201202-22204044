@@ -19,6 +19,7 @@ public class TorreVertical extends Piece {
             case Piece.BLACK_TEAM -> this.png = TorreVertical.BLACK_PNG;
             case Piece.WHITE_TEAM -> this.png = TorreVertical.WHITE_PNG;
         }
+        points = 3;
 
         addBehaviour(new BehaviourVertical());
     }

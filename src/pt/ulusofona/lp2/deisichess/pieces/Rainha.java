@@ -17,6 +17,7 @@ public class Rainha extends Piece {
             case Piece.BLACK_TEAM -> this.png = Rainha.BLACK_PNG;
             case Piece.WHITE_TEAM -> this.png = Rainha.WHITE_PNG;
         }
+        points = 4;
 
         addBehaviour(new BehaviourDiagonal());
         addBehaviour(new BehaviourHorizontal());

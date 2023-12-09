@@ -5,7 +5,7 @@ import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
 import java.util.ArrayList;
 
-public abstract class Behaviour implements Cloneable{
+public abstract class Behaviour implements Cloneable {
 
     protected Direction direction;
 
@@ -86,9 +86,13 @@ public abstract class Behaviour implements Cloneable{
         virtualY = behaviorData.yStart;
     }
 
+
     protected boolean isOneSlotBehindDestination(int currentX, int currentY, int endX, int endY) {
         return Math.abs(currentX - endX) <= 1 && Math.abs(currentY - endY) <= 1;
     }
 
+    public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
+        return null;
+    }
 
 }

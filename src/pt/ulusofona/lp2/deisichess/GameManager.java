@@ -56,7 +56,7 @@ public class GameManager {
     public boolean move(int x0, int y0, int x1, int y1) {
 
         gameStates.push(new GameState((Board) board.clone(), (Statistic) statistic.clone()));
-        if (!board.isValidCoordinate(x0, y0) || !board.isValidCoordinate(x1, y1)) {
+        if (!Board.isValidCoordinate(x0, y0, getBoardSize()) || !Board.isValidCoordinate(x0, y0, getBoardSize())) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
@@ -223,7 +223,26 @@ public class GameManager {
     }
 
     public java.util.List<Comparable> getHints(int x, int y) {
-        return null;
+        var piece = Board.getPieceAt(x, y, board.pieces());
+
+        var movements = piece.forseeMovements(board.pieces(), board.getBoardSize());
+
+        var hintList = new ArrayList<Comparable>();
+
+        for (ArrayList<Integer> positions : movements) {
+
+            if (piece.isValidMove(board.pieces(), positions.get(0), positions.get(1))) {
+
+                var pieceAtDestination = Board.getPieceAt(positions.get(0), positions.get(1), board.pieces());
+                int points = (pieceAtDestination != null && this.getCurrentTeamID() != pieceAtDestination.getTeam())
+                        ? pieceAtDestination.getPoints()
+                        : 0;
+
+                hintList.add(new Hint(points, positions.get(0), positions.get(1)));
+            }
+        }
+
+        return hintList;
     }
 
     public Map<String, String> customizeBoard() {

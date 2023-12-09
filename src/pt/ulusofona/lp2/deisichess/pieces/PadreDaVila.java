@@ -20,6 +20,7 @@ public class PadreDaVila extends Piece {
             case Piece.WHITE_TEAM -> this.png = PadreDaVila.WHITE_PNG;
         }
 
+        points = 3;
         addBehaviour(new BehaviourDiagonal());
     }
 

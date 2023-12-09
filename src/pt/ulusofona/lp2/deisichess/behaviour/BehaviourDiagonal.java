@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess.behaviour;
 import pt.ulusofona.lp2.deisichess.Board;
 import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BehaviourDiagonal extends Behaviour {
@@ -67,6 +68,49 @@ public class BehaviourDiagonal extends Behaviour {
 
     }
 
+    @Override
+    public ArrayList<ArrayList<Integer>> forseeMovements(BehaviourData behaviorData, ArrayList<Piece> boardPieces, int range, int boardSize) {
+
+        var directions = new ArrayList<Direction>();
+        directions.add(Direction.UP_LEFT);
+        directions.add(Direction.UP_RIGHT);
+        directions.add(Direction.DOWN_LEFT);
+        directions.add(Direction.DOWN_RIGHT);
+        setDirection(Direction.UP_LEFT);
+
+        var possibleMovements = new ArrayList<ArrayList<Integer>>();
+        for (Direction d : directions) {
+
+            setInitialVirtualPosition(behaviorData);
+
+            for (int i = 1; i <= range; i++) {
+
+                switch (this.getDirection()) {
+                    case UP_LEFT -> moveUpLeft();
+                    case UP_RIGHT -> moveUpRight();
+                    case DOWN_LEFT -> moveDownLeft();
+                    case DOWN_RIGHT -> moveDownRight();
+
+                }
+
+                if (Board.isValidCoordinate(virtualX, virtualY, boardSize)) {
+                    var xyPair = new ArrayList<Integer>();
+                    xyPair.add(virtualX);
+                    xyPair.add(virtualY);
+                    possibleMovements.add(xyPair);
+                }
+            }
+
+            switch (d) {
+                case UP_LEFT -> setDirection(Direction.UP_RIGHT);
+                case UP_RIGHT -> setDirection(Direction.DOWN_LEFT);
+                case DOWN_LEFT -> setDirection(Direction.DOWN_RIGHT);
+            }
+        }
+
+        return possibleMovements;
+    }
+
     //region static methods
     public void moveUpLeft() {
         moveUp();
@@ -88,5 +132,6 @@ public class BehaviourDiagonal extends Behaviour {
         moveDown();
     }
     //endregion
+
 
 }

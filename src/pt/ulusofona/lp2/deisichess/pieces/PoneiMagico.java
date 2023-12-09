@@ -19,6 +19,7 @@ public class PoneiMagico extends Piece {
             case Piece.BLACK_TEAM -> this.png = PoneiMagico.BLACK_PNG;
             case Piece.WHITE_TEAM -> this.png = PoneiMagico.WHITE_PNG;
         }
+        points = 5;
 
         addBehaviour(new BehaviourLShape());
     }

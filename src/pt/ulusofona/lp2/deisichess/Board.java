@@ -133,9 +133,9 @@ public class Board implements Cloneable{
         return properties;
     }
 
-    public boolean isValidCoordinate(int x, int y) {
-        var isValidX = x >= 0 && x < this.getBoardSize();
-        var isValidY = y >= 0 && y < this.getBoardSize();
+    public static boolean isValidCoordinate(int x, int y, int boardSize) {
+        var isValidX = x >= 0 && x < boardSize;
+        var isValidY = y >= 0 && y < boardSize;
         return isValidX && isValidY;
     }
 
