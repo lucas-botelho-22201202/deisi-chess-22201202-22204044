@@ -68,7 +68,7 @@ public class Board implements Cloneable{
         try {
             for (int countLine = 1; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
-                addPiece(PieceFactory.CreatePiece(line));
+                addPiece(PieceFactory.createPiece(line));
             }
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException();

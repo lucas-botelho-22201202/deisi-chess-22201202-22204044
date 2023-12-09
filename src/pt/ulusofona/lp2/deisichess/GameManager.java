@@ -159,7 +159,7 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel() {
-        return new AuthorsPanelBuilder().GetCustomJPanel();
+        return new AuthorsPanelBuilder().getCustomJPanel();
     }
 
     public String getPieceIDInEachSquare() {
