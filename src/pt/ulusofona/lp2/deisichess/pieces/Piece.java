@@ -140,8 +140,21 @@ public abstract class Piece implements Cloneable {
     public String toString() {
         var sb = new StringBuilder();
 
+        String typeName = switch (type) {
+            case 0 -> "Rei";
+            case 1 -> "Rainha";
+            case 2 -> "PoneiMagico";
+            case 3 -> "PadreDaVila";
+            case 4 -> "TorreHorizontal";
+            case 5 -> "TorreVertical";
+//            case 6 -> "HomerSimpson";
+//            case 7 -> "Joker";
+            default -> "";
+        };
+
         sb.append(uniqueId).append(" | ")
-                .append(type).append(" | ")
+                .append(typeName).append(" | ")
+                .append(points == 1000 ? "(Infinito)" : points).append(" | ")
                 .append(team).append(" | ")
                 .append(nickName).append(" @ ");
 
