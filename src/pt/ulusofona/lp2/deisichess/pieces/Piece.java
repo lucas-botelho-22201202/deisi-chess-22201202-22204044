@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
+import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
 import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
 import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
 import pt.ulusofona.lp2.deisichess.observer.Observer;
@@ -38,8 +39,21 @@ public abstract class Piece extends Observer implements Cloneable {
         this.movementRange = movementRange;
     }
 
-    public abstract boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y);
+    public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
+        var behaviourData = new BehaviourData(getX(), getY(), x, y);
+        Behaviour behaviour;
 
+        try {
+            behaviour = Behaviour.getValidMovementBehaviour(behaviourData, getBehaviours(), movementRange);
+        } catch (InvalidBehaviourException e) {
+            return false;
+        }
+
+        behaviour.calculateDirection(behaviourData);
+
+
+        return !behaviour.hasCollision(behaviourData, boardPieces);
+    }
 
     //region getters
     public int getUniqueId() {
@@ -79,6 +93,7 @@ public abstract class Piece extends Observer implements Cloneable {
     }
 
     //endregion
+
     //region setters
 
     public void setX(int x) {
@@ -107,7 +122,7 @@ public abstract class Piece extends Observer implements Cloneable {
         return properties;
     }
 
-    public void kill() {
+    public void capture() {
         x = -1;
         y = -1;
         this.setStatus(PIECE_IS_CAPTURED);
@@ -137,39 +152,12 @@ public abstract class Piece extends Observer implements Cloneable {
         setY(y);
     }
 
-    @Override
-    public String toString() {
-        var sb = new StringBuilder();
-
-        String typeName = switch (type) {
-            case 0 -> "Rei";
-            case 1 -> "Rainha";
-            case 2 -> "PoneiMagico";
-            case 3 -> "PadreDaVila";
-            case 4 -> "TorreHorizontal";
-            case 5 -> "TorreVertical";
-//            case 6 -> "HomerSimpson";
-//            case 7 -> "Joker";
-            default -> "";
-        };
-
-        sb.append(uniqueId).append(" | ")
-                .append(typeName).append(" | ")
-                .append(points == 1000 ? "(infinito)" : points).append(" | ")
-                .append(team).append(" | ")
-                .append(nickName).append(" @ ");
-
-        if (status.equals(Piece.PIECE_IS_CAPTURED)) {
-            sb.append("(n/a)");
-        } else {
-            sb.append("(").append(x).append(", ").append(y).append(")");
-        }
-
-        return sb.toString();
-    }
-
     protected void addBehaviour(Behaviour behaviour) {
         behaviours.add(behaviour);
+    }
+
+    protected void resetBehaviours() {
+        behaviours = new ArrayList<>();
     }
 
     public ArrayList<Behaviour> getBehaviours() {
@@ -181,7 +169,7 @@ public abstract class Piece extends Observer implements Cloneable {
         var possibleMovements = new ArrayList<ArrayList<Integer>>();
 
         for (Behaviour behaviour : behaviours) {
-            possibleMovements.addAll(behaviour.forseeMovements(new BehaviourData(x, y, -1,-1), boardPieces, movementRange, boardSize));
+            possibleMovements.addAll(behaviour.forseeMovements(new BehaviourData(x, y), boardPieces, movementRange, boardSize));
         }
 
         return possibleMovements;
@@ -199,5 +187,36 @@ public abstract class Piece extends Observer implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new InternalError(e);
         }
+    }
+
+    @Override
+    public String toString() {
+        var sb = new StringBuilder();
+
+        String typeName = switch (type) {
+            case 0 -> "Rei";
+            case 1 -> "Rainha";
+            case 2 -> "PoneiMagico";
+            case 3 -> "PadreDaVila";
+            case 4 -> "TorreHorizontal";
+            case 5 -> "TorreVertical";
+//            case 6 -> "HomerSimpson";
+//            case 7 -> "Joker"; //gets overwritten in Joker class
+            default -> "";
+        };
+
+        sb.append(uniqueId).append(" | ")
+                .append(typeName).append(" | ")
+                .append(points == 1000 ? "(infinito)" : points).append(" | ")
+                .append(team).append(" | ")
+                .append(nickName).append(" @ ");
+
+        if (status.equals(Piece.PIECE_IS_CAPTURED)) {
+            sb.append("(n/a)");
+        } else {
+            sb.append("(").append(x).append(", ").append(y).append(")");
+        }
+
+        return sb.toString();
     }
 }

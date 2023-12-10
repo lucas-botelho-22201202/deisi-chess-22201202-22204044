@@ -1,19 +1,22 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.observer.Observer;
+import pt.ulusofona.lp2.deisichess.observer.Subject;
 import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
-public class GameManager {
+public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
+
+    List<Observer> observers = new ArrayList<>();
     private int numMoves = 0;
     private Board board = new Board();
     private Statistic statistic = new Statistic();
     private Stack<GameState> gameStates = new Stack<>();
-
     public GameManager() {
     }
 
@@ -42,10 +45,21 @@ public class GameManager {
             board.createPiecesFromFile(reader, board.getAmountOfPieces());
             board.buildBoardFromFile(reader);
 
+            registerAllObservers(board.pieces());
+            notifyObservers();
+
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException(e);
         } catch (Exception e) {
             throw new IOException();
+        }
+    }
+
+    private void registerAllObservers(List<Piece> pieces) {
+        for (Observer piece : pieces) {
+            if (piece.wantsToSubscribe()) {
+                registerObserver(piece);
+            }
         }
     }
 
@@ -86,7 +100,7 @@ public class GameManager {
                 return false;
             }
 
-            pieceAtDestination.kill();
+            pieceAtDestination.capture();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
         }
@@ -95,6 +109,7 @@ public class GameManager {
         statistic.increaseCountValidMoves(getCurrentTeamID());
         board.switchPlayingTeam();
         this.increaseNumMoves();
+        notifyObservers();
         return true;
     }
 
@@ -255,5 +270,17 @@ public class GameManager {
 
     public Map<String, String> customizeBoard() {
         return new HashMap<>();
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(numMoves);
+        }
     }
 }

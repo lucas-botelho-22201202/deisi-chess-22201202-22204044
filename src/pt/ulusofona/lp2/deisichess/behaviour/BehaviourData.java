@@ -14,6 +14,11 @@ public class BehaviourData {
     }
 
 
+    public BehaviourData(int xStart, int yStart) {
+        this.xStart = xStart;
+        this.yStart = yStart;
+    }
+
     public int calculateDistance() {
         int deltaX = Math.abs(xEnd - xStart);
         int deltaY = Math.abs(yEnd - yStart);

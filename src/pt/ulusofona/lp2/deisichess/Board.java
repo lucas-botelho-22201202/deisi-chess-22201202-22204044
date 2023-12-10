@@ -71,7 +71,7 @@ public class Board implements Cloneable {
         try {
             for (; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
-                addPiece(PieceFactory.createPiece(line));
+                addPiece(PieceFactory.createPieceFromFileLine(line));
             }
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException(countLine + 2, e.getProblem(), e.getAmountOfData(), e.getExpected());
@@ -153,6 +153,7 @@ public class Board implements Cloneable {
 
     public void switchPlayingTeam() {
         setCurrentTeamId(getCurrentTeamId() == Piece.BLACK_TEAM ? Piece.WHITE_TEAM : Piece.BLACK_TEAM);
+
     }
 
     public int countPiecesIngame(int teamId) {

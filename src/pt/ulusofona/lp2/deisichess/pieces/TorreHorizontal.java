@@ -40,4 +40,16 @@ public class TorreHorizontal extends Piece {
 
         return !behaviour.hasCollision(behaviourData, boardPieces);
     }
+
+    @Override
+    public void update(int roundNumber) {
+
+    }
+
+    @Override
+    public boolean wantsToSubscribe() {
+        return false;
+    }
+
+
 }
