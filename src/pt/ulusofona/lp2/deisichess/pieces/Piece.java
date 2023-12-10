@@ -196,10 +196,10 @@ public abstract class Piece extends Observer implements Cloneable {
         String typeName = switch (type) {
             case 0 -> "Rei";
             case 1 -> "Rainha";
-            case 2 -> "PoneiMagico";
-            case 3 -> "PadreDaVila";
-            case 4 -> "TorreHorizontal";
-            case 5 -> "TorreVertical";
+            case 2 -> "Ponei Magico";
+            case 3 -> "Padre Da Vila";
+            case 4 -> "Torre Horizontal";
+            case 5 -> "Torre Vertical";
 //            case 6 -> "HomerSimpson";
 //            case 7 -> "Joker"; //gets overwritten in Joker class
             default -> "";

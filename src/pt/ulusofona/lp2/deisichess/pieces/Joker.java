@@ -48,11 +48,11 @@ public class Joker extends Piece {
 
         String typeName = switch (impersonated.getType()) {
             case 1 -> "Rainha";
-            case 2 -> "PoneiMagico";
-            case 3 -> "PadreDaVila";
-            case 4 -> "TorreHorizontal";
-            case 5 -> "TorreVertical";
-            case 6 -> "HomerSimpson";
+            case 2 -> "Ponei Magico";
+            case 3 -> "Padre da Vila";
+            case 4 -> "Torre Horizontal";
+            case 5 -> "Torre Vertical";
+            case 6 -> "Homer Simpson";
             default -> "";
         };
 
