@@ -43,7 +43,7 @@ public class GameManager {
             board.buildBoardFromFile(reader);
 
         } catch (InvalidGameInputException e) {
-            throw new InvalidGameInputException();
+            throw new InvalidGameInputException(e);
         } catch (Exception e) {
             throw new IOException();
         }

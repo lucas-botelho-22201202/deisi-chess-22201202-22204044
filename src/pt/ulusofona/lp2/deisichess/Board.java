@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Board implements Cloneable{
+public class Board implements Cloneable {
     private int boardSize;
     private int amountOfPieces;
     private ArrayList<Piece> boardPieces;
@@ -38,6 +38,7 @@ public class Board implements Cloneable{
     }
 
     public void setBoardSize(int boardSize) {
+
         this.boardSize = boardSize;
     }
 
@@ -65,39 +66,50 @@ public class Board implements Cloneable{
 
     public void createPiecesFromFile(BufferedReader reader, int numPieces) throws InvalidGameInputException, IOException {
         String line;
+        int countLine = 1;
+
         try {
-            for (int countLine = 1; countLine <= numPieces; countLine++) {
+            for (; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
                 addPiece(PieceFactory.createPiece(line));
             }
         } catch (InvalidGameInputException e) {
-            throw new InvalidGameInputException();
+            throw new InvalidGameInputException(countLine + 2, e.getProblem(), e.getAmountOfData(), e.getExpected());
         } catch (Exception e) {
             throw new IOException();
         }
 
     }
 
-    public void buildBoardFromFile(BufferedReader reader) throws IOException {
+    public void buildBoardFromFile(BufferedReader reader) throws InvalidGameInputException, IOException {
         String line;
         int y = 0;
-
+        int countLine = 1;
         try {
             while ((line = reader.readLine()) != null) {
                 var lineElements = line.split(":");
-                var isBoardFileLine = lineElements.length == this.getBoardSize();
+                var isBoardFileLine = lineElements.length == boardSize;
                 if (!isBoardFileLine) {
-                    return;
+
+                    var problem = lineElements.length > boardSize
+                            ? InvalidGameInputException.DADOS_A_MAIS
+                            : InvalidGameInputException.DADOS_A_MENOS;
+
+                    throw new InvalidGameInputException(
+                            amountOfPieces + 2 + countLine, problem,
+                            lineElements.length,
+                            boardSize);
                 }
 
                 this.processBoardFileLine(lineElements, y);
                 y++;
+
+                countLine++;
             }
 
         } catch (Exception e) {
             throw new IOException();
         }
-
     }
 
     public boolean squareHasPiece(int x, int y) {
@@ -148,7 +160,7 @@ public class Board implements Cloneable{
         for (Piece piece : this.pieces()) {
             var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
             var belongsToTeam = piece.getTeam() == teamId;
-            if (pieceIsInGame && belongsToTeam) {
+             if (pieceIsInGame && belongsToTeam) {
                 count++;
             }
         }

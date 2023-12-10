@@ -2,14 +2,23 @@ package pt.ulusofona.lp2.deisichess;
 
 import pt.ulusofona.lp2.deisichess.pieces.*;
 
+import java.io.IOException;
+
 public class PieceFactory {
 
-    public static Piece createPiece(String pieceLine) throws InvalidGameInputException {
+    public static Piece createPiece(String pieceLine) throws InvalidGameInputException, IOException {
         var lineElements = pieceLine.split(":");
-        var isPieceFileLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE;
+        var isCorrectPieceLine = lineElements.length == GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE;
 
-        if (!isPieceFileLine) {
-            throw new InvalidGameInputException();
+        if (!isCorrectPieceLine) {
+            var problem = lineElements.length > GameManager.NUM_OF_PIECE_PARAMETERS_ON_FILE
+                    ? InvalidGameInputException.DADOS_A_MAIS
+                    : InvalidGameInputException.DADOS_A_MENOS;
+
+            throw new InvalidGameInputException(
+                    problem,
+                    lineElements.length,
+                    InvalidGameInputException.DADOS_ESPERADOS_PECA);
         }
 
         var uId = Integer.parseInt(lineElements[0]);
@@ -18,7 +27,7 @@ public class PieceFactory {
 
         var isInvalidTeam = team != Piece.BLACK_TEAM && team !=  Piece.WHITE_TEAM;
         if (isInvalidTeam){
-            throw new InvalidGameInputException();
+            throw new IOException();
         }
 
         var nickName = lineElements[3];
@@ -32,8 +41,9 @@ public class PieceFactory {
             case 5 -> new TorreVertical(uId, type, team, nickName);
 //            case 6 -> new HomerSimpson(uId, type, team, nickName);
 //            case 7 -> new Joker(uId, type, team, nickName);
-//            default -> throw new InvalidGameInputException();
+//            default -> throw new IOException();
             default -> new Rainha(uId, type, team, nickName);
+
         };
 
     }
