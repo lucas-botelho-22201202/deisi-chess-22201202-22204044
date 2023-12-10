@@ -2,10 +2,11 @@ package pt.ulusofona.lp2.deisichess.pieces;
 
 import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
 import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
+import pt.ulusofona.lp2.deisichess.observer.Observer;
 
 import java.util.ArrayList;
 
-public abstract class Piece implements Cloneable {
+public abstract class Piece extends Observer implements Cloneable {
     //region constants
     public static final int BLACK_TEAM = 10;
     public static final int WHITE_TEAM = 20;
@@ -154,7 +155,7 @@ public abstract class Piece implements Cloneable {
 
         sb.append(uniqueId).append(" | ")
                 .append(typeName).append(" | ")
-                .append(points == 1000 ? "(Infinito)" : points).append(" | ")
+                .append(points == 1000 ? "(infinito)" : points).append(" | ")
                 .append(team).append(" | ")
                 .append(nickName).append(" @ ");
 
