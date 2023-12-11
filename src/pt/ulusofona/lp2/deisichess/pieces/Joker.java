@@ -52,7 +52,7 @@ public class Joker extends Piece {
             case 3 -> PadreDaVila.NAME;
             case 4 -> TorreHorizontal.NAME;
             case 5 -> TorreVertical.NAME;
-            case 6 -> "Homer Simpson";
+            case 6 -> HomerSimpson.NAME;
             default -> "";
         };
 
