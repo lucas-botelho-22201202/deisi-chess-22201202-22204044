@@ -32,7 +32,7 @@ public class HomerSimpson extends Piece {
     @Override
     public void update(int roundNumber) {
 
-        isAwake = roundNumber % 3 == 0;
+        isAwake = roundNumber % 3 != 0;
 
         if (getTeam() == Piece.BLACK_TEAM){
             setPng(isAwake ? HomerSimpson.BLACK_PNG : HomerSimpson.BLACK_PNG_SLEEP);
