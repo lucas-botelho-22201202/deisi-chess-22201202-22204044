@@ -9,6 +9,8 @@ public class Rei extends Piece {
     static final String BLACK_PNG = "KingGrey.png";
     static final String WHITE_PNG = "KingBeije.png";
     static final int DEFAULT_OFFSET = 1;
+    static final String NAME = "Rei";
+
 
     public Rei(int uniqueId, int type, int team, String nickName) {
         super(uniqueId, type, team, nickName, Rei.DEFAULT_OFFSET);

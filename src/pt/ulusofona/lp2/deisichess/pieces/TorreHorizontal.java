@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class TorreHorizontal extends Piece {
     static final String BLACK_PNG = "HorTowerGrey.png";
     static final String WHITE_PNG = "HorTowerBeije.png";
+    static final String NAME = "TorreHor";
+
     static final int DEFAULT_OFFSET = 1000;
 
     public TorreHorizontal(int uniqueId, int type, int team, String nickName) {

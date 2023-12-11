@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class PadreDaVila extends Piece {
     static final String BLACK_PNG = "BishopGrey.png";
     static final String WHITE_PNG = "BishopBeije.png";
+    static final String NAME = "Padre da Vila";
+
     static final int DEFAULT_OFFSET = 3;
 
     public PadreDaVila(int uniqueId, int type, int team, String nickName) {

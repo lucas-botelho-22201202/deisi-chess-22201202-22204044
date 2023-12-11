@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class PoneiMagico extends Piece {
     static final String BLACK_PNG = "PoneiGrey.png";
     static final String WHITE_PNG = "PoneiBeije.png";
+    static final String NAME = "Ponei Mágico";
+
     static final int DEFAULT_OFFSET = 2;
 
     public PoneiMagico(int uniqueId, int type, int team, String nickName) {

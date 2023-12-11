@@ -11,6 +11,7 @@ public class TorreVertical extends Piece {
     static final String BLACK_PNG = "VertTowerGrey.png";
     static final String WHITE_PNG = "VertTowerBeije.png";
     static final int DEFAULT_OFFSET = 1000;
+    static final String NAME = "TorreVert";
 
     public TorreVertical(int uniqueId, int type, int team, String nickName) {
         super(uniqueId, type, team, nickName, TorreVertical.DEFAULT_OFFSET);
