@@ -14,6 +14,7 @@ public class GameManager extends Subject {
 
     List<Observer> observers = new ArrayList<>();
     private int numMoves = 0;
+    private int roundNum = 0;
     private Board board = new Board();
     private Statistic statistic = new Statistic();
     private Stack<GameState> gameStates = new Stack<>();
@@ -22,10 +23,6 @@ public class GameManager extends Subject {
 
     public Board getBoard() {
         return this.board;
-    }
-
-    public void increaseNumMoves() {
-        this.numMoves++;
     }
 
     public void resetNumMoves() {
@@ -108,7 +105,7 @@ public class GameManager extends Subject {
         piecePlaying.move(x1, y1);
         statistic.increaseCountValidMoves(getCurrentTeamID());
         board.switchPlayingTeam();
-        this.increaseNumMoves();
+        roundNum++;
         notifyObservers();
         return true;
     }
@@ -280,7 +277,7 @@ public class GameManager extends Subject {
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update(numMoves);
+            observer.update(roundNum);
         }
     }
 }
