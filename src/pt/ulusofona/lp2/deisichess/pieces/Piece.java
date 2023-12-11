@@ -104,6 +104,10 @@ public abstract class Piece extends Observer implements Cloneable {
         this.y = y;
     }
 
+    public void setPng(String png) {
+        this.png = png;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -200,7 +204,7 @@ public abstract class Piece extends Observer implements Cloneable {
             case 3 -> PadreDaVila.NAME;
             case 4 -> TorreHorizontal.NAME;
             case 5 -> TorreVertical.NAME;
-//            case 6 -> "HomerSimpson";
+            case 6 -> HomerSimpson.NAME; //sleep version gets overwritten in HomerSimpson class
 //            case 7 -> "Joker"; //gets overwritten in Joker class
             default -> "";
         };

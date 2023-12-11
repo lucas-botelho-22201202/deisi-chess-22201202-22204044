@@ -26,23 +26,6 @@ public class Rei extends Piece {
         addBehaviour(new BehaviourVertical());
     }
 
-//    @Override
-//    public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
-//        var behaviourData = new BehaviourData(getX(), getY(), x, y);
-//        Behaviour behaviour;
-//
-//        try {
-//            behaviour = Behaviour.getValidMovementBehaviour(behaviourData, getBehaviours(), movementRange);
-//        } catch (InvalidBehaviourException e) {
-//            return false;
-//        }
-//
-//        behaviour.calculateDirection(behaviourData);
-//
-//
-//        return !behaviour.hasCollision(behaviourData, boardPieces);
-//    }
-
     @Override
     public void update(int roundNumber) {
 
