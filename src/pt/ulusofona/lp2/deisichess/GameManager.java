@@ -107,7 +107,7 @@ public class GameManager extends Subject {
             }
 
             piecePlaying.capture(pieceAtDestination);
-            addToListOfNameOfPiecesCaptured(pieceAtDestination);
+//            addToListOfNameOfPiecesCaptured(pieceAtDestination);
             piecePlaying.increaseNumCaptures();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
