@@ -11,7 +11,7 @@ import java.util.*;
 public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
-    private static final Map<Integer, String> typeToNameMap = Map.of(
+    private static final Map<Integer, String> TYPE_TO_NAME_MAP = Map.of(
             0, Rei.NAME,
             1, Rainha.NAME,
             2, PoneiMagico.NAME,
@@ -137,7 +137,7 @@ public class GameManager extends Subject {
             nameCaptured = "Joker/";
         }
 
-        nameCaptured += typeToNameMap.getOrDefault(pieceAtDestination.getType(), "");
+        nameCaptured += TYPE_TO_NAME_MAP.getOrDefault(pieceAtDestination.getType(), "");
 
         nameOfPiecesCaptured.add(nameCaptured);
     }
