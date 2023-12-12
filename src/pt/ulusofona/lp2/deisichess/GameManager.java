@@ -91,15 +91,8 @@ public class GameManager extends Subject {
 
         var pieceAtDestination = Board.getPieceAt(x1, y1, board.pieces());
         if (pieceAtDestination != null) {
-            var isFriendlyFire = piecePlaying.getTeam() == pieceAtDestination.getTeam();
-            if (isFriendlyFire) {
-                statistic.increaseCountInvalidMoves(getCurrentTeamID());
-                return false;
-            }
 
-            var isSameType = piecePlaying.getType() == pieceAtDestination.getType();
-            var cantEatSameType = !(pieceAtDestination.canEatSameType() && pieceAtDestination.canEatSameType());
-            if (isSameType && cantEatSameType) {
+            if (!isValidCapture(piecePlaying, pieceAtDestination)) {
                 statistic.increaseCountInvalidMoves(getCurrentTeamID());
                 return false;
             }
@@ -114,6 +107,22 @@ public class GameManager extends Subject {
         board.switchPlayingTeam();
         roundNum++;
         notifyObservers();
+        return true;
+    }
+
+    private boolean isValidCapture(Piece piecePlaying, Piece pieceAtDestination) {
+
+        var isFriendlyFire = piecePlaying.getTeam() == pieceAtDestination.getTeam();
+        if (isFriendlyFire) {
+            return false;
+        }
+
+        var isSameType = piecePlaying.getType() == pieceAtDestination.getType();
+        var cantEatSameType = !(pieceAtDestination.canEatSameType() && pieceAtDestination.canEatSameType());
+        if (isSameType && cantEatSameType) {
+            return false;
+        }
+
         return true;
     }
 
@@ -255,7 +264,7 @@ public class GameManager extends Subject {
                 if (piece.isValidMove(board.pieces(), position.get(0), position.get(1))) {
                     var pieceAtDestination = Board.getPieceAt(position.get(0), position.get(1), board.pieces());
                     if (pieceAtDestination != null) {
-                        if (this.getCurrentTeamID() != pieceAtDestination.getTeam()) {
+                        if (isValidCapture(piece, pieceAtDestination)) {
                             hintList.add(new Hint(pieceAtDestination.getPoints(), position.get(0), position.get(1)));
                         }
                     } else {
