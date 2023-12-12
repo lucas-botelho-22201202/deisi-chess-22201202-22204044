@@ -11,6 +11,15 @@ import java.util.*;
 public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
+    private static final Map<Integer, String> typeToNameMap = Map.of(
+            0, Rei.NAME,
+            1, Rainha.NAME,
+            2, PoneiMagico.NAME,
+            3, PadreDaVila.NAME,
+            4, TorreHorizontal.NAME,
+            5, TorreVertical.NAME,
+            6, HomerSimpson.NAME
+    );
 
     private List<Observer> observers = new ArrayList<>();
     private List<String> nameOfPiecesCaptured = new ArrayList<>();
@@ -106,7 +115,7 @@ public class GameManager extends Subject {
             }
 
             piecePlaying.capture(pieceAtDestination);
-//            addToListOfNameOfPiecesCaptured(pieceAtDestination);
+            addToListOfNameOfPiecesCaptured(pieceAtDestination);
             piecePlaying.increaseNumCaptures();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
@@ -124,24 +133,13 @@ public class GameManager extends Subject {
     private void addToListOfNameOfPiecesCaptured(Piece pieceAtDestination) {
         String nameCaptured = "";
 
-        if (pieceAtDestination.isJoker()){
+        if (pieceAtDestination.isJoker()) {
             nameCaptured = "Joker/";
         }
 
-        nameCaptured += switch (pieceAtDestination.getType()) {
-            case 0 -> Rei.NAME;
-            case 1 -> Rainha.NAME;
-            case 2 -> PoneiMagico.NAME;
-            case 3 -> PadreDaVila.NAME;
-            case 4 -> TorreHorizontal.NAME;
-            case 5 -> TorreVertical.NAME;
-            case 6 -> HomerSimpson.NAME;
-            default -> "";
-        };
+        nameCaptured += typeToNameMap.getOrDefault(pieceAtDestination.getType(), "");
 
-        if (!nameOfPiecesCaptured.contains(nameCaptured)){
-            nameOfPiecesCaptured.add(nameCaptured);
-        }
+        nameOfPiecesCaptured.add(nameCaptured);
     }
 
     private boolean isValidCapture(Piece piecePlaying, Piece pieceAtDestination) {

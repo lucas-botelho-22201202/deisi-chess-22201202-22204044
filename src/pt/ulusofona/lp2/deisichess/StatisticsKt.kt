@@ -46,7 +46,7 @@ class StatisticsKt {
         }
 
         fun tiposCapturados(gameManager: GameManager): ArrayList<String> {
-            return ArrayList(gameManager.nameOfPiecesCaptured)
+            return ArrayList(gameManager.nameOfPiecesCaptured.distinctBy { it })
         }
 
         private fun teamNameToString(teamId: Int): String {
