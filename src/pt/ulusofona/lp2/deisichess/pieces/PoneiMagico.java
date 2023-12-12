@@ -1,16 +1,11 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
-import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
-import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
 import pt.ulusofona.lp2.deisichess.behaviour.BehaviourLShape;
-import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
-
-import java.util.ArrayList;
 
 public class PoneiMagico extends Piece {
     static final String BLACK_PNG = "PoneiGrey.png";
     static final String WHITE_PNG = "PoneiBeije.png";
-    static final String NAME = "Ponei Mágico";
+    public  static final String NAME = "Ponei Mágico";
 
     static final int DEFAULT_OFFSET = 2;
 
@@ -36,8 +31,4 @@ public class PoneiMagico extends Piece {
         return false;
     }
 
-    @Override
-    public boolean canEatSameType() {
-        return true;
-    }
 }

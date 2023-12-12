@@ -49,4 +49,5 @@ public class PieceFactory {
             default -> null;
         };
     }
+
 }

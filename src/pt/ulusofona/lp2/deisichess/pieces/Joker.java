@@ -1,12 +1,7 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
-import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
 import pt.ulusofona.lp2.deisichess.PieceFactory;
 import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
-import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
-import pt.ulusofona.lp2.deisichess.behaviour.BehaviourDiagonal;
-
-import java.util.ArrayList;
 
 public class Joker extends Piece {
     static final String BLACK_PNG = "JokerGrey.png";
@@ -51,7 +46,7 @@ public class Joker extends Piece {
     public String toString() {
         var sb = new StringBuilder();
 
-        String typeName = switch (getType()) {
+        String typeName = switch (impersonated.getType()) {
             case 1 -> Rainha.NAME;
             case 2 -> PoneiMagico.NAME;
             case 3 -> PadreDaVila.NAME;
@@ -84,5 +79,9 @@ public class Joker extends Piece {
     @Override
     public int getType(){
         return impersonated.getType();
+    }
+
+    public boolean isJoker(){
+        return true;
     }
 }

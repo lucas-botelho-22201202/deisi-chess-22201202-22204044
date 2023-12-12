@@ -11,7 +11,7 @@ public class HomerSimpson extends Piece {
     static final String WHITE_PNG = "HomerBeije.png";
     static final String SLEEP_TEXT = "Doh! zzzzzz";
     static final int DEFAULT_OFFSET = 1;
-    static final String NAME = "Homer Simpson";
+    public  static final String NAME = "Homer Simpson";
 
     private boolean isAwake = false;
 
@@ -55,11 +55,6 @@ public class HomerSimpson extends Piece {
     @Override
     public ArrayList<ArrayList<Integer>> forseeMovements(ArrayList<Piece> boardPieces, int boardSize) {
         return isAwake ? super.forseeMovements(boardPieces, boardSize) : new ArrayList<>();
-    }
-
-    @Override
-    public boolean canEatSameType() {
-        return true;
     }
 
     @Override

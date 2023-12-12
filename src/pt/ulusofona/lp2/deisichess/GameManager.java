@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import pt.ulusofona.lp2.deisichess.observer.Observer;
 import pt.ulusofona.lp2.deisichess.observer.Subject;
-import pt.ulusofona.lp2.deisichess.pieces.Piece;
+import pt.ulusofona.lp2.deisichess.pieces.*;
 
 import javax.swing.*;
 import java.io.*;
@@ -12,13 +12,18 @@ public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
 
-    List<Observer> observers = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
+    private List<String> nameOfPiecesCaptured = new ArrayList<>();
     private int numMoves = 0;
     private int roundNum = 0;
     private Board board = new Board();
     private Statistic statistic = new Statistic();
     private Stack<GameState> gameStates = new Stack<>();
     public GameManager() {
+    }
+
+    public List<String> getNameOfPiecesCaptured() {
+        return nameOfPiecesCaptured;
     }
 
     public Board getBoard() {
@@ -68,24 +73,27 @@ public class GameManager extends Subject {
 
         gameStates.push(new GameState((Board) board.clone(), (Statistic) statistic.clone()));
         if (!Board.isValidCoordinate(x0, y0, getBoardSize()) || !Board.isValidCoordinate(x0, y0, getBoardSize())) {
-            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         var piecePlaying = Board.getPieceAt(x0, y0, board.pieces());
         if (piecePlaying == null) {
-            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            piecePlaying.increaseInvalidMoves();
             return false;
         }
 
         var triedToMoveOtherTeamsPiece = piecePlaying.getTeam() != getCurrentTeamID();
         if (triedToMoveOtherTeamsPiece) {
-            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            piecePlaying.increaseInvalidMoves();
             return false;
         }
 
         if (!piecePlaying.isValidMove(board.pieces(), x1, y1)) {
-            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            piecePlaying.increaseInvalidMoves();
             return false;
         }
 
@@ -93,21 +101,48 @@ public class GameManager extends Subject {
         if (pieceAtDestination != null) {
 
             if (!isValidCapture(piecePlaying, pieceAtDestination)) {
-                statistic.increaseCountInvalidMoves(getCurrentTeamID());
+//                statistic.increaseCountInvalidMoves(getCurrentTeamID());
+                piecePlaying.increaseInvalidMoves();
                 return false;
             }
 
-            pieceAtDestination.capture();
+            piecePlaying.capture(pieceAtDestination);
+            addToListOfNameOfPiecesCaptured(pieceAtDestination);
+            piecePlaying.increaseNumCaptures();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
         piecePlaying.move(x1, y1);
-        statistic.increaseCountValidMoves(getCurrentTeamID());
+//        statistic.increaseCountValidMoves(getCurrentTeamID());
+        piecePlaying.increaseValidMoves();
         board.switchPlayingTeam();
         roundNum++;
         notifyObservers();
         return true;
+    }
+
+    private void addToListOfNameOfPiecesCaptured(Piece pieceAtDestination) {
+        String nameCaptured = "";
+
+        if (pieceAtDestination.isJoker()){
+            nameCaptured = "Joker/";
+        }
+
+        nameCaptured += switch (pieceAtDestination.getType()) {
+            case 0 -> Rei.NAME;
+            case 1 -> Rainha.NAME;
+            case 2 -> PoneiMagico.NAME;
+            case 3 -> PadreDaVila.NAME;
+            case 4 -> TorreHorizontal.NAME;
+            case 5 -> TorreVertical.NAME;
+            case 6 -> HomerSimpson.NAME;
+            default -> "";
+        };
+
+        if (!nameOfPiecesCaptured.contains(nameCaptured)){
+            nameOfPiecesCaptured.add(nameCaptured);
+        }
     }
 
     private boolean isValidCapture(Piece piecePlaying, Piece pieceAtDestination) {
@@ -118,9 +153,8 @@ public class GameManager extends Subject {
         }
 
         var isSameType = piecePlaying.getType() == pieceAtDestination.getType();
-        var cantEatSameType = !(pieceAtDestination.canEatSameType() && pieceAtDestination.canEatSameType());
-        if (isSameType && cantEatSameType) {
-            return false;
+        if (isSameType){
+            return pieceAtDestination.canEatSameType();
         }
 
         return true;
@@ -278,7 +312,7 @@ public class GameManager extends Subject {
             return hintList;
         }
 
-        return new ArrayList<>();
+        return null;
     }
 
     public Map<String, String> customizeBoard() {

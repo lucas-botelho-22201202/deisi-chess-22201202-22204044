@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TorreHorizontal extends Piece {
     static final String BLACK_PNG = "HorTowerGrey.png";
     static final String WHITE_PNG = "HorTowerBeije.png";
-    static final String NAME = "TorreHor";
+    public static final String NAME = "TorreHor";
 
     static final int DEFAULT_OFFSET = 1000;
 
@@ -24,28 +24,6 @@ public class TorreHorizontal extends Piece {
         points = 3;
 
         addBehaviour(new BehaviourHorizontal());
-    }
-
-    @Override
-    public boolean canEatSameType() {
-        return true;
-    }
-
-    @Override
-    public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
-        var behaviourData = new BehaviourData(getX(), getY(), x, y);
-        Behaviour behaviour;
-
-        try {
-            behaviour = Behaviour.getValidMovementBehaviour(behaviourData, getBehaviours(), movementRange);
-        } catch (InvalidBehaviourException e) {
-            return false;
-        }
-
-        behaviour.calculateDirection(behaviourData);
-
-
-        return !behaviour.hasCollision(behaviourData, boardPieces);
     }
 
     @Override

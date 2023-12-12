@@ -26,8 +26,13 @@ public abstract class Piece extends Observer implements Cloneable {
     protected String png;
     protected int movementRange;
     protected int points;
+    private int capturedPoints;
 
     private ArrayList<Behaviour> behaviours = new ArrayList<>();
+
+    private int numInvalidMoves = 0;
+    private int numValidMoves = 0;
+    private int numCapturas = 0;
 
     //endregion
 
@@ -39,7 +44,9 @@ public abstract class Piece extends Observer implements Cloneable {
         this.movementRange = movementRange;
     }
 
-    public abstract boolean canEatSameType();
+    public boolean canEatSameType() {
+        return true;
+    }
 
     public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
         var behaviourData = new BehaviourData(getX(), getY(), x, y);
@@ -58,6 +65,12 @@ public abstract class Piece extends Observer implements Cloneable {
     }
 
     //region getters
+
+
+    public int getCapturedPoints() {
+        return capturedPoints;
+    }
+
     public int getUniqueId() {
         return uniqueId;
     }
@@ -94,6 +107,18 @@ public abstract class Piece extends Observer implements Cloneable {
         return points;
     }
 
+    public int getNumInvalidMoves() {
+        return numInvalidMoves;
+    }
+
+    public int getNumCapturas() {
+        return numCapturas;
+    }
+
+    public int getNumValidMoves() {
+        return numValidMoves;
+    }
+
     //endregion
 
     //region setters
@@ -128,7 +153,12 @@ public abstract class Piece extends Observer implements Cloneable {
         return properties;
     }
 
-    public void capture() {
+    public void capture(Piece enemy) {
+        enemy.getCaptured();
+        capturedPoints += enemy.points;
+    }
+
+    public void getCaptured() {
         x = -1;
         y = -1;
         this.setStatus(PIECE_IS_CAPTURED);
@@ -181,6 +211,20 @@ public abstract class Piece extends Observer implements Cloneable {
         return possibleMovements;
     }
 
+    public void increaseInvalidMoves() {
+        numInvalidMoves++;
+    }
+    public void increaseNumCaptures() {
+        numCapturas++;
+    }
+    public void increaseValidMoves() {
+        numValidMoves++;
+    }
+
+    public boolean isJoker(){
+        return false;
+    }
+
     @Override
     public Object clone() {
         try {
@@ -225,4 +269,6 @@ public abstract class Piece extends Observer implements Cloneable {
 
         return sb.toString();
     }
+
+
 }

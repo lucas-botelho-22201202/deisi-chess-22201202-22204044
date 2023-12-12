@@ -1,16 +1,11 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
-import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
-import pt.ulusofona.lp2.deisichess.behaviour.BehaviourData;
 import pt.ulusofona.lp2.deisichess.behaviour.BehaviourDiagonal;
-import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
-
-import java.util.ArrayList;
 
 public class PadreDaVila extends Piece {
     static final String BLACK_PNG = "BishopGrey.png";
     static final String WHITE_PNG = "BishopBeije.png";
-    static final String NAME = "Padre da Vila";
+    public static final String NAME = "Padre da Vila";
 
     static final int DEFAULT_OFFSET = 3;
 
@@ -36,8 +31,4 @@ public class PadreDaVila extends Piece {
         return false;
     }
 
-    @Override
-    public boolean canEatSameType() {
-        return true;
-    }
 }

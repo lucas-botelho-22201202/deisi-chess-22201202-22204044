@@ -1,15 +1,12 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
 import pt.ulusofona.lp2.deisichess.behaviour.*;
-import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
-
-import java.util.ArrayList;
 
 public class Rei extends Piece {
     static final String BLACK_PNG = "KingGrey.png";
     static final String WHITE_PNG = "KingBeije.png";
     static final int DEFAULT_OFFSET = 1;
-    static final String NAME = "Rei";
+    public static final String NAME = "Rei";
 
 
     public Rei(int uniqueId, int type, int team, String nickName) {
@@ -36,8 +33,4 @@ public class Rei extends Piece {
         return false;
     }
 
-    @Override
-    public boolean canEatSameType() {
-        return true;
-    }
 }

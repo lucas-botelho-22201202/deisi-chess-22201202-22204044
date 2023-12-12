@@ -1,14 +1,11 @@
 package pt.ulusofona.lp2.deisichess.pieces;
 
 import pt.ulusofona.lp2.deisichess.behaviour.*;
-import pt.ulusofona.lp2.deisichess.InvalidBehaviourException;
-
-import java.util.ArrayList;
 
 public class Rainha extends Piece {
     static final String BLACK_PNG = "Grey_Queen.png";
     static final String WHITE_PNG = "Beige_Queen.png";
-    static final String NAME = "Rainha";
+    public static final String NAME = "Rainha";
 
     static final int DEFAULT_OFFSET = 5;
 
