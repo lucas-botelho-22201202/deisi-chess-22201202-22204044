@@ -73,26 +73,24 @@ public class GameManager extends Subject {
 
         gameStates.push(new GameState((Board) board.clone(), (Statistic) statistic.clone()));
         if (!Board.isValidCoordinate(x0, y0, getBoardSize()) || !Board.isValidCoordinate(x0, y0, getBoardSize())) {
-//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         var piecePlaying = Board.getPieceAt(x0, y0, board.pieces());
         if (piecePlaying == null) {
-//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
-            piecePlaying.increaseInvalidMoves();
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         var triedToMoveOtherTeamsPiece = piecePlaying.getTeam() != getCurrentTeamID();
         if (triedToMoveOtherTeamsPiece) {
-//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
-            piecePlaying.increaseInvalidMoves();
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }
 
         if (!piecePlaying.isValidMove(board.pieces(), x1, y1)) {
-//            statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            statistic.increaseCountInvalidMoves(getCurrentTeamID());
             piecePlaying.increaseInvalidMoves();
             return false;
         }
@@ -101,7 +99,7 @@ public class GameManager extends Subject {
         if (pieceAtDestination != null) {
 
             if (!isValidCapture(piecePlaying, pieceAtDestination)) {
-//                statistic.increaseCountInvalidMoves(getCurrentTeamID());
+                statistic.increaseCountInvalidMoves(getCurrentTeamID());
                 piecePlaying.increaseInvalidMoves();
                 return false;
             }
@@ -114,7 +112,7 @@ public class GameManager extends Subject {
         }
 
         piecePlaying.move(x1, y1);
-//        statistic.increaseCountValidMoves(getCurrentTeamID());
+        statistic.increaseCountValidMoves(getCurrentTeamID());
         piecePlaying.increaseValidMoves();
         board.switchPlayingTeam();
         roundNum++;

@@ -26,7 +26,7 @@ class StatisticsKt {
         fun pecaMaisBaralhada(gameManager: GameManager): ArrayList<String> {
             return ArrayList(gameManager.board.pieces()
                     .filter { it.numInvalidMoves > 0 }
-                    .sortedByDescending { it.numInvalidMoves }
+                    .sortedByDescending { it.numInvalidMoves.toDouble() / (it.numInvalidMoves + it.numValidMoves)  }
                     .take(3)
                     .map { "${it.team}:${it.nickName}:${it.numInvalidMoves}:${it.numValidMoves}" })
         }
@@ -41,7 +41,7 @@ class StatisticsKt {
 
         fun pecasMaisCincoCapturas(gameManager: GameManager): ArrayList<String> {
             return ArrayList(gameManager.board.pieces()
-                    .filter { it.capturedPoints > 5 }
+                    .filter { it.numCapturas > 5 }
                     .map { "${teamNameToString(it.team)}:${it.nickName}:${it.numCapturas}" })
         }
 
