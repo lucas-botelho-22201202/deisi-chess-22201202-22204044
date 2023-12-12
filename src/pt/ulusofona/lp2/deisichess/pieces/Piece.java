@@ -39,6 +39,8 @@ public abstract class Piece extends Observer implements Cloneable {
         this.movementRange = movementRange;
     }
 
+    public abstract boolean canEatSameType();
+
     public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
         var behaviourData = new BehaviourData(getX(), getY(), x, y);
         Behaviour behaviour;
@@ -132,7 +134,7 @@ public abstract class Piece extends Observer implements Cloneable {
         this.setStatus(PIECE_IS_CAPTURED);
     }
 
-    public String infoToFile(){
+    public String infoToFile() {
         String pieceID = String.valueOf(uniqueId);
         String pieceType = String.valueOf(type);
         String pieceTeam = String.valueOf(team);

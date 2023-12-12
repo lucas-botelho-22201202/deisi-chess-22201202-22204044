@@ -58,6 +58,11 @@ public class HomerSimpson extends Piece {
     }
 
     @Override
+    public boolean canEatSameType() {
+        return true;
+    }
+
+    @Override
     public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
         return isAwake && super.isValidMove(boardPieces, x, y);
     }

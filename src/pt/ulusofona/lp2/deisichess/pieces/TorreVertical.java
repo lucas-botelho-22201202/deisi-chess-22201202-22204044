@@ -34,4 +34,9 @@ public class TorreVertical extends Piece {
     public boolean wantsToSubscribe() {
         return false;
     }
+
+    @Override
+    public boolean canEatSameType() {
+        return true;
+    }
 }

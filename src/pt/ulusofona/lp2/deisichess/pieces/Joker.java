@@ -43,6 +43,11 @@ public class Joker extends Piece {
     }
 
     @Override
+    public boolean canEatSameType() {
+        return impersonated.canEatSameType();
+    }
+
+    @Override
     public String toString() {
         var sb = new StringBuilder();
 

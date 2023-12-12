@@ -97,6 +97,13 @@ public class GameManager extends Subject {
                 return false;
             }
 
+            var isSameType = piecePlaying.getType() == pieceAtDestination.getType();
+            var cantEatSameType = !(pieceAtDestination.canEatSameType() && pieceAtDestination.canEatSameType());
+            if (isSameType && cantEatSameType) {
+                statistic.increaseCountInvalidMoves(getCurrentTeamID());
+                return false;
+            }
+
             pieceAtDestination.capture();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());

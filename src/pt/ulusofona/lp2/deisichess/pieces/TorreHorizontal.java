@@ -27,6 +27,11 @@ public class TorreHorizontal extends Piece {
     }
 
     @Override
+    public boolean canEatSameType() {
+        return true;
+    }
+
+    @Override
     public boolean isValidMove(ArrayList<Piece> boardPieces, int x, int y) {
         var behaviourData = new BehaviourData(getX(), getY(), x, y);
         Behaviour behaviour;
