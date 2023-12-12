@@ -46,7 +46,7 @@ public class Joker extends Piece {
     public String toString() {
         var sb = new StringBuilder();
 
-        String typeName = switch (impersonated.getType()) {
+        String typeName = switch (getType()) {
             case 1 -> Rainha.NAME;
             case 2 -> PoneiMagico.NAME;
             case 3 -> PadreDaVila.NAME;
