@@ -18,15 +18,15 @@ public class TestRei {
                 {x, y, x + 1, y + 1},       // valido baixo direita
         };
 
+        var gameManager = new GameManager();
 
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rei/8x8rei.txt"));
+        } catch (Exception e) {
+        }
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rei/8x8rei.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -42,6 +42,8 @@ public class TestRei {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -57,15 +59,15 @@ public class TestRei {
                 {x, y, x - 1, y - 1},       // valido esquerda cima
         };
 
+        var gameManager = new GameManager();
 
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rei/8x8rei.txt"));
+        } catch (Exception e) {
+        }
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rei/8x8rei.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -81,11 +83,13 @@ public class TestRei {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
     @Test
-    public void test_Rainha_invalid_moves_from_center(){
+    public void test_Rainha_invalid_moves_from_center() {
 
         var x = 3;
         var y = 4;
@@ -93,19 +97,20 @@ public class TestRei {
         int[][] moves = {
                 {x, y, x + 1, y + 2},
                 {x, y, x + 1, y - 2},
-                {x, y, x -1 , y - 2},
-                {x, y, x -1 , y + 2},
+                {x, y, x - 1, y - 2},
+                {x, y, x - 1, y + 2},
         };
 
+        var gameManager = new GameManager();
+
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rei/8x8rei.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rei/8x8rei.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -121,12 +126,16 @@ public class TestRei {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+
+            gameManager.undo();
+
         }
+
     }
 
 
     @Test
-    public void test_rei_colisions(){
+    public void test_rei_colisions() {
 
         var x = 3;
         var y = 4;
@@ -136,15 +145,15 @@ public class TestRei {
                 {x, y, x + 1, y},
         };
 
+        var gameManager = new GameManager();
+
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rei/8x8rei-colisao.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
-
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rei/8x8rei-colisao.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -160,9 +169,10 @@ public class TestRei {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+
+            gameManager.undo();
         }
     }
-
 
 
 }

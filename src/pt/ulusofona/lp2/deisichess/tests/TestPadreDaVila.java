@@ -20,15 +20,16 @@ public class TestPadreDaVila {
                 {x, y, x - 1, y - 1},  // Diagonal move to the bottom-left (one step)
         };
 
+        var gameManager = new GameManager();
+
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -44,6 +45,8 @@ public class TestPadreDaVila {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -61,15 +64,16 @@ public class TestPadreDaVila {
                 {x, y, x - 2, y - 1},
         };
 
+        var gameManager = new GameManager();
+
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -85,6 +89,8 @@ public class TestPadreDaVila {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -101,16 +107,16 @@ public class TestPadreDaVila {
                 {x, y, x, y + 2},
                 {x, y, x, y - 1},
         };
+        var gameManager = new GameManager();
 
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -126,6 +132,7 @@ public class TestPadreDaVila {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
         }
     }
     @Test
@@ -139,14 +146,14 @@ public class TestPadreDaVila {
                 {x, y, x - 2, y - 2},  // Diagonal move to the bottom-left (two step)
         };
 
+        var gameManager = new GameManager();
 
+        try {
+            gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo-colisao.txt"));
+        } catch (Exception e) {
+        }
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                gameManager.loadGame(new File("test-files/test-padre-da-vila/8x8bispo-colisao.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -162,6 +169,7 @@ public class TestPadreDaVila {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
         }
     }
 

@@ -22,15 +22,15 @@ public class TestRainha {
                 {x, y, x + 1, y + 1},       // valido baixo direita
         };
 
+        var gameManager = new GameManager();
 
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
+        } catch (Exception e) {
+        }
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -46,6 +46,8 @@ public class TestRainha {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -64,15 +66,16 @@ public class TestRainha {
                 {x, y, x - 1, y - 1},       // valido baixo preto
         };
 
+        var gameManager = new GameManager();
+
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -88,6 +91,8 @@ public class TestRainha {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -104,15 +109,16 @@ public class TestRainha {
                 {x, y, x -1 , y + 2},
         };
 
+        var gameManager = new GameManager();
+
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -128,6 +134,8 @@ public class TestRainha {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -143,15 +151,15 @@ public class TestRainha {
                 {x, y, x + 1, y},
         };
 
+        var gameManager = new GameManager();
 
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-rainha/8x8rainha-colisao.txt"));
+        } catch (Exception e) {
+        }
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-rainha/8x8rainha-colisao.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -167,6 +175,8 @@ public class TestRainha {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 

@@ -20,16 +20,16 @@ public class TestTorreHorizontal {
                 {x, y, x - 3, y},  // Horizontal move to the left (three step)
 
         };
+        var gameManager = new GameManager();
 
+        try {
+            //ensures that piece is always starting on the same place
+            gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                //ensures that piece is always starting on the same place
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -45,6 +45,8 @@ public class TestTorreHorizontal {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -61,15 +63,15 @@ public class TestTorreHorizontal {
                 {x, y, x + 1, y - 1},  // Diagonal move (invalid)
                 {x, y, x - 1, y - 1},  // Diagonal move (invalid)
         };
+        var gameManager = new GameManager();
+
+        try {
+            gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
+        } catch (Exception e) {
+        }
 
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
-
-            try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -85,6 +87,8 @@ public class TestTorreHorizontal {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
@@ -100,14 +104,14 @@ public class TestTorreHorizontal {
                 {x, y, x, y - 1},
         };
 
+        var gameManager = new GameManager();
 
+        try {
+            gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
+        } catch (Exception e) {
+        }
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -123,6 +127,8 @@ public class TestTorreHorizontal {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
     @Test
@@ -135,15 +141,15 @@ public class TestTorreHorizontal {
                 {x, y, x + 2, y},
                 {x, y, x - 2, y},
         };
+        var gameManager = new GameManager();
 
+        try {
+            gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8-colisao-even-quadrants.txt"));
+        } catch (Exception e) {
+        }
 
         for (int[] move : moves) {
-            var gameManager = new GameManager();
 
-            try {
-                gameManager.loadGame(new File("test-files/test-torre-horizontal/8x8-colisao-even-quadrants.txt"));
-            } catch (Exception e) {
-            }
 
             int startingX = move[0];
             int startingY = move[1];
@@ -159,6 +165,8 @@ public class TestTorreHorizontal {
                             .append(endingX).append(":")
                             .append(endingY).append(")")
                             .toString());
+            gameManager.undo();
+
         }
     }
 
