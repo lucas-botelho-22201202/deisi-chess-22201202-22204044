@@ -86,6 +86,7 @@ public class GameManager extends Subject {
         var triedToMoveOtherTeamsPiece = piecePlaying.getTeam() != getCurrentTeamID();
         if (triedToMoveOtherTeamsPiece) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
+            piecePlaying.increaseInvalidMoves();
             return false;
         }
 
