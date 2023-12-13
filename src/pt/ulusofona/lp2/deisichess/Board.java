@@ -86,7 +86,8 @@ public class Board implements Cloneable {
         int y = 0;
         int countLine = 1;
         try {
-            while ((line = reader.readLine()) != null) {
+            for(int i = 0; i<boardSize;i++){
+                line = reader.readLine();
                 var lineElements = line.split(":");
                 var isBoardFileLine = lineElements.length == boardSize;
                 if (!isBoardFileLine) {
@@ -103,10 +104,7 @@ public class Board implements Cloneable {
 
                 this.processBoardFileLine(lineElements, y);
                 y++;
-
-                countLine++;
             }
-
         } catch (Exception e) {
             throw new IOException();
         }
