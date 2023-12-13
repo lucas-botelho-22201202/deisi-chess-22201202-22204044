@@ -11,15 +11,6 @@ import java.util.*;
 public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
-    private static final Map<Integer, String> TYPE_TO_NAME_MAP = Map.of(
-            0, Rei.NAME,
-            1, Rainha.NAME,
-            2, PoneiMagico.NAME,
-            3, PadreDaVila.NAME,
-            4, TorreHorizontal.NAME,
-            5, TorreVertical.NAME,
-            6, HomerSimpson.NAME
-    );
 
     private List<Observer> observers = new ArrayList<>();
     private List<String> nameOfPiecesCaptured = new ArrayList<>();
@@ -115,7 +106,6 @@ public class GameManager extends Subject {
             }
 
             piecePlaying.capture(pieceAtDestination);
-            addToListOfNameOfPiecesCaptured(pieceAtDestination);
             piecePlaying.increaseNumCaptures();
             resetNumMoves(); //resets to -1 instead of 0
             statistic.increaseCountCapture(getCurrentTeamID());
@@ -128,18 +118,6 @@ public class GameManager extends Subject {
         roundNum++;
         notifyObservers();
         return true;
-    }
-
-    private void addToListOfNameOfPiecesCaptured(Piece pieceAtDestination) {
-        String nameCaptured = "";
-
-        if (pieceAtDestination.isJoker()) {
-            nameCaptured = "Joker/";
-        }
-
-        nameCaptured += TYPE_TO_NAME_MAP.getOrDefault(pieceAtDestination.getType(), "");
-
-        nameOfPiecesCaptured.add(nameCaptured);
     }
 
     private boolean isValidCapture(Piece piecePlaying, Piece pieceAtDestination) {

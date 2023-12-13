@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisichess
 
-import pt.ulusofona.lp2.deisichess.pieces.Piece
+import pt.ulusofona.lp2.deisichess.pieces.*
 
 fun getStatsCalculator(type: StatType): (GameManager) -> ArrayList<String> {
     return when (type) {
@@ -44,8 +44,9 @@ fun pecasMaisCincoCapturas(gameManager: GameManager): ArrayList<String> {
 
 fun tiposCapturados(gameManager: GameManager): ArrayList<String> {
     return ArrayList(gameManager.board.pieces()
+            .filter { it.status.equals(Piece.PIECE_IS_CAPTURED) }
             .distinctBy { it.type }
-            .map { it.toString() }
+            .map { pieceTypeToString(it) }
             .sorted())
 }
 
@@ -55,5 +56,27 @@ private fun teamNameToString(teamId: Int): String {
     } else {
         "BRANCA"
     }
+}
+
+private fun pieceTypeToString(piece: Piece): String {
+
+    var nameCaptured = if (piece.isJoker) {
+        "${Joker.NAME}/"
+    } else {
+        ""
+    };
+
+    nameCaptured += when (piece.type) {
+        0 -> Rei.NAME
+        1 -> Rainha.NAME
+        2 -> PoneiMagico.NAME
+        3 -> PadreDaVila.NAME
+        4 -> TorreHorizontal.NAME
+        5 -> TorreVertical.NAME
+        6 -> HomerSimpson.NAME
+        else -> piece.type
+    }
+
+    return nameCaptured;
 }
 

@@ -6,6 +6,7 @@ import pt.ulusofona.lp2.deisichess.behaviour.Behaviour;
 public class Joker extends Piece {
     static final String BLACK_PNG = "JokerGrey.png";
     static final String WHITE_PNG = "JokerBeije.png";
+    public static final String NAME = "Joker";
     static final int DEFAULT_OFFSET = 0;
 
     private Piece impersonated;
