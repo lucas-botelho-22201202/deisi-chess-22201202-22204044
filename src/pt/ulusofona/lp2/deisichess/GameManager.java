@@ -190,13 +190,15 @@ public class GameManager extends Subject {
             return true;
         }
 
-        var blackTeamWon = countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0;
+        var whiteHasKings = board.countPiecesIngameByType(Piece.WHITE_TEAM, 0) == 0;
+        var blackTeamWon = countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0 || !whiteHasKings;
         if (blackTeamWon) {
             statistic.setWinningTeam(Piece.BLACK_TEAM);
             return true;
         }
 
-        var whiteTeamWon = countBlackPiecesInGame == 0 && countWhitePiecesInGame > 0;
+        var blackHasKings = board.countPiecesIngameByType(Piece.BLACK_TEAM, 0) == 0;
+        var whiteTeamWon = countBlackPiecesInGame == 0 && countWhitePiecesInGame > 0 || !blackHasKings;
         if (whiteTeamWon) {
             statistic.setWinningTeam(Piece.WHITE_TEAM);
             return true;

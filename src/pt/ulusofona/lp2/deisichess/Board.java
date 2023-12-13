@@ -161,7 +161,20 @@ public class Board implements Cloneable {
         for (Piece piece : this.pieces()) {
             var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
             var belongsToTeam = piece.getTeam() == teamId;
-             if (pieceIsInGame && belongsToTeam) {
+            if (pieceIsInGame && belongsToTeam) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public int countPiecesIngameByType(int teamId, int type) {
+        var count = 0;
+        for (Piece piece : this.pieces()) {
+            var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME) && piece.getType() == type;
+            var belongsToTeam = piece.getTeam() == teamId;
+            if (pieceIsInGame && belongsToTeam) {
                 count++;
             }
         }
