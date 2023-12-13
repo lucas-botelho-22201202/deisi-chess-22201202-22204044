@@ -34,7 +34,7 @@ class StatisticsKt {
         fun topCincoPontos(gameManager: GameManager): ArrayList<String> {
             return ArrayList(gameManager.board.pieces()
                     .filter { it.capturedPoints > 0 }
-                    .sortedByDescending { it.capturedPoints }
+                    .sortedWith(compareByDescending<Piece> { it.capturedPoints }.thenBy { it.nickName })
                     .take(5)
                     .map { "${it.nickName} (${teamNameToString(it.team)}) tem ${it.capturedPoints} pontos" })
         }
