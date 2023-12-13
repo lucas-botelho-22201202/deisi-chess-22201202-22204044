@@ -169,10 +169,8 @@ public abstract class Piece extends Observer implements Cloneable {
         String pieceType = String.valueOf(type);
         String pieceTeam = String.valueOf(team);
         String pieceNickName = getNickName();
-        int x = getX();
-        int y = getY();
 
-        String result = pieceID + ":" + pieceType + ":" + pieceTeam + ":" + pieceNickName + ": (" + x + ", " + y + ")";
+        String result = pieceID + ":" + pieceType + ":" + pieceTeam + ":" + pieceNickName;
 
         return result;
     }

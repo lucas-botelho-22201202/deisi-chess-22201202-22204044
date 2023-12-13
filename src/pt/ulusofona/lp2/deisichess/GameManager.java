@@ -222,12 +222,8 @@ public class GameManager extends Subject {
         return result;
     }
 
-    public boolean isGameOver() {
-        return statistic.getWinningTeam() != -1;
-    }
-
     public void saveGame(File file) throws IOException {
-        if (!isGameOver()) {
+        if (!gameOver()) {
             int boardSize = board.getBoardSize();
             int numPieces = board.getAmountOfPieces();
 
