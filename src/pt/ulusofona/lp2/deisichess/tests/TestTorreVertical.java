@@ -147,7 +147,7 @@ public class TestTorreVertical {
         var gameManager = new GameManager();
 
         try {
-            gameManager.loadGame(new File("test-files/test-torre-vertical/8x8-colisao-even-quadrants.txt"));
+            gameManager.loadGame(new File("test-files/test-torre-vertical/8x8-colisao.txt"));
         } catch (Exception e) {
         }
 

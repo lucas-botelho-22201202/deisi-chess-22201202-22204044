@@ -25,8 +25,6 @@ public class HomerSimpson extends Piece {
         points = 2;
 
         addBehaviour(new BehaviourDiagonal());
-        addBehaviour(new BehaviourHorizontal());
-        addBehaviour(new BehaviourVertical());
     }
 
     @Override
