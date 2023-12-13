@@ -81,7 +81,7 @@ public class GameManager extends Subject {
     public boolean move(int x0, int y0, int x1, int y1) {
 
         gameStates.push(new GameState((Board) board.clone(), (Statistic) statistic.clone()));
-        if (!Board.isValidCoordinate(x0, y0, getBoardSize()) || !Board.isValidCoordinate(x0, y0, getBoardSize())) {
+        if (!Board.isValidCoordinate(x0, y0, getBoardSize()) || !Board.isValidCoordinate(x1, y1, getBoardSize())) {
             statistic.increaseCountInvalidMoves(getCurrentTeamID());
             return false;
         }

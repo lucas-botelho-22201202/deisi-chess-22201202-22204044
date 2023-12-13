@@ -18,6 +18,7 @@ public class TestTorreVertical {
                 {x, y, x + 3, y},  // Horizontal move to the right (three step)
                 {x, y, x - 1, y},  // Horizontal move to the left (one step)
                 {x, y, x - 3, y},  // Horizontal move to the left (three step)
+                {x, y, x, y - 5},  // Horizontal move to the left (three step)
 
         };
 
