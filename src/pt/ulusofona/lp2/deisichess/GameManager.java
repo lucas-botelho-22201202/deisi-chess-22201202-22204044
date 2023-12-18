@@ -232,20 +232,33 @@ public class GameManager extends Subject {
             int boardSize = board.getBoardSize();
             int numPieces = board.getAmountOfPieces();
 
+            //todo write piece statistic infos
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(boardSize + "\n" + numPieces);
                 writer.newLine();
-                for (int i = 0; i < numPieces; i++) {
-                    Piece piece = board.getPieceById(i + 1);
-                    writer.write(piece.infoToFile() + "\n");
-                }
+                writePiecesInfoToFile(numPieces, writer);
                 writer.write(getPieceIDInEachSquare());
-                writer.write(getCurrentTeamID() + "\n");
-                writer.write(statistic.statisticsToFile());
+                writeTeamIdToFile(writer);
+                writeStatisticsToFile(writer);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void writeStatisticsToFile(BufferedWriter writer) throws IOException {
+        writer.write(statistic.statisticsToFile());
+    }
+
+    private void writeTeamIdToFile(BufferedWriter writer) throws IOException {
+        writer.write(getCurrentTeamID() + "\n");
+    }
+
+    private void writePiecesInfoToFile(int numPieces, BufferedWriter writer) throws IOException {
+        for (int i = 1; i <= numPieces; i++) {
+            Piece piece = board.getPieceById(i);
+            writer.write(piece.infoToFile() + "\n");
         }
     }
 

@@ -94,12 +94,12 @@ public class Statistic implements Cloneable {
     }
 
     public void loadStatistics(BufferedReader reader) throws IOException {
-        setCaptureCount(10, Integer.parseInt(reader.readLine()));
-        setValidMoves(10, Integer.parseInt(reader.readLine()));
-        setInvalidMoves(10, Integer.parseInt(reader.readLine()));
-        setCaptureCount(20, Integer.parseInt(reader.readLine()));
-        setValidMoves(20, Integer.parseInt(reader.readLine()));
-        setInvalidMoves(20, Integer.parseInt(reader.readLine()));
+        setCaptureCount(Piece.BLACK_TEAM, Integer.parseInt(reader.readLine()));
+        setValidMoves(Piece.BLACK_TEAM, Integer.parseInt(reader.readLine()));
+        setInvalidMoves(Piece.BLACK_TEAM, Integer.parseInt(reader.readLine()));
+        setCaptureCount(Piece.WHITE_TEAM, Integer.parseInt(reader.readLine()));
+        setValidMoves(Piece.WHITE_TEAM, Integer.parseInt(reader.readLine()));
+        setInvalidMoves(Piece.WHITE_TEAM, Integer.parseInt(reader.readLine()));
     }
 
     public String statisticsToFile(){
