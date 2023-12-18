@@ -2,6 +2,9 @@ package pt.ulusofona.lp2.deisichess;
 
 import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class Statistic implements Cloneable {
     private int countCaptureBlack;
     private int countValidMovesBlack;
@@ -17,6 +20,39 @@ public class Statistic implements Cloneable {
 
     public int getWinningTeam() {
         return winningTeam;
+    }
+
+    public void setCaptureCount(int teamId, int captures) {
+        switch (teamId) {
+            case Piece.BLACK_TEAM -> {
+                countCaptureBlack = captures;
+            }
+            case Piece.WHITE_TEAM -> {
+                countCaptureWhite = captures;
+            }
+        }
+    }
+
+    public void setValidMoves(int teamId, int validMoves) {
+        switch (teamId) {
+            case Piece.BLACK_TEAM -> {
+                countValidMovesBlack = validMoves;
+            }
+            case Piece.WHITE_TEAM -> {
+                countValidMovesWhite = validMoves;
+            }
+        }
+    }
+
+    public void setInvalidMoves(int teamId, int invalidMoves) {
+        switch (teamId) {
+            case Piece.BLACK_TEAM -> {
+                countInvalidMovesBlack = invalidMoves;
+            }
+            case Piece.WHITE_TEAM -> {
+                countInvalidMovesWhite = invalidMoves;
+            }
+        }
     }
 
     public void increaseCountCapture(int teamId) {
@@ -57,16 +93,23 @@ public class Statistic implements Cloneable {
         return countCaptureBlack + countCaptureWhite;
     }
 
+    public void loadStatistics(BufferedReader reader) throws IOException {
+        setCaptureCount(10, Integer.parseInt(reader.readLine()));
+        setValidMoves(10, Integer.parseInt(reader.readLine()));
+        setInvalidMoves(10, Integer.parseInt(reader.readLine()));
+        setCaptureCount(20, Integer.parseInt(reader.readLine()));
+        setValidMoves(20, Integer.parseInt(reader.readLine()));
+        setInvalidMoves(20, Integer.parseInt(reader.readLine()));
+    }
+
     public String statisticsToFile(){
         StringBuilder statistics = new StringBuilder();
 
-        statistics.append("Equipa das Pretas\n")
-                .append(countCaptureBlack).append("\n")
+        statistics.append(countCaptureBlack).append("\n")
                 .append(countValidMovesBlack).append("\n")
                 .append(countInvalidMovesBlack).append("\n");
 
-        statistics.append("Equipa das Brancas\n")
-                .append(countCaptureWhite).append("\n")
+        statistics.append(countCaptureWhite).append("\n")
                 .append(countValidMovesWhite).append("\n")
                 .append(countInvalidMovesWhite);
 

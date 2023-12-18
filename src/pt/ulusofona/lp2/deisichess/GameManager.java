@@ -46,6 +46,11 @@ public class GameManager extends Subject {
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
             board.createPiecesFromFile(reader, board.getAmountOfPieces());
             board.buildBoardFromFile(reader);
+            if(reader.ready()){
+                board.setCurrentTeamId(Integer.parseInt(reader.readLine()));
+                statistic.loadStatistics(reader);
+            }
+
 
             registerAllObservers(board.pieces());
             notifyObservers();
