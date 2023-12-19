@@ -234,7 +234,6 @@ public class GameManager extends Subject {
     }
 
     public void saveGame(File file) throws IOException {
-//        if (!gameOver()) {
             int boardSize = board.getBoardSize();
             int numPieces = board.getAmountOfPieces();
 
@@ -252,7 +251,6 @@ public class GameManager extends Subject {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//        }
     }
 
     private void writeStatisticsToFile(BufferedWriter writer) throws IOException {
