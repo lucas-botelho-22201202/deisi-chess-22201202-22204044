@@ -45,8 +45,8 @@ fun pecasMaisCincoCapturas(gameManager: GameManager): ArrayList<String> {
 fun tiposCapturados(gameManager: GameManager): ArrayList<String> {
     return ArrayList(gameManager.board.pieces()
             .filter { it.status.equals(Piece.PIECE_IS_CAPTURED) }
-            .distinctBy { it.type }
             .map { pieceTypeToString(it) }
+            .distinct()
             .sorted())
 }
 

@@ -22,6 +22,10 @@ public class GameManager extends Subject {
     public GameManager() {
     }
 
+    public GameManager(Board board) {
+        this.board = board;
+    }
+
     public List<String> getNameOfPiecesCaptured() {
         return nameOfPiecesCaptured;
     }
