@@ -17,7 +17,6 @@ public class TestBehaviourDiagonal {
         var x = 3;
         var y = 4;
 
-
         ArrayList<ArrayList<Integer>> expectedPositions = new ArrayList<>();
 
         expectedPositions.add(new ArrayList<>(List.of(x + 1, y + 1)));

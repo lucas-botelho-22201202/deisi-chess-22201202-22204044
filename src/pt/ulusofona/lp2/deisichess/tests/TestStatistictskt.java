@@ -18,28 +18,25 @@ public class TestStatistictskt {
 
         try {
             gameManager.loadGame(new File("test-files/8x8.txt"));
-
-            for (int i = 0; i < gameManager.getBoard().getAmountOfPieces(); i++) {
-               gameManager.getBoard().pieces().get(i).setStatus(Piece.PIECE_IS_CAPTURED);
-            }
-
-            var result = StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager);
-
-            var expected = new ArrayList<>(Arrays.asList(
-                    "Homer Simpson",
-                    "Joker/Rainha",
-                    "Padre da Vila",
-                    "Ponei Mágico",
-                    "Rainha",
-                    "Rei",
-                    "TorreHor",
-                    "TorreVert"
-            ));
-            Assertions.assertEquals(expected, result, "test_tipos_capturados");
-
         } catch (Exception e) {
         }
 
-        return;
+        for (int i = 0; i < gameManager.getBoard().getAmountOfPieces(); i++) {
+            gameManager.getBoard().pieces().get(i).setStatus(Piece.PIECE_IS_CAPTURED);
+        }
+
+        var result = StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager);
+
+        var expected = new ArrayList<>(Arrays.asList(
+                "Homer Simpson",
+                "Joker/Rainha",
+                "Padre da Vila",
+                "Ponei Mágico",
+                "Rainha",
+                "Rei",
+                "TorreHor",
+                "TorreVert"
+        ));
+        Assertions.assertEquals(expected, result, "test_tipos_capturados");
     }
 }

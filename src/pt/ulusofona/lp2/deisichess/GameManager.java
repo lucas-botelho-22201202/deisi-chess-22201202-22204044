@@ -13,7 +13,6 @@ public class GameManager extends Subject {
     static final int MAX_MOVS = 10;
 
     private List<Observer> observers = new ArrayList<>();
-    private List<String> nameOfPiecesCaptured = new ArrayList<>();
     private int numMoves = 0;
     private int roundNum = 0;
     private Board board = new Board();
@@ -24,10 +23,6 @@ public class GameManager extends Subject {
 
     public GameManager(Board board) {
         this.board = board;
-    }
-
-    public List<String> getNameOfPiecesCaptured() {
-        return nameOfPiecesCaptured;
     }
 
     public Board getBoard() {
@@ -54,7 +49,6 @@ public class GameManager extends Subject {
                 board.setCurrentTeamId(Integer.parseInt(reader.readLine()));
                 statistic.loadStatistics(reader);
             }
-
 
             registerAllObservers(board.pieces());
             notifyObservers();
