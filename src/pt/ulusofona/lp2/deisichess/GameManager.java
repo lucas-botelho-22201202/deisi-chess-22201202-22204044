@@ -172,24 +172,27 @@ public class GameManager extends Subject {
         var countBlackPiecesInGame = board.countPiecesIngame(Piece.BLACK_TEAM);
         var countWhitePiecesInGame = board.countPiecesIngame(Piece.WHITE_TEAM);
 
-        var isDraw = countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1;
+        var isBlackKingInGame = board.isKingInGame(Piece.BLACK_TEAM);
+        var isWhiteKingInGame = board.isKingInGame(Piece.WHITE_TEAM);
+
+        var isDraw = countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1 && isBlackKingInGame && isWhiteKingInGame;
         if (isDraw) {
             statistic.setWinningTeam(-1);
             return true;
         }
 
-        var blackTeamWon = countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0;
+
+        var blackTeamWon = (countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0) || (isBlackKingInGame && !isWhiteKingInGame);
         if (blackTeamWon) {
             statistic.setWinningTeam(Piece.BLACK_TEAM);
             return true;
         }
 
-        var whiteTeamWon = countBlackPiecesInGame == 0 && countWhitePiecesInGame > 0;
+        var whiteTeamWon = (countBlackPiecesInGame == 0 && countWhitePiecesInGame > 0) || (!isBlackKingInGame && isWhiteKingInGame);
         if (whiteTeamWon) {
             statistic.setWinningTeam(Piece.WHITE_TEAM);
             return true;
         }
-
 
         var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
         if (statistic.getNumTotalCaptures() > 0) {

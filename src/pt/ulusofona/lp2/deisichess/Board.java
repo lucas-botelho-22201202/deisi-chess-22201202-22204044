@@ -184,6 +184,16 @@ public class Board implements Cloneable {
         }
     }
 
+    public boolean isKingInGame(int teamId){
+        for (Piece boardPiece : boardPieces) {
+            var isKing = boardPiece.getType() == 0 && !boardPiece.isJoker();
+            if (isKing && boardPiece.getTeam() == teamId){
+                return boardPiece.getStatus().equals(Piece.PIECE_IN_GAME);
+            }
+        }
+        return false;
+    }
+
     @Override
     public Object clone() {
         try {
