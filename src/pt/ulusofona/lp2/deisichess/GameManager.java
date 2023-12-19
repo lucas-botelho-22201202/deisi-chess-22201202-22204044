@@ -11,7 +11,6 @@ import java.util.*;
 public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
     static final int MAX_MOVS = 10;
-
     private List<Observer> observers = new ArrayList<>();
     private List<String> nameOfPiecesCaptured = new ArrayList<>();
     private int numMoves = 0;
@@ -19,10 +18,9 @@ public class GameManager extends Subject {
     private Board board = new Board();
     private Statistic statistic = new Statistic();
     private Stack<GameState> gameStates = new Stack<>();
+
     public GameManager() {
     }
-
-
     public GameManager(Board board) {
         this.board = board;
     }
@@ -54,6 +52,7 @@ public class GameManager extends Subject {
             if(reader.ready()){
                 board.setCurrentTeamId(Integer.parseInt(reader.readLine()));
                 statistic.loadStatistics(reader);
+                board.setPiecesStatusFromFile(reader);
             }
 
 
@@ -181,7 +180,6 @@ public class GameManager extends Subject {
             return true;
         }
 
-
         var blackTeamWon = (countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0) || (isBlackKingInGame && !isWhiteKingInGame);
         if (blackTeamWon) {
             statistic.setWinningTeam(Piece.BLACK_TEAM);
@@ -236,7 +234,7 @@ public class GameManager extends Subject {
     }
 
     public void saveGame(File file) throws IOException {
-        if (!gameOver()) {
+//        if (!gameOver()) {
             int boardSize = board.getBoardSize();
             int numPieces = board.getAmountOfPieces();
 
@@ -244,28 +242,37 @@ public class GameManager extends Subject {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(boardSize + "\n" + numPieces);
                 writer.newLine();
-                writePiecesInfoToFile(numPieces, writer);
+                writePiecesInfoToFile(writer);
                 writer.write(getPieceIDInEachSquare());
                 writeTeamIdToFile(writer);
                 writeStatisticsToFile(writer);
+                writer.newLine();
+                writeIdCapturedPieces(writer);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+//        }
     }
 
     private void writeStatisticsToFile(BufferedWriter writer) throws IOException {
         writer.write(statistic.statisticsToFile());
     }
 
+    private void writeIdCapturedPieces(BufferedWriter writer) throws IOException {
+        for (Piece piece : board.pieces()) {
+            if (piece.getStatus().equals(Piece.PIECE_IS_CAPTURED)) {
+                writer.write(piece.getUniqueId() + "\n");
+            }
+        }
+    }
+
     private void writeTeamIdToFile(BufferedWriter writer) throws IOException {
         writer.write(getCurrentTeamID() + "\n");
     }
 
-    private void writePiecesInfoToFile(int numPieces, BufferedWriter writer) throws IOException {
-        for (int i = 1; i <= numPieces; i++) {
-            Piece piece = board.getPieceById(i);
+    private void writePiecesInfoToFile(BufferedWriter writer) throws IOException {
+        for (Piece piece : board.pieces()) {
             writer.write(piece.infoToFile() + "\n");
         }
     }

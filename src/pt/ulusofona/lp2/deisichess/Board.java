@@ -5,6 +5,7 @@ import pt.ulusofona.lp2.deisichess.pieces.Piece;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board implements Cloneable {
     private int boardSize;
@@ -38,7 +39,6 @@ public class Board implements Cloneable {
     }
 
     public void setBoardSize(int boardSize) {
-
         this.boardSize = boardSize;
     }
 
@@ -68,6 +68,8 @@ public class Board implements Cloneable {
         String line;
         int countLine = 1;
 
+        boardPieces = new ArrayList<>();
+
         try {
             for (; countLine <= numPieces; countLine++) {
                 line = reader.readLine();
@@ -75,6 +77,18 @@ public class Board implements Cloneable {
             }
         } catch (InvalidGameInputException e) {
             throw new InvalidGameInputException(countLine + 2, e.getProblem(), e.getAmountOfData(), e.getExpected());
+        } catch (Exception e) {
+            throw new IOException();
+        }
+    }
+
+    public void setPiecesStatusFromFile(BufferedReader reader) throws IOException {
+        String line;
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                getPieceById(Integer.parseInt(line)).getCaptured();
+            }
         } catch (Exception e) {
             throw new IOException();
         }
@@ -86,7 +100,7 @@ public class Board implements Cloneable {
         int y = 0;
         int countLine = 1;
         try {
-            for(int i = 0; i<boardSize;i++){
+            for (int i = 0; i < boardSize; i++) {
                 line = reader.readLine();
                 var lineElements = line.split(":");
                 var isBoardFileLine = lineElements.length == boardSize;
@@ -159,7 +173,7 @@ public class Board implements Cloneable {
         for (Piece piece : this.pieces()) {
             var pieceIsInGame = piece.getStatus().equals(Piece.PIECE_IN_GAME);
             var belongsToTeam = piece.getTeam() == teamId;
-             if (pieceIsInGame && belongsToTeam) {
+            if (pieceIsInGame && belongsToTeam) {
                 count++;
             }
         }
@@ -184,10 +198,10 @@ public class Board implements Cloneable {
         }
     }
 
-    public boolean isKingInGame(int teamId){
+    public boolean isKingInGame(int teamId) {
         for (Piece boardPiece : boardPieces) {
             var isKing = boardPiece.getType() == 0 && !boardPiece.isJoker();
-            if (isKing && boardPiece.getTeam() == teamId){
+            if (isKing && boardPiece.getTeam() == teamId) {
                 return boardPiece.getStatus().equals(Piece.PIECE_IN_GAME);
             }
         }

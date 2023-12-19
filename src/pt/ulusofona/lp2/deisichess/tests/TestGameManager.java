@@ -139,7 +139,6 @@ public class TestGameManager {
 
         ArrayList<String> listOfExpectedTexts = new ArrayList<>(Arrays.asList(expectedText.split(",")));
 
-        System.out.println(countMoves);
         Assertions.assertEquals(listOfExpectedTexts.get(1), gameResult.get(1), "test_Draw_10_Sequencial_moves_without_capturing failed with total of:" + countMoves + " moves.");
     }
 
