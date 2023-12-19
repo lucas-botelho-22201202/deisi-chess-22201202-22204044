@@ -171,22 +171,20 @@ public class GameManager extends Subject {
     public boolean gameOver() {
         var countBlackPiecesInGame = board.countPiecesIngame(Piece.BLACK_TEAM);
         var countWhitePiecesInGame = board.countPiecesIngame(Piece.WHITE_TEAM);
-        var blackKingInGame = board.isKingInGame(Piece.BLACK_TEAM);
-        var whiteKingInGame = board.isKingInGame(Piece.WHITE_TEAM);
 
-        var isDraw = (countBlackPiecesInGame == 1 && blackKingInGame) && (countWhitePiecesInGame == 1 && whiteKingInGame);
+        var isDraw = countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1;
         if (isDraw) {
             statistic.setWinningTeam(-1);
             return true;
         }
 
-        var blackTeamWon = !whiteKingInGame && (countBlackPiecesInGame > 0 && blackKingInGame);
+        var blackTeamWon = countWhitePiecesInGame == 0 && countBlackPiecesInGame > 0;
         if (blackTeamWon) {
             statistic.setWinningTeam(Piece.BLACK_TEAM);
             return true;
         }
 
-        var whiteTeamWon = !blackKingInGame && (countWhitePiecesInGame > 0 && whiteKingInGame);
+        var whiteTeamWon = countBlackPiecesInGame == 0 && countWhitePiecesInGame > 0;
         if (whiteTeamWon) {
             statistic.setWinningTeam(Piece.WHITE_TEAM);
             return true;

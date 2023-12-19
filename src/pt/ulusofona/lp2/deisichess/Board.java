@@ -184,22 +184,6 @@ public class Board implements Cloneable {
         }
     }
 
-    public boolean isKingInGame(int teamId){
-        switch (teamId) {
-            case Piece.BLACK_TEAM -> {
-                if(getPieceById(1) != null){
-                    return getPieceById(1).getStatus() == Piece.PIECE_IN_GAME;
-                }
-            }
-            case Piece.WHITE_TEAM -> {
-                if(getPieceById(9) != null){
-                    return getPieceById(9).getStatus() == Piece.PIECE_IN_GAME;
-                }
-            }
-        }
-        return false;
-    }
-
     @Override
     public Object clone() {
         try {
