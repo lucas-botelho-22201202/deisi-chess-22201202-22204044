@@ -126,6 +126,7 @@ public class GameManager extends Subject {
         piecePlaying.increaseValidMoves();
         board.switchPlayingTeam();
         roundNum++;
+        numMoves++;
         notifyObservers();
         return true;
     }
