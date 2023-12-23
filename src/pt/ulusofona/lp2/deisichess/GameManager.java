@@ -21,6 +21,7 @@ public class GameManager extends Subject {
 
     public GameManager() {
     }
+
     public GameManager(Board board) {
         this.board = board;
     }
@@ -49,7 +50,7 @@ public class GameManager extends Subject {
             board.setAmountOfPieces(Integer.parseInt(reader.readLine()));
             board.createPiecesFromFile(reader, board.getAmountOfPieces());
             board.buildBoardFromFile(reader);
-            if(reader.ready()){
+            if (reader.ready()) {
                 board.setCurrentTeamId(Integer.parseInt(reader.readLine()));
                 statistic.loadStatistics(reader);
                 board.setPiecesStatusFromFile(reader);
@@ -137,7 +138,7 @@ public class GameManager extends Subject {
         }
 
         var isSameType = piecePlaying.getType() == pieceAtDestination.getType();
-        if (isSameType){
+        if (isSameType) {
             return pieceAtDestination.canEatSameType();
         }
 
@@ -193,8 +194,9 @@ public class GameManager extends Subject {
         }
 
         var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
-        if (statistic.getNumTotalCaptures() > 0) {
-            return maxMovesReached;
+        if (statistic.getNumTotalCaptures() > 0 && maxMovesReached) {
+            statistic.setWinningTeam(-1);
+            return true;
         }
 
         return false;
@@ -212,45 +214,41 @@ public class GameManager extends Subject {
 
     public String getPieceIDInEachSquare() {
         int boardSize = board.getBoardSize();
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         for (int row = 0; row < boardSize; row++) {
-            String line = "";
+            StringBuilder line = new StringBuilder();
             for (int column = 0; column < boardSize; column++) {
-                String id = "0";
-                if (getSquareInfo(column, row) != null && getSquareInfo(column, row).length > 0) {
-                    id = getSquareInfo(column, row)[0];
-                }
+                String[] squareInfo = getSquareInfo(column, row);
+                String id = (squareInfo != null && squareInfo.length > 0) ? squareInfo[0] : "0";
 
-                if (column == boardSize - 1) {
-                    line += id;
-                } else {
-                    line += id + ":";
+                line.append(id);
+                if (column < boardSize - 1) {
+                    line.append(":");
                 }
             }
-            result += line + "\n";
+            result.append(line).append("\n");
         }
-        return result;
+        return result.toString();
     }
 
     public void saveGame(File file) throws IOException {
-            int boardSize = board.getBoardSize();
-            int numPieces = board.getAmountOfPieces();
+        int boardSize = board.getBoardSize();
+        int numPieces = board.getAmountOfPieces();
 
-            //todo write piece statistic infos
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write(boardSize + "\n" + numPieces);
-                writer.newLine();
-                writePiecesInfoToFile(writer);
-                writer.write(getPieceIDInEachSquare());
-                writeTeamIdToFile(writer);
-                writeStatisticsToFile(writer);
-                writer.newLine();
-                writeIdCapturedPieces(writer);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(boardSize + "\n" + numPieces);
+            writer.newLine();
+            writePiecesInfoToFile(writer);
+            writer.write(getPieceIDInEachSquare());
+            writeTeamIdToFile(writer);
+            writeStatisticsToFile(writer);
+            writer.newLine();
+            writeIdCapturedPieces(writer);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeStatisticsToFile(BufferedWriter writer) throws IOException {
