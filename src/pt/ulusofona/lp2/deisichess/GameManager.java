@@ -194,8 +194,7 @@ public class GameManager extends Subject {
             return true;
         }
 
-        var maxMovesReached = this.numMoves == GameManager.MAX_MOVS;
-        if (statistic.getNumTotalCaptures() > 0 && maxMovesReached) {
+        if (this.numMoves == GameManager.MAX_MOVS) {
             statistic.setWinningTeam(-1);
             return true;
         }
