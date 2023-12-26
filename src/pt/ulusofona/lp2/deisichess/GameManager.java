@@ -13,7 +13,7 @@ public class GameManager extends Subject {
     static final int MAX_MOVS = 10;
     private List<Observer> observers = new ArrayList<>();
     private List<String> nameOfPiecesCaptured = new ArrayList<>();
-    private int numMoves = 0;
+    private int numMovesWithoutCapture = 0;
     private int roundNum = 0;
     private Board board = new Board();
     private Statistic statistic = new Statistic();
@@ -34,8 +34,8 @@ public class GameManager extends Subject {
         return this.board;
     }
 
-    public void resetNumMoves() {
-        this.numMoves = -1;
+    public void resetNumMovesWithoutCapture() {
+        this.numMovesWithoutCapture = -1;
     }
 
     public void loadGame(File file) throws InvalidGameInputException, IOException {
@@ -117,7 +117,7 @@ public class GameManager extends Subject {
 
             piecePlaying.capture(pieceAtDestination);
             piecePlaying.increaseNumCaptures();
-            resetNumMoves(); //resets to -1 instead of 0
+            resetNumMovesWithoutCapture();
             statistic.increaseCountCapture(getCurrentTeamID());
         }
 
@@ -126,7 +126,7 @@ public class GameManager extends Subject {
         piecePlaying.increaseValidMoves();
         board.switchPlayingTeam();
         roundNum++;
-        numMoves++;
+        numMovesWithoutCapture++;
         notifyObservers();
         return true;
     }
@@ -194,12 +194,7 @@ public class GameManager extends Subject {
             return true;
         }
 
-        if (this.numMoves == GameManager.MAX_MOVS) {
-            statistic.setWinningTeam(-1);
-            return true;
-        }
-
-        return false;
+        return this.numMovesWithoutCapture == GameManager.MAX_MOVS;
     }
 
     public ArrayList<String> getGameResults() {

@@ -18,10 +18,6 @@ public class Statistic implements Cloneable {
         this.winningTeam = winningTeam;
     }
 
-    public int getWinningTeam() {
-        return winningTeam;
-    }
-
     public void setCaptureCount(int teamId, int captures) {
         switch (teamId) {
             case Piece.BLACK_TEAM -> {
