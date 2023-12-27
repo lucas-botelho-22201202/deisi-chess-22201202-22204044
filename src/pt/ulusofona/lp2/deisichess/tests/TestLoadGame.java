@@ -17,7 +17,7 @@ public class TestLoadGame {
         var gameManager = new GameManager();
 
         try {
-            gameManager.loadGame(new File("8x8.txt"));
+            gameManager.loadGame(new File("test-files/test-load-game/8x8.txt"));
 
         } catch (Exception e) {
         }
@@ -42,7 +42,7 @@ public class TestLoadGame {
         }
 
         try {
-            gameManager.loadGame(new File("8x8.txt"));
+            gameManager.loadGame(new File("test-files/test-load-game/8x8.txt"));
 
         } catch (Exception e) {
         }
