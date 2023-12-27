@@ -98,6 +98,15 @@ public class Statistic implements Cloneable {
         setInvalidMoves(Piece.WHITE_TEAM, Integer.parseInt(reader.readLine()));
     }
 
+    public void resetStatistics(){
+        setCaptureCount(Piece.BLACK_TEAM, 0);
+        setValidMoves(Piece.BLACK_TEAM, 0);
+        setInvalidMoves(Piece.BLACK_TEAM, 0);
+        setCaptureCount(Piece.WHITE_TEAM, 0);
+        setValidMoves(Piece.WHITE_TEAM, 0);
+        setInvalidMoves(Piece.WHITE_TEAM, 0);
+    }
+
     public String statisticsToFile(){
         StringBuilder statistics = new StringBuilder();
 
