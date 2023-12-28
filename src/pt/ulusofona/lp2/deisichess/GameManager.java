@@ -10,7 +10,7 @@ import java.util.*;
 
 public class GameManager extends Subject {
     static final int NUM_OF_PIECE_PARAMETERS_ON_FILE = 4;
-    static final int MAX_MOVS = 3;
+    static final int MAX_MOVS = 10;
     private List<Observer> observers = new ArrayList<>();
     private List<String> nameOfPiecesCaptured = new ArrayList<>();
     private int numMovesWithoutCapture = 0;
