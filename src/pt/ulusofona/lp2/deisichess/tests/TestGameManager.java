@@ -2,9 +2,11 @@ package pt.ulusofona.lp2.deisichess.tests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import pt.ulusofona.lp2.deisichess.Board;
 import pt.ulusofona.lp2.deisichess.GameManager;
+import pt.ulusofona.lp2.deisichess.PieceFactory;
+import pt.ulusofona.lp2.deisichess.pieces.Piece;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,5 +162,25 @@ public class TestGameManager {
         } catch (Exception e) {
 
         }
+    }
+
+    @Test
+    public void test_ObserverPattern() {
+        var gameManager = new GameManager();
+
+        try {
+            gameManager.loadGame(new File("test-files/test-load-game/8x8.txt"));
+
+        } catch (Exception e) {
+        }
+
+
+        Assertions.assertEquals(gameManager.getBoard().getPieceById(7).toString(), "Doh! zzzzzz", "Homer is awake");
+        //move homer false
+        Assertions.assertFalse(gameManager.move(0, 6, 0, 5), "Homer moved");
+
+        //move rei
+        gameManager.move(0, 0, 0, 1);
+        Assertions.assertNotEquals(gameManager.getBoard().getPieceById(7).toString(), "Doh! zzzzzz", "Homer is asleep");
     }
 }

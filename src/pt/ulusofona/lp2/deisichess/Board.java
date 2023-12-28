@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Board implements Cloneable {
     private int boardSize;
@@ -16,6 +17,12 @@ public class Board implements Cloneable {
     public Board() {
         defineStartingTeam(Piece.BLACK_TEAM);
         boardPieces = new ArrayList<>();
+    }
+
+    public Board(int size) {
+        defineStartingTeam(Piece.BLACK_TEAM);
+        boardPieces = new ArrayList<>();
+        boardSize = size;
     }
 
     private void defineStartingTeam(int startingTeam) {
@@ -220,5 +227,20 @@ public class Board implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new InternalError(e);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Board otherBoard = (Board) obj;
+        return boardSize == otherBoard.boardSize &&
+                amountOfPieces == otherBoard.amountOfPieces &&
+                currentTeamId == otherBoard.currentTeamId &&
+                Objects.equals(boardPieces, otherBoard.boardPieces);
     }
 }

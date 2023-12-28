@@ -163,4 +163,19 @@ public class Statistic implements Cloneable {
             throw new InternalError(e);
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        Statistic otherStatistic = (Statistic) obj;
+        return countCaptureBlack == otherStatistic.countCaptureBlack &&
+                countValidMovesBlack == otherStatistic.countValidMovesBlack &&
+                countInvalidMovesBlack == otherStatistic.countInvalidMovesBlack &&
+                countCaptureWhite == otherStatistic.countCaptureWhite &&
+                countValidMovesWhite == otherStatistic.countValidMovesWhite &&
+                countInvalidMovesWhite == otherStatistic.countInvalidMovesWhite &&
+                winningTeam == otherStatistic.winningTeam;
+    }
 }

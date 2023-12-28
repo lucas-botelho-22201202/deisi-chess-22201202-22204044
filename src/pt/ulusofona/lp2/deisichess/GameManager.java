@@ -26,10 +26,6 @@ public class GameManager extends Subject {
         this.board = board;
     }
 
-    public List<String> getNameOfPiecesCaptured() {
-        return nameOfPiecesCaptured;
-    }
-
     public Board getBoard() {
         return this.board;
     }
@@ -54,7 +50,7 @@ public class GameManager extends Subject {
                 board.setCurrentTeamId(Integer.parseInt(reader.readLine()));
                 statistic.loadStatistics(reader);
                 board.setPiecesStatusFromFile(reader);
-            }else{
+            } else {
                 board.setCurrentTeamId(Piece.BLACK_TEAM);
                 statistic.resetStatistics();
             }
@@ -326,5 +322,22 @@ public class GameManager extends Subject {
         for (Observer observer : observers) {
             observer.update(roundNum);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        GameManager otherGameManager = (GameManager) obj;
+//        return numMovesWithoutCapture == otherGameManager.numMovesWithoutCapture &&
+//                roundNum == otherGameManager.roundNum &&
+//                Objects.equals(gameStates, otherGameManager.gameStates);
+        return Objects.equals(board, otherGameManager.board) &&
+                Objects.equals(statistic, otherGameManager.statistic);
+
     }
 }

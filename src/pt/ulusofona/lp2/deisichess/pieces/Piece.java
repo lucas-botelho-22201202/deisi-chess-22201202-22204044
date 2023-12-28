@@ -7,7 +7,7 @@ import pt.ulusofona.lp2.deisichess.observer.Observer;
 
 import java.util.ArrayList;
 
-public abstract class Piece extends Observer implements Cloneable {
+public abstract class Piece extends Observer implements Cloneable{
     //region constants
     public static final int BLACK_TEAM = 10;
     public static final int WHITE_TEAM = 20;
@@ -268,5 +268,21 @@ public abstract class Piece extends Observer implements Cloneable {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+
+        Piece otherPiece = (Piece) obj;
+        return uniqueId == otherPiece.uniqueId &&
+                type == otherPiece.type &&
+                team == otherPiece.team &&
+                x == otherPiece.x &&
+                y == otherPiece.y &&
+                nickName.equals(otherPiece.nickName) &&
+                status.equals(otherPiece.status);
+    }
 
 }
