@@ -42,19 +42,6 @@ public class BehaviourLShape extends Behaviour {
         }
     }
 
-    private void simulateMovement(Direction direction) {
-        switch (direction) {
-            case UP_LEFT, UP_RIGHT -> moveUp();
-            case DOWN_LEFT, DOWN_RIGHT -> moveDown();
-            case LEFT_DOWN, LEFT_UP -> moveLeft();
-            case RIGHT_DOWN, RIGHT_UP -> moveRight();
-            case UP -> moveUp();
-            case DOWN -> moveDown();
-            case LEFT -> moveLeft();
-            case RIGHT -> moveRight();
-        }
-    }
-
     private void switchMovementDirection(BehaviourData behaviorData) {
 
         setInitialVirtualPosition(behaviorData);
