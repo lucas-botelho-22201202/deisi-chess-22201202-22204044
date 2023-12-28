@@ -135,6 +135,21 @@ public class Board implements Cloneable {
         return false;
     }
 
+    public boolean hasAdjacentPieceFromSameTeam(int x, int y){
+
+        var hasPieceAbove = squareHasPiece(x, y-1);
+        var hasPieceAboveLeft = squareHasPiece(x-1, y-1);
+        var hasPieceAboveRight = squareHasPiece(x+1, y-1);
+        var hasPieceBelow = squareHasPiece(x, y+1);
+        var hasPieceBelowLeft = squareHasPiece(x-1, y+1);
+        var hasPieceBelowRight = squareHasPiece(x+1, y+1);
+        var hasPieceLeft = squareHasPiece(x-1, y);
+        var hasPieceRight = squareHasPiece(x+1, y);
+
+        return hasPieceAbove || hasPieceAboveLeft || hasPieceAboveRight || hasPieceBelow || hasPieceBelowLeft
+                || hasPieceBelowRight || hasPieceLeft || hasPieceRight;
+    }
+
     public static Piece getPieceAt(int x, int y, ArrayList<Piece> boardPieces) {
 
         for (Piece piece : boardPieces) {
