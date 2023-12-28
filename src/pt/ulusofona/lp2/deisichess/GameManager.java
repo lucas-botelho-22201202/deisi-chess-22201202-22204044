@@ -54,8 +54,10 @@ public class GameManager extends Subject {
                 board.setCurrentTeamId(Integer.parseInt(reader.readLine()));
                 statistic.loadStatistics(reader);
                 board.setPiecesStatusFromFile(reader);
+            }else{
+                board.setCurrentTeamId(Piece.BLACK_TEAM);
+                statistic.resetStatistics();
             }
-
 
             registerAllObservers(board.pieces());
             notifyObservers();
