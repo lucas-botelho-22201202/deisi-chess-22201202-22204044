@@ -176,9 +176,8 @@ public class GameManager extends Subject {
         var isBlackKingInGame = board.isKingInGame(Piece.BLACK_TEAM);
         var isWhiteKingInGame = board.isKingInGame(Piece.WHITE_TEAM);
 
-//        && isBlackKingInGame && isWhiteKingInGame
-        var isDraw = countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1 ;
-        if (isDraw) {
+        var isDraw = countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1 && isBlackKingInGame && isWhiteKingInGame;
+        if (isDraw || countBlackPiecesInGame == 1 && countWhitePiecesInGame == 1) {
             statistic.setWinningTeam(-1);
             return true;
         }
