@@ -12,12 +12,6 @@ public abstract class Behaviour implements Cloneable {
     protected int virtualX;
     protected int virtualY;
 
-    public abstract boolean isDiagonal();
-
-    public abstract boolean isHorizontal();
-
-    public abstract boolean isVertical();
-
     public abstract boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces);
 
     public abstract boolean isValid(BehaviourData behaviorData);

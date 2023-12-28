@@ -7,21 +7,6 @@ import java.util.ArrayList;
 
 public class BehaviourLShape extends Behaviour {
     @Override
-    public boolean isDiagonal() {
-        return false;
-    }
-
-    @Override
-    public boolean isHorizontal() {
-        return false;
-    }
-
-    @Override
-    public boolean isVertical() {
-        return false;
-    }
-
-    @Override
     public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
         setInitialVirtualPosition(behaviorData);
 

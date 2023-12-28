@@ -4,8 +4,6 @@ public class InvalidGameInputException extends Exception {
     static final String DADOS_A_MAIS = "DADOS A MAIS";
     static final String DADOS_A_MENOS = "DADOS A MENOS";
     static final int DADOS_ESPERADOS_PECA = 4;
-//    static final int DADOS_ESPERADOS_PRIMEIRA_LINHA = 1;
-//    static final int DADOS_ESPERADOS_SEGUNDA_LINHA = 1;
     private int lineNum;
     private int amountOfData;
     private int expected;

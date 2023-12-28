@@ -8,21 +8,6 @@ import java.util.ArrayList;
 public class BehaviourHorizontal extends Behaviour {
 
     @Override
-    public boolean isDiagonal() {
-        return false;
-    }
-
-    @Override
-    public boolean isHorizontal() {
-        return true;
-    }
-
-    @Override
-    public boolean isVertical() {
-        return false;
-    }
-
-    @Override
     public boolean hasCollision(BehaviourData behaviorData, ArrayList<Piece> boardPieces) {
         setInitialVirtualPosition(behaviorData);
 
@@ -98,9 +83,5 @@ public class BehaviourHorizontal extends Behaviour {
 
     public static boolean isLeft(int xStart, int xEnd) {
         return xEnd < xStart;
-    }
-
-    public static boolean isRight(int xStart, int xEnd) {
-        return xEnd > xStart;
     }
 }
