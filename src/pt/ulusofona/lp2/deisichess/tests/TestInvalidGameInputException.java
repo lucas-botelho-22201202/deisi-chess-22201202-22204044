@@ -1,13 +1,13 @@
 package pt.ulusofona.lp2.deisichess.tests;
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.ulusofona.lp2.deisichess.GameManager;
 import pt.ulusofona.lp2.deisichess.InvalidGameInputException;
 
 import java.io.File;
-import java.io.IOException;
 
-public class InvalidGameInputExceptionTest {
+public class TestInvalidGameInputException {
     @Test
     void InvalidGameInputExceptionTest_Dados_Mais() {
         int lineNum = 10;
@@ -22,10 +22,10 @@ public class InvalidGameInputExceptionTest {
 
         } catch (InvalidGameInputException e) {
             InvalidGameInputException expected = new InvalidGameInputException(lineNum, problem, amountOfData, expectedData);
-            assertEquals(e.getLineWithError(), expected.getLineWithError());
-            assertEquals(e.getProblem(), expected.getProblem());
-            assertEquals(e.getAmountOfData(), expected.getAmountOfData());
-            assertEquals(e.getExpected(), expected.getExpected());
+            Assertions.assertEquals(e.getLineWithError(), expected.getLineWithError());
+            Assertions.assertEquals(e.getProblem(), expected.getProblem());
+            Assertions.assertEquals(e.getAmountOfData(), expected.getAmountOfData());
+            Assertions.assertEquals(e.getExpected(), expected.getExpected());
 
         } catch (Exception e) {
 
@@ -46,10 +46,10 @@ public class InvalidGameInputExceptionTest {
 
         } catch (InvalidGameInputException e) {
             InvalidGameInputException expected = new InvalidGameInputException(lineNum, problem, amountOfData, expectedData);
-            assertEquals(e.getLineWithError(), expected.getLineWithError());
-            assertEquals(e.getProblem(), expected.getProblem());
-            assertEquals(e.getAmountOfData(), expected.getAmountOfData());
-            assertEquals(e.getExpected(), expected.getExpected());
+            Assertions.assertEquals(e.getLineWithError(), expected.getLineWithError());
+            Assertions.assertEquals(e.getProblem(), expected.getProblem());
+            Assertions.assertEquals(e.getAmountOfData(), expected.getAmountOfData());
+            Assertions.assertEquals(e.getExpected(), expected.getExpected());
 
         } catch (Exception e) {
 

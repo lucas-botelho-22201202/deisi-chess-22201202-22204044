@@ -309,7 +309,13 @@ public class GameManager extends Subject {
     }
 
     public Map<String, String> customizeBoard() {
-        return new HashMap<>();
+        var board = new HashMap<String, String>();
+
+        board.put("title", "portal");
+        board.put("imageBlackSquare", "imageBlackSquare.png");
+        board.put("imageWhiteSquare", "imageWhiteSquare.png");
+
+        return board;
     }
 
     @Override
