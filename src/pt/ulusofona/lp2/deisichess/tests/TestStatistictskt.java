@@ -39,7 +39,5 @@ public class TestStatistictskt {
 
         } catch (Exception e) {
         }
-
-        return;
     }
 }

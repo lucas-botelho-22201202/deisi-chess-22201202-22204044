@@ -333,9 +333,7 @@ public class GameManager extends Subject {
             return false;
         }
         GameManager otherGameManager = (GameManager) obj;
-//        return numMovesWithoutCapture == otherGameManager.numMovesWithoutCapture &&
-//                roundNum == otherGameManager.roundNum &&
-//                Objects.equals(gameStates, otherGameManager.gameStates);
+
         return Objects.equals(board, otherGameManager.board) &&
                 Objects.equals(statistic, otherGameManager.statistic);
 
