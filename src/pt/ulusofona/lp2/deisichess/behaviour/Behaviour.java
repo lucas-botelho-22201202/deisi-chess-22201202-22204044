@@ -32,9 +32,9 @@ public abstract class Behaviour implements Cloneable {
 
     public static Behaviour getValidMovementBehaviour(BehaviourData behaviourData, ArrayList<Behaviour> behaviours, int movementRange) throws InvalidBehaviourException {
         for (Behaviour behaviour : behaviours) {
-            var isValidBehavirour = behaviour.isValid(behaviourData);
+            var isValidBehaviour = behaviour.isValid(behaviourData);
             var isValidRangeOfMovement = behaviour.isInMovementRange(behaviourData, movementRange);
-            if (isValidBehavirour && isValidRangeOfMovement) {
+            if (isValidBehaviour && isValidRangeOfMovement) {
                 return behaviour;
             }
         }
