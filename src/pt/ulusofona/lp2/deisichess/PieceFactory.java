@@ -46,6 +46,7 @@ public class PieceFactory {
             case 5 -> new TorreVertical(uId, type, team, nickName);
             case 6 -> new HomerSimpson(uId, type, team, nickName);
             case 7 -> new Joker(uId, type, team, nickName);
+            case 8 -> new Portal(uId, type, team, nickName);
             default -> null;
         };
     }
