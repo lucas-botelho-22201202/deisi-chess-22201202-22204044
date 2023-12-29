@@ -22,6 +22,7 @@ public class TestInvalidGameInputException {
 
         } catch (InvalidGameInputException e) {
             InvalidGameInputException expected = new InvalidGameInputException(lineNum, problem, amountOfData, expectedData);
+            Assertions.assertEquals(e.getProblemDescription(), expected.getProblemDescription());
             Assertions.assertEquals(e.getLineWithError(), expected.getLineWithError());
             Assertions.assertEquals(e.getProblem(), expected.getProblem());
             Assertions.assertEquals(e.getAmountOfData(), expected.getAmountOfData());
@@ -46,6 +47,7 @@ public class TestInvalidGameInputException {
 
         } catch (InvalidGameInputException e) {
             InvalidGameInputException expected = new InvalidGameInputException(lineNum, problem, amountOfData, expectedData);
+            Assertions.assertEquals(e.getProblemDescription(), expected.getProblemDescription());
             Assertions.assertEquals(e.getLineWithError(), expected.getLineWithError());
             Assertions.assertEquals(e.getProblem(), expected.getProblem());
             Assertions.assertEquals(e.getAmountOfData(), expected.getAmountOfData());

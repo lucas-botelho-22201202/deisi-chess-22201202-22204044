@@ -33,8 +33,22 @@ public class InvalidGameInputException extends Exception {
         this.expected = expected;
     }
 
+
     public int getLineWithError() {
         return lineNum;
+    }
+
+    public String getProblemDescription() {
+
+        var sb = new StringBuilder(problem)
+                .append(" (Esperava: ")
+                .append(expected)
+                .append(" ; Obtive: ")
+                .append(amountOfData)
+                .append(")");
+
+
+        return sb.toString();
     }
 
     public int getAmountOfData() {
