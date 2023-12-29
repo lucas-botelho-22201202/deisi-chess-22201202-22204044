@@ -3,8 +3,8 @@ package pt.ulusofona.lp2.deisichess.pieces;
 import pt.ulusofona.lp2.deisichess.behaviour.*;
 
 public class Portal extends Piece {
-    static final String BLACK_PNG = "VertTowerGrey.png";
-    static final String WHITE_PNG = "VertTowerBeije.png";
+    static final String BLACK_PNG = "portalGrey.png";
+    static final String WHITE_PNG = "portalBeije.png";
     static final int DEFAULT_OFFSET = 1000;
     public static final String NAME = "Portal";
 
