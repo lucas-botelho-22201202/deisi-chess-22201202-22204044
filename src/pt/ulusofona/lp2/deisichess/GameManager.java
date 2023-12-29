@@ -330,6 +330,7 @@ public class GameManager extends Subject {
         }
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
