@@ -29,3 +29,6 @@ Pontuação: 20 pontos<br>
 ![](portalGrey.png?raw=true "Portal Piece Black Team")
 
 A inclusão do Portal no xadrez adiciona uma dimensão estratégica , incentivando jogadores a explorar novas táticas para alcançar a vitória.<br>
+
+### Link para o vídeo: <br>
+https://youtu.be/KBg1k8Kj_5o
